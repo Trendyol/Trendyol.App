@@ -152,8 +152,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SampleController.cs" />
+    <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Migrations\201612181948134_Initialization.cs" />
+    <Compile Include="Migrations\201612181948134_Initialization.Designer.cs">
+      <DependentUpon>201612181948134_Initialization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Sample.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\CreateSampleRequest.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +178,11 @@
       <Name>Trendyol.App</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612181948134_Initialization.resx">
+      <DependentUpon>201612181948134_Initialization.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
