@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C19A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{F61C45B0-BE0E-4214-8AD1-EC29E9440C1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.NLog", "Trendyol.App.NLog\Trendyol.App.NLog.csproj", "{AD6FC708-BA35-4DDA-A09D-A052B9E8EF0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{F61C45B0-BE0E-4214-8AD1-EC29E9440C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F61C45B0-BE0E-4214-8AD1-EC29E9440C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F61C45B0-BE0E-4214-8AD1-EC29E9440C1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD6FC708-BA35-4DDA-A09D-A052B9E8EF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD6FC708-BA35-4DDA-A09D-A052B9E8EF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD6FC708-BA35-4DDA-A09D-A052B9E8EF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD6FC708-BA35-4DDA-A09D-A052B9E8EF0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

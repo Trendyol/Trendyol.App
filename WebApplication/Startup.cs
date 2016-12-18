@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 using Trendyol.App;
+using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
 using WebApplication;
 
@@ -15,6 +16,7 @@ namespace WebApplication
         {
             App = TrendyolAppBuilder.Instance
                 .UseWebApi(app)
+                .UseNLog()
                 .Build();
         }
     }
