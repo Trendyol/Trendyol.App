@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 using Common.Logging;
 using WebApplication.Data;
 using WebApplication.Models;
 using WebApplication.Requests;
+using Jarvis.Filtering;
 
 namespace WebApplication.Controllers
 {
@@ -14,7 +17,7 @@ namespace WebApplication.Controllers
 
         [Route("")]
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Filter(string fields = null, string name = null)
         {
             Logger.Trace("Fetching samples.");
 
@@ -22,7 +25,7 @@ namespace WebApplication.Controllers
 
             using (var context = new DataContext())
             {
-                var query = context.Samples;
+                var query = context.Samples.Where(new QueryParameter("Name", name)).Select(fields);
 
                 foreach (Sample sample in query)
                 {
@@ -35,6 +38,27 @@ namespace WebApplication.Controllers
             }
 
             return Ok(samples);
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        public IHttpActionResult Get(long id, string fields = null)
+        {
+            Logger.Trace($"Fetching sample by id: {id}.");
+
+            Sample sample;
+
+            using (var context = new DataContext())
+            {
+                sample = context.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
+            }
+
+            if (sample == null)
+            {
+                throw new HttpException(404, "");
+            }
+
+            return Ok(sample);
         }
 
         [Route("")]
