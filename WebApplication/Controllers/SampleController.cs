@@ -8,7 +8,7 @@ namespace WebApplication.Controllers
     [RoutePrefix("samples")]
     public class SampleController : ApiController
     {
-        public ILog Logger = LogManager.GetLogger<SampleController>();
+        private static readonly ILog Logger = LogManager.GetLogger<SampleController>();
 
         [Route("")]
         [HttpGet]
