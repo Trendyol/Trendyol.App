@@ -1,0 +1,2 @@
+# Trendyol.App
+Application wrapper.
