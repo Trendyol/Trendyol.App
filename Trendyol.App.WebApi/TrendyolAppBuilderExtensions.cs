@@ -27,13 +27,13 @@ namespace Trendyol.App.WebApi
 
             app.UseWebApi(config);
 
-            builder.SetData(Constants.TrendyolAppDataKeyPrefix + Constants.HttpConfigurationDataKey, config);
+            builder.SetData(Constants.HttpConfigurationDataKey, config);
             return builder;
         }
 
         public static TrendyolAppBuilder UseHttpsGuard(this TrendyolAppBuilder builder, IAppBuilder app)
         {
-            HttpConfiguration config = builder.GetData<HttpConfiguration>(Constants.TrendyolAppDataKeyPrefix + Constants.HttpConfigurationDataKey);
+            HttpConfiguration config = builder.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
             if (config == null)
             {

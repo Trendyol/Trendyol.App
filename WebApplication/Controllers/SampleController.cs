@@ -7,6 +7,7 @@ using WebApplication.Data;
 using WebApplication.Models;
 using WebApplication.Requests;
 using Jarvis.Filtering;
+using WebApplication.Managers;
 
 namespace WebApplication.Controllers
 {
@@ -14,6 +15,13 @@ namespace WebApplication.Controllers
     public class SampleController : ApiController
     {
         private static readonly ILog Logger = LogManager.GetLogger<SampleController>();
+
+        private readonly ISampleManager _sampleManager;
+
+        public SampleController(ISampleManager sampleManager)
+        {
+            _sampleManager = sampleManager;
+        }
 
         [Route("")]
         [HttpGet]
@@ -56,6 +64,11 @@ namespace WebApplication.Controllers
             if (sample == null)
             {
                 throw new HttpException(404, "");
+            }
+
+            if (!_sampleManager.IsValid(sample))
+            {
+                return BadRequest("Invalid sample.");
             }
 
             return Ok(sample);

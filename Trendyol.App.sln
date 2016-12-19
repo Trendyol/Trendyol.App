@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.Autofac", "Trendyol.App.Autofac\Trendyol.App.Autofac.csproj", "{E6583126-21BE-479D-862D-97DA0BBFD9C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.AutofacWebApi", "Trendyol.App.AutofacWebApi\Trendyol.App.AutofacWebApi.csproj", "{4C29A05B-2AEE-43F8-83F2-F833A9C2EB3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{E6583126-21BE-479D-862D-97DA0BBFD9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6583126-21BE-479D-862D-97DA0BBFD9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6583126-21BE-479D-862D-97DA0BBFD9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C29A05B-2AEE-43F8-83F2-F833A9C2EB3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C29A05B-2AEE-43F8-83F2-F833A9C2EB3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C29A05B-2AEE-43F8-83F2-F833A9C2EB3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C29A05B-2AEE-43F8-83F2-F833A9C2EB3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

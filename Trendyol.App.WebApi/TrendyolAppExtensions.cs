@@ -6,7 +6,7 @@ namespace Trendyol.App.WebApi
     {
         public static HttpConfiguration GetHttpConfiguration(this TrendyolApp app)
         {
-            HttpConfiguration config = app.GetData<HttpConfiguration>(Constants.TrendyolAppDataKeyPrefix + Constants.HttpConfigurationDataKey);
+            HttpConfiguration config = app.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
             return config;
         }
     }
