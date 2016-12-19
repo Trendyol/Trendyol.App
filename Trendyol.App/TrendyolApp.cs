@@ -2,7 +2,11 @@
 
 namespace Trendyol.App
 {
-    public class TrendyolApp
+    public class TrendyolApp : InMemoryDataStore
     {
+        public TrendyolApp(Dictionary<string, object> data)
+        {
+            _data = data;
+        }
     }
 }

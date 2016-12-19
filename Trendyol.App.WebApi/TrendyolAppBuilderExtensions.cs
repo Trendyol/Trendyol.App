@@ -13,9 +13,6 @@ namespace Trendyol.App.WebApi
 {
     public static class TrendyolAppBuilderExtensions
     {
-        private const string TrendyolAppDataKeyPrefix = "Trendyol.App.WebApi.";
-        private const string HttpConfigurationDataKey = "HttpConfiguration";
-
         public static TrendyolAppBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app)
         {
             HttpConfiguration config = new HttpConfiguration();
@@ -30,13 +27,13 @@ namespace Trendyol.App.WebApi
 
             app.UseWebApi(config);
 
-            builder.SetData(TrendyolAppDataKeyPrefix + HttpConfigurationDataKey, config);
+            builder.SetData(Constants.TrendyolAppDataKeyPrefix + Constants.HttpConfigurationDataKey, config);
             return builder;
         }
 
         public static TrendyolAppBuilder UseHttpsGuard(this TrendyolAppBuilder builder, IAppBuilder app)
         {
-            HttpConfiguration config = builder.GetData<HttpConfiguration>(TrendyolAppDataKeyPrefix + HttpConfigurationDataKey);
+            HttpConfiguration config = builder.GetData<HttpConfiguration>(Constants.TrendyolAppDataKeyPrefix + Constants.HttpConfigurationDataKey);
 
             if (config == null)
             {
