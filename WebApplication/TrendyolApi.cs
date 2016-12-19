@@ -10,16 +10,16 @@ using Trendyol.App.WebApi;
 using WebApplication;
 using WebApplication.Managers;
 
-[assembly: OwinStartup(typeof(Startup))]
+[assembly: OwinStartup(typeof(TrendyolApi))]
 namespace WebApplication
 {
-    public class Startup
+    public class TrendyolApi
     {
-        public static TrendyolApp App;
+        public static TrendyolApp Instance;
 
         public void Configuration(IAppBuilder app)
         {
-            App = TrendyolAppBuilder.Instance
+            Instance = TrendyolAppBuilder.Instance
                 .UseWebApi(app)
                 .UseAutofac(RegisterDependencies)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
