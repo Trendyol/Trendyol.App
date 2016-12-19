@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
@@ -169,6 +173,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Trendyol.App.Autofac\Trendyol.App.Autofac.csproj">
+      <Project>{e6583126-21be-479d-862d-97da0bbfd9c3}</Project>
+      <Name>Trendyol.App.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Trendyol.App.NLog\Trendyol.App.NLog.csproj">
       <Project>{ad6fc708-ba35-4dda-a09d-a052b9e8ef0a}</Project>
       <Name>Trendyol.App.NLog</Name>
