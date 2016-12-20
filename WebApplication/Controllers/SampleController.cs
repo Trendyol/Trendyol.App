@@ -17,10 +17,12 @@ namespace WebApplication.Controllers
         private static readonly ILog Logger = LogManager.GetLogger<SampleController>();
 
         private readonly ISampleManager _sampleManager;
+        private readonly DataContext _dataContext;
 
-        public SampleController(ISampleManager sampleManager)
+        public SampleController(ISampleManager sampleManager, DataContext dataContext)
         {
             _sampleManager = sampleManager;
+            _dataContext = dataContext;
         }
 
         [Route("")]
@@ -54,12 +56,7 @@ namespace WebApplication.Controllers
         {
             Logger.Trace($"Fetching sample by id: {id}.");
 
-            Sample sample;
-
-            using (var context = new DataContext())
-            {
-                sample = context.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
-            }
+            Sample sample = _dataContext.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
 
             if (sample == null)
             {
