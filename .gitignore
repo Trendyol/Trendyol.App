@@ -169,7 +169,7 @@ rcf/
 # Windows Store app package directory
 AppPackages/
 BundleArtifacts/
-!_bin_deployableAssemblies/**/*.*
+!_bin_deployableAssemblies/
 
 # Visual Studio cache files
 # files ending in .cache can be ignored
