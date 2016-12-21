@@ -1,8 +1,10 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Trendyol.App.WebApi.Controllers
 {
     [RoutePrefix("")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class HelpController : ApiController
     {
         [HttpGet, Route("")]
