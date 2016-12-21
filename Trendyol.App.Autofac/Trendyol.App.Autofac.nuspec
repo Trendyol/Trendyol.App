@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Trendyol.App.Autofac</id>
+    <version>1.0.0</version>
+    <title>Trendyol.App.Autofac</title>
+    <authors>trendyol ocinbat</authors>
+    <owners>trendyol ocinbat</owners>
+    <projectUrl>https://github.com/Trendyol/Trendyol.App</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple application wrapper.</description>
+    <summary>A simple application wrapper.</summary>
+    <copyright>Copyright 2016</copyright>
+    <tags>tredyol boilerplate</tags>
+    <dependencies>
+      <dependency id="Trendyol.App" version="1.0.0" />
+      <dependency id="Autofac" version="4.2.1" />
+    </dependencies>
+  </metadata>
+</package>

@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Common.Logging;
 using WebApplication.Data;
 using WebApplication.Models;
 using WebApplication.Requests;
-using Jarvis.Filtering;
 using WebApplication.Managers;
+using WebApplication.Repositories;
 
 namespace WebApplication.Controllers
 {
@@ -18,11 +17,13 @@ namespace WebApplication.Controllers
 
         private readonly ISampleManager _sampleManager;
         private readonly DataContext _dataContext;
+        private readonly ISampleRepository _sampleRepository;
 
-        public SampleController(ISampleManager sampleManager, DataContext dataContext)
+        public SampleController(ISampleManager sampleManager, DataContext dataContext, ISampleRepository sampleRepository)
         {
             _sampleManager = sampleManager;
             _dataContext = dataContext;
+            _sampleRepository = sampleRepository;
         }
 
         [Route("")]
@@ -31,21 +32,7 @@ namespace WebApplication.Controllers
         {
             Logger.Trace("Fetching samples.");
 
-            var samples = new List<SampleViewModel>();
-
-            using (var context = new DataContext())
-            {
-                var query = context.Samples.Where(new QueryParameter("Name", name)).Select(fields);
-
-                foreach (Sample sample in query)
-                {
-                    samples.Add(new SampleViewModel()
-                    {
-                        Id = sample.Id,
-                        Name = sample.Name
-                    });
-                }
-            }
+            var samples = _sampleRepository.GetSamples(fields, name);
 
             return Ok(samples);
         }

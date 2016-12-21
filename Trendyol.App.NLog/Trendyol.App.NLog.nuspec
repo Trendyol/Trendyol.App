@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Trendyol.App.NLog</id>
+    <version>1.0.0</version>
+    <title>Trendyol.App.NLog</title>
+    <authors>trendyol ocinbat</authors>
+    <owners>trendyol ocinbat</owners>
+    <projectUrl>https://github.com/Trendyol/Trendyol.App</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple application wrapper.</description>
+    <summary>A simple application wrapper.</summary>
+    <copyright>Copyright 2016</copyright>
+    <tags>tredyol boilerplate</tags>
+    <dependencies>
+      <dependency id="Trendyol.App" version="1.0.0" />
+      <dependency id="Common.Logging" version="3.3.1" />
+      <dependency id="Common.Logging.Core" version="3.3.1" />
+      <dependency id="Common.Logging.NLog41" version="3.3.1" />
+      <dependency id="NLog" version="4.1.2" />
+    </dependencies>
+  </metadata>
+</package>

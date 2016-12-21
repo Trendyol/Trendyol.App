@@ -105,6 +105,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Trendyol.App.WebApi.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
