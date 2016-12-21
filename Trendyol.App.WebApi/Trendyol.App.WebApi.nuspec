@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Trendyol.App.WebApi</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Trendyol.App.WebApi</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -27,6 +27,7 @@
       <dependency id="Microsoft.Owin.Host.SystemWeb" version="3.0.1" />
       <dependency id="Newtonsoft.Json" version="6.0.4" />
       <dependency id="Owin" version="1.0" />
+      <dependency id="Swashbuckle" version="5.5.3" />
     </dependencies>
   </metadata>
 </package>

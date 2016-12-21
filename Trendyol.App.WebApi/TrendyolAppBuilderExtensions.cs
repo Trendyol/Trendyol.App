@@ -1,21 +1,41 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Net.Http.Formatting;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using Swashbuckle.Application;
 using Trendyol.App.WebApi.Handlers;
 
 namespace Trendyol.App.WebApi
 {
     public static class TrendyolAppBuilderExtensions
     {
-        public static TrendyolAppBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app)
+        public static TrendyolAppBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app, string applicationName, string customSwaggerContentPath = null)
         {
+            Assembly apiAssembly = Assembly.GetCallingAssembly();
+
             HttpConfiguration config = new HttpConfiguration();
+
+            config.EnableSwagger("docs/{apiVersion}/swagger", c =>
+            {
+                c.SingleApiVersion("v1", applicationName)
+                 .Description($"{applicationName} documentation.");
+            })
+            .EnableSwaggerUi("help/{*assetPath}", c =>
+            {
+                if (!String.IsNullOrEmpty(customSwaggerContentPath))
+                {
+                    c.InjectJavaScript(apiAssembly, $"{apiAssembly.GetName().Name}.{customSwaggerContentPath}");
+                }
+
+                c.DisableValidator();
+            });
 
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute("Default", "{controller}/{id}", new { id = RouteParameter.Optional });
