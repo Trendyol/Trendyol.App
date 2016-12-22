@@ -16,13 +16,13 @@ namespace WebApplication.Controllers
         private static readonly ILog Logger = LogManager.GetLogger<SampleController>();
 
         private readonly ISampleManager _sampleManager;
-        private readonly DataContext _dataContext;
+        private readonly Context _context;
         private readonly ISampleRepository _sampleRepository;
 
-        public SampleController(ISampleManager sampleManager, DataContext dataContext, ISampleRepository sampleRepository)
+        public SampleController(ISampleManager sampleManager, Context context, ISampleRepository sampleRepository)
         {
             _sampleManager = sampleManager;
-            _dataContext = dataContext;
+            _context = context;
             _sampleRepository = sampleRepository;
         }
 
@@ -43,7 +43,7 @@ namespace WebApplication.Controllers
         {
             Logger.Trace($"Fetching sample by id: {id}.");
 
-            Sample sample = _dataContext.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
+            Sample sample = _context.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
 
             if (sample == null)
             {
@@ -67,7 +67,7 @@ namespace WebApplication.Controllers
             Sample sample = new Sample();
             sample.Name = request.Name;
 
-            using (var context = new DataContext())
+            using (var context = new Context())
             {
                 context.Samples.Add(sample);
                 context.SaveChanges();

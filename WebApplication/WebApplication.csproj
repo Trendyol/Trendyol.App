@@ -164,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SampleController.cs" />
-    <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\Context.cs" />
     <Compile Include="Managers\ISampleManager.cs" />
     <Compile Include="Managers\SampleManager.cs" />
     <Compile Include="Migrations\201612181948134_Initialization.cs" />
@@ -176,6 +176,7 @@
     <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ISampleRepository.cs" />
+    <Compile Include="Repositories\SampleRepository.cs" />
     <Compile Include="Requests\CreateSampleRequest.cs" />
     <Compile Include="TrendyolApi.cs" />
   </ItemGroup>
@@ -187,6 +188,10 @@
     <ProjectReference Include="..\Trendyol.App.Autofac\Trendyol.App.Autofac.csproj">
       <Project>{e6583126-21be-479d-862d-97da0bbfd9c3}</Project>
       <Name>Trendyol.App.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trendyol.App.EntityFramework\Trendyol.App.EntityFramework.csproj">
+      <Project>{02191109-9684-4a4b-bb59-28181d32c8e7}</Project>
+      <Name>Trendyol.App.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trendyol.App.NLog\Trendyol.App.NLog.csproj">
       <Project>{ad6fc708-ba35-4dda-a09d-a052b9e8ef0a}</Project>

@@ -10,6 +10,7 @@ using Trendyol.App.WebApi;
 using WebApplication;
 using WebApplication.Data;
 using WebApplication.Managers;
+using WebApplication.Repositories;
 
 [assembly: OwinStartup(typeof(TrendyolApi))]
 namespace WebApplication
@@ -30,8 +31,9 @@ namespace WebApplication
 
         private void RegisterDependencies(ContainerBuilder builder)
         {
-            builder.Register(c => new DataContext()).InstancePerLifetimeScope();
+            builder.Register(c => new Context()).InstancePerLifetimeScope();
             builder.RegisterType<SampleManager>().As<ISampleManager>().InstancePerLifetimeScope();
+            builder.RegisterType<SampleRepository>().As<ISampleRepository>().InstancePerLifetimeScope();
         }
     }
 }
