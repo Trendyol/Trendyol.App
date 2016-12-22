@@ -4,7 +4,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Data
 {
-    public class Context : DataContextBase
+    public class Context : DataContextBase<Context>
     {
         public Context()
             : base("Context")
