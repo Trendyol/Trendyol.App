@@ -171,6 +171,10 @@
     <Compile Include="Migrations\201612181948134_Initialization.Designer.cs">
       <DependentUpon>201612181948134_Initialization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612231128114_Sample-Update.cs" />
+    <Compile Include="Migrations\201612231128114_Sample-Update.Designer.cs">
+      <DependentUpon>201612231128114_Sample-Update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Sample.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
@@ -209,6 +213,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612181948134_Initialization.resx">
       <DependentUpon>201612181948134_Initialization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612231128114_Sample-Update.resx">
+      <DependentUpon>201612231128114_Sample-Update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

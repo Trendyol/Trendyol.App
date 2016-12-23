@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Common.Logging;
+using Trendyol.App.WebApi.Models;
 using WebApplication.Data;
 using WebApplication.Models;
 using WebApplication.Requests;
@@ -28,18 +30,34 @@ namespace WebApplication.Controllers
 
         [Route("")]
         [HttpGet]
-        public IHttpActionResult Filter(string fields = null, string name = null)
+        public IEnumerable<Sample> Filter(string fields = null, string name = null)
         {
             Logger.Trace("Fetching samples.");
 
-            var samples = _sampleRepository.GetSamples(fields, name);
+            List<Sample> samples = _sampleRepository.GetSamples(fields, name);
 
-            return Ok(samples);
+            return samples;
+        }
+
+        [Route("")]
+        [HttpPost]
+        public void Post(CreateSampleRequest request)
+        {
+            Logger.Trace("Creating sample.");
+
+            Sample sample = new Sample();
+            sample.Name = request.Name;
+
+            using (var context = new Context())
+            {
+                context.Samples.Add(sample);
+                context.SaveChanges();
+            }
         }
 
         [Route("{id}")]
         [HttpGet]
-        public IHttpActionResult Get(long id, string fields = null)
+        public Sample Get(long id, string fields = null)
         {
             Logger.Trace($"Fetching sample by id: {id}.");
 
@@ -52,28 +70,63 @@ namespace WebApplication.Controllers
 
             if (!_sampleManager.IsValid(sample))
             {
-                return BadRequest("Invalid sample.");
+                throw new HttpException(400, "Invalid sample.");
             }
 
-            return Ok(sample);
+            return sample;
         }
 
-        [Route("")]
-        [HttpPost]
-        public IHttpActionResult Post(CreateSampleRequest request)
+        [Route("{id}")]
+        [HttpPut]
+        public void Put(long id, Sample sample)
         {
-            Logger.Trace("Creating sample.");
+            Sample dbSample = _context.Samples.Find(id);
 
-            Sample sample = new Sample();
-            sample.Name = request.Name;
-
-            using (var context = new Context())
+            if (dbSample == null)
             {
-                context.Samples.Add(sample);
-                context.SaveChanges();
+                throw new HttpException(404, "");
             }
 
-            return Ok(sample);
+            if (!_sampleManager.IsValid(sample))
+            {
+                throw new HttpException(400, "Invalid sample.");
+            }
+
+            dbSample.Name = sample.Name;
+            dbSample.Size = sample.Size;
+            _context.SaveChanges();
+        }
+
+        [Route("{id}")]
+        [HttpPatch]
+        public void Patch(long id, List<PatchParameter> parameters)
+        {
+            using (var context = new Context())
+            {
+                Sample sample = context.Samples.Find(id);
+
+                foreach (PatchParameter patchParameter in parameters)
+                {
+                    patchParameter.Update(sample);
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public void Delete(long id)
+        {
+            Sample sample = _context.Samples.Find(id);
+
+            if (sample == null)
+            {
+                throw new HttpException(404, "");
+            }
+
+            _context.Samples.Remove(sample);
+            _context.SaveChanges();
         }
     }
 }
