@@ -22,7 +22,7 @@ namespace WebApplication
         {
             Instance = TrendyolAppBuilder.Instance
                 .UseWebApi(app, "Sample Api")
-                .UseAutofac(typeof(ISampleService).Assembly, typeof(DataContext).Assembly, RegisterDependencies)
+                .UseAutofac(RegisterDependencies, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
                 .Build();
