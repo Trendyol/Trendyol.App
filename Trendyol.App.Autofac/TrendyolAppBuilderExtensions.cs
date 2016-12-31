@@ -8,23 +8,29 @@ namespace Trendyol.App.Autofac
 {
     public static class TrendyolAppBuilderExtensions
     {
-        public static TrendyolAppBuilder UseAutofac(this TrendyolAppBuilder builder, Assembly serviceAssembly, Assembly dataAssembly, Action<ContainerBuilder> action)
+        public static TrendyolAppBuilder UseAutofac(this TrendyolAppBuilder builder, Action<ContainerBuilder> action = null, Assembly serviceAssembly = null, Assembly dataAssembly = null)
         {
             ContainerBuilder containerBuilder = new ContainerBuilder();
 
-            containerBuilder
-                .RegisterAssemblyTypes(serviceAssembly)
-                .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
-                .AsImplementedInterfaces()
-                .SingleInstance();
+            if (serviceAssembly != null)
+            {
+                containerBuilder
+                    .RegisterAssemblyTypes(serviceAssembly)
+                    .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
+                    .AsImplementedInterfaces()
+                    .SingleInstance();
+            }
 
-            containerBuilder
-                .RegisterAssemblyTypes(dataAssembly)
-                .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
-                .AsImplementedInterfaces()
-                .SingleInstance();
+            if (dataAssembly != null)
+            {
+                containerBuilder
+                    .RegisterAssemblyTypes(dataAssembly)
+                    .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
+                    .AsImplementedInterfaces()
+                    .SingleInstance();
+            }
 
-            action(containerBuilder);
+            action?.Invoke(containerBuilder);
 
             IContainer container = containerBuilder.Build();
 
