@@ -71,8 +71,8 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jarvis, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jarvis.1.3.4\lib\net40\Jarvis.dll</HintPath>
+    <Reference Include="Jarvis, Version=1.3.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jarvis.1.3.6\lib\net40\Jarvis.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -164,9 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SampleController.cs" />
-    <Compile Include="Data\Context.cs" />
-    <Compile Include="Managers\ISampleManager.cs" />
-    <Compile Include="Managers\SampleManager.cs" />
     <Compile Include="Migrations\201612181948134_Initialization.cs" />
     <Compile Include="Migrations\201612181948134_Initialization.Designer.cs">
       <DependentUpon>201612181948134_Initialization.cs</DependentUpon>
@@ -176,15 +173,14 @@
       <DependentUpon>201612231128114_Sample-Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Sample.cs" />
-    <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ISampleRepository.cs" />
-    <Compile Include="Repositories\SampleRepository.cs" />
-    <Compile Include="Requests\CreateSampleRequest.cs" />
     <Compile Include="TrendyolApi.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{435bbf86-313c-4914-bbf2-157d530da905}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Trendyol.App.AutofacWebApi\Trendyol.App.AutofacWebApi.csproj">
       <Project>{4c29a05b-2aee-43f8-83f2-f833a9c2eb3a}</Project>
       <Name>Trendyol.App.AutofacWebApi</Name>
@@ -209,6 +205,10 @@
       <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>
       <Name>Trendyol.App</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{930a6c82-341d-4ea1-9fb4-9d37e2ebd013}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612181948134_Initialization.resx">
@@ -218,6 +218,7 @@
       <DependentUpon>201612231128114_Sample-Update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

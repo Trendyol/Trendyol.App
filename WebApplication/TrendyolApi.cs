@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
+using Data;
+using Domain.Services;
 using Microsoft.Owin;
 using Owin;
 using Trendyol.App;
@@ -8,9 +10,6 @@ using Trendyol.App.AutofacWebApi;
 using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
 using WebApplication;
-using WebApplication.Data;
-using WebApplication.Managers;
-using WebApplication.Repositories;
 
 [assembly: OwinStartup(typeof(TrendyolApi))]
 namespace WebApplication
@@ -23,7 +22,7 @@ namespace WebApplication
         {
             Instance = TrendyolAppBuilder.Instance
                 .UseWebApi(app, "Sample Api")
-                .UseAutofac(RegisterDependencies)
+                .UseAutofac(typeof(ISampleService).Assembly, typeof(DataContext).Assembly, RegisterDependencies)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
                 .Build();
@@ -31,9 +30,6 @@ namespace WebApplication
 
         private void RegisterDependencies(ContainerBuilder builder)
         {
-            builder.Register(c => new Context()).InstancePerLifetimeScope();
-            builder.RegisterType<SampleManager>().As<ISampleManager>().InstancePerLifetimeScope();
-            builder.RegisterType<SampleRepository>().As<ISampleRepository>().InstancePerLifetimeScope();
         }
     }
 }

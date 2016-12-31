@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using Trendyol.App.Dtos;
+﻿using Trendyol.App.Domain.Responses;
 
 namespace Trendyol.App.WebApi.Models
 {
-    public class ErrorResponse
+    public class ErrorResponse : BaseResponse
     {
         public string Message { get; set; }
-
-        public List<ErrorDto> Errors { get; set; }
     }
 }

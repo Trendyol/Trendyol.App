@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Results;
 using Common.Logging;
-using Trendyol.App.Dtos;
+using Trendyol.App.Domain.Dtos;
 using Trendyol.App.WebApi.Models;
 
 namespace Trendyol.App.WebApi.Handlers

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebApplication.Models
+namespace Domain.Objects
 {
     public class Sample
     {

@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Trendyol.App.WebApi</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <title>Trendyol.App.WebApi</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -13,7 +13,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>tredyol boilerplate</tags>
     <dependencies>
-      <dependency id="Trendyol.App" version="1.0.0" />
+      <dependency id="Trendyol.App" version="1.0.1" />
       <dependency id="Common.Logging" version="3.3.1" />
       <dependency id="Common.Logging.Core" version="3.3.1" />
       <dependency id="Microsoft.AspNet.WebApi" version="5.2.3" />
@@ -28,7 +28,7 @@
       <dependency id="Newtonsoft.Json" version="6.0.4" />
       <dependency id="Owin" version="1.0" />
       <dependency id="Swashbuckle" version="5.5.3" />
-      <dependency id="Jarvis" version="1.3.4" />
+      <dependency id="Jarvis" version="1.3.6" />
     </dependencies>
   </metadata>
 </package>

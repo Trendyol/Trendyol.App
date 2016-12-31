@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Trendyol.App.Dtos
+namespace Trendyol.App.Domain.Dtos
 {
     public class ErrorDto
     {

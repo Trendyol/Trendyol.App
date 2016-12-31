@@ -1,4 +1,4 @@
-﻿namespace WebApplication.Requests
+﻿namespace Domain.Requests
 {
     public class CreateSampleRequest
     {

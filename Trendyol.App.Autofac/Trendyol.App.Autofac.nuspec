@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.Autofac</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Trendyol.App.Autofac</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -13,8 +13,9 @@
     <copyright>Copyright 2016</copyright>
     <tags>tredyol boilerplate</tags>
     <dependencies>
-      <dependency id="Trendyol.App" version="1.0.0" />
+      <dependency id="Trendyol.App" version="1.0.1" />
       <dependency id="Autofac" version="4.2.1" />
+      <dependency id="Jarvis" version="1.3.6" />
     </dependencies>
   </metadata>
 </package>
