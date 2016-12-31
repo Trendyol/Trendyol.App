@@ -16,11 +16,9 @@ namespace WebApplication
 {
     public class TrendyolApi
     {
-        public static TrendyolApp Instance;
-
         public void Configuration(IAppBuilder app)
         {
-            Instance = TrendyolAppBuilder.Instance
+            TrendyolAppBuilder.Instance
                 .UseWebApi(app, "Sample Api")
                 .UseAutofac(RegisterDependencies, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
