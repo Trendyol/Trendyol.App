@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using Common.Logging;
 using Domain.Objects;
@@ -53,6 +54,7 @@ namespace WebApplication.Controllers
         [HttpPut]
         public void Put(long id, Sample sample)
         {
+            throw new Exception("Error....");
         }
 
         [Route("{id}")]
