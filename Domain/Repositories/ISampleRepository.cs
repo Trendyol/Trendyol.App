@@ -7,5 +7,7 @@ namespace Domain.Repositories
     public interface ISampleRepository : IRepository
     {
         List<Sample> QuerySamples(string fields, string name);
+
+        Sample CreateSample(string name);
     }
 }

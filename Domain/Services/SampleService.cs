@@ -26,7 +26,7 @@ namespace Domain.Services
         {
             CreateSampleResponse response = new CreateSampleResponse();
 
-
+            response.Sample = _sampleRepository.CreateSample(request.Name);
 
             return response;
         }

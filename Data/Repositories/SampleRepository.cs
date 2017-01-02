@@ -26,5 +26,21 @@ namespace Data.Repositories
 
             return samples;
         }
+
+        public Sample CreateSample(string name)
+        {
+            Sample sample = new Sample();
+            sample.Name = name;
+            sample.CreatedOn = DateTime.UtcNow;
+            sample.Size = 0;
+
+            using (var context = new DataContext())
+            {
+                context.Samples.Add(sample);
+                context.SaveChanges();
+            }
+
+            return sample;
+        }
     }
 }
