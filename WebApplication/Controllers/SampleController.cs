@@ -38,7 +38,7 @@ namespace WebApplication.Controllers
         {
             Logger.Trace("Creating sample.");
 
-            return _sampleService.CreateSample(request).Sample;
+            return _sampleService.CreateSample(request).Data;
         }
 
         [Route("{id}")]
