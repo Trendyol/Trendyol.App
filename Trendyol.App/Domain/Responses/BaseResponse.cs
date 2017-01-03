@@ -22,8 +22,8 @@ namespace Trendyol.App.Domain.Responses
         }
     }
 
-    public class BaseResponse<T> : BaseResponse
+    public abstract class BaseResponse<T> : BaseResponse
     {
-        public T Data { get; set; }
+        public abstract T Data { get; set; }
     }
 }

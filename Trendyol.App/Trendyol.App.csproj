@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />
     <Compile Include="Domain\Enums\MessageType.cs" />
     <Compile Include="Domain\Services\IService.cs" />

@@ -3,8 +3,8 @@ using Trendyol.App.Domain.Responses;
 
 namespace Domain.Responses
 {
-    public class CreateSampleResponse : BaseResponse
+    public class CreateSampleResponse : BaseResponse<Sample>
     {
-        public Sample Sample { get; set; }
+        public override Sample Data { get; set; }
     }
 }
