@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+using Microsoft.Owin.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
@@ -16,7 +17,7 @@ namespace Trendyol.App.WebApi
 {
     public static class TrendyolAppBuilderExtensions
     {
-        public static TrendyolAppBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app, string applicationName, string customSwaggerContentPath = null)
+        public static TrendyolAppBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app, string applicationName, string customSwaggerContentPath = null, CorsOptions corsOptions = null)
         {
             Assembly apiAssembly = Assembly.GetCallingAssembly();
 
@@ -44,6 +45,11 @@ namespace Trendyol.App.WebApi
             config.Formatters.Add(CreateJsonFormatter());
             config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
             config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+
+            if (corsOptions != null)
+            {
+                app.UseCors(corsOptions);
+            }
 
             app.UseWebApi(config);
 
