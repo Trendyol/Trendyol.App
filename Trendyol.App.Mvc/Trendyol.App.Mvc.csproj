@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerHandlers\IControllerHandler.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="TrendyolAppBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
