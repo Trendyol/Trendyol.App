@@ -81,11 +81,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerHandlers\IControllerHandler.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="TrendyolAppBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Trendyol.App.Mvc.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">

@@ -1,4 +1,4 @@
-﻿namespace Trendyol.App.Domain
+﻿namespace Trendyol.App.Domain.Services
 {
     public interface IService
     {

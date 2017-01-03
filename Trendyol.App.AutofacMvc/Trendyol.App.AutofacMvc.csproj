@@ -38,8 +38,24 @@
       <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Jarvis, Version=1.3.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jarvis.1.3.6\lib\net40\Jarvis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -83,6 +99,10 @@
     <ProjectReference Include="..\Trendyol.App.Autofac\Trendyol.App.Autofac.csproj">
       <Project>{e6583126-21be-479d-862d-97da0bbfd9c3}</Project>
       <Name>Trendyol.App.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trendyol.App.Mvc\Trendyol.App.Mvc.csproj">
+      <Project>{F7E5392B-CB70-4731-98F5-F0ADF706731C}</Project>
+      <Name>Trendyol.App.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
       <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>

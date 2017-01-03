@@ -1,5 +1,5 @@
 ﻿@using Domain.Objects
-@model Domain.Responses.QuerySamplesResponse
+@model MvcApplication.Models.QuerySamplesViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-12">
         @if (Model.Samples.HasElements())
-        {
+            {
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -20,7 +20,7 @@
                 </thead>
                 <tbody>
                     @foreach (Sample sample in Model.Samples)
-                {
+                    {
                         <tr>
                             <td>@sample.Id</td>
                             <td>@sample.Name</td>

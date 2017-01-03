@@ -4,6 +4,6 @@ namespace Trendyol.App.WebApi.Models
 {
     public class ErrorResponse : BaseResponse
     {
-        public string Message { get; set; }
+        public string DisplayMessage { get; set; }
     }
 }

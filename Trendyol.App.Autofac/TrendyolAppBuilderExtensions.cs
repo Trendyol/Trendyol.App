@@ -3,6 +3,7 @@ using System.Reflection;
 using Autofac;
 using Trendyol.App.Data;
 using Trendyol.App.Domain;
+using Trendyol.App.Domain.Services;
 
 namespace Trendyol.App.Autofac
 {

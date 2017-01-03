@@ -53,8 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\IRepository.cs" />
-    <Compile Include="Domain\IService.cs" />
-    <Compile Include="Domain\Dtos\ErrorDto.cs" />
+    <Compile Include="Domain\Dtos\MessageDto.cs" />
+    <Compile Include="Domain\Enums\MessageType.cs" />
+    <Compile Include="Domain\Services\IService.cs" />
     <Compile Include="Domain\Responses\BaseResponse.cs" />
     <Compile Include="InMemoryDataStore.cs" />
     <Compile Include="TrendyolApp.cs" />

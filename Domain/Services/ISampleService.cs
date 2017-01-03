@@ -1,6 +1,7 @@
 ﻿using Domain.Requests;
 using Domain.Responses;
 using Trendyol.App.Domain;
+using Trendyol.App.Domain.Services;
 
 namespace Domain.Services
 {
