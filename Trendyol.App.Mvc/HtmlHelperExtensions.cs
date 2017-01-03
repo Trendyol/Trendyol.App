@@ -8,12 +8,12 @@ namespace Trendyol.App.Mvc
     {
         public static SelectList ToSelectList(this IEnumerable<LookupDto> lookups)
         {
-            return new SelectList(lookups, "Value", "Text");
+            return new SelectList(lookups ?? new List<LookupDto>(), "Value", "Text");
         }
 
         public static SelectList ToSelectList(this IEnumerable<LookupDto> lookups, object selectedValue)
         {
-            return new SelectList(lookups, "Value", "Text", selectedValue);
+            return new SelectList(lookups ?? new List<LookupDto>(), "Value", "Text", selectedValue);
         }
     }
 }
