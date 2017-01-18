@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Configuration;
 using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
-using Microsoft.Owin.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
@@ -17,58 +15,47 @@ namespace Trendyol.App.WebApi
 {
     public static class TrendyolAppBuilderExtensions
     {
-        public static TrendyolAppBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app, string applicationName, string customSwaggerContentPath = null, CorsOptions corsOptions = null)
+        public static TrendyolWebApiBuilder UseWebApi(this TrendyolAppBuilder builder, IAppBuilder app, string applicationName, string customSwaggerContentPath = null)
         {
-            Assembly apiAssembly = Assembly.GetCallingAssembly();
+            Assembly callingAssembly = Assembly.GetCallingAssembly();
 
-            HttpConfiguration config = new HttpConfiguration();
+            builder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = new HttpConfiguration();
 
-            config.EnableSwagger("docs/{apiVersion}/swagger", c =>
-            {
-                c.SingleApiVersion("v1", applicationName)
-                 .Description($"{applicationName} documentation.");
-            })
-            .EnableSwaggerUi("help/{*assetPath}", c =>
-            {
-                if (!String.IsNullOrEmpty(customSwaggerContentPath))
+                config.EnableSwagger("docs/{apiVersion}/swagger", c =>
                 {
-                    c.InjectJavaScript(apiAssembly, $"{apiAssembly.GetName().Name}.{customSwaggerContentPath}");
-                }
+                    c.SingleApiVersion("v1", applicationName)
+                     .Description($"{applicationName} documentation.");
+                })
+                .EnableSwaggerUi("help/{*assetPath}", c =>
+                {
+                    if (!String.IsNullOrEmpty(customSwaggerContentPath))
+                    {
+                        c.InjectJavaScript(callingAssembly, $"{callingAssembly.GetName().Name}.{customSwaggerContentPath}");
+                    }
 
-                c.DisableValidator();
+                    c.DisableValidator();
+                });
+
+                config.MapHttpAttributeRoutes();
+                config.Routes.MapHttpRoute("Default", "{controller}/{id}", new { id = RouteParameter.Optional });
+
+                config.Formatters.Clear();
+                config.Formatters.Add(CreateJsonFormatter());
+                config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+                config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+
+                builder.DataStore.SetData(Constants.HttpConfigurationDataKey, config);
             });
 
-            config.MapHttpAttributeRoutes();
-            config.Routes.MapHttpRoute("Default", "{controller}/{id}", new { id = RouteParameter.Optional });
-
-            config.Formatters.Clear();
-            config.Formatters.Add(CreateJsonFormatter());
-            config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
-            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
-
-            if (corsOptions != null)
+            builder.AfterBuild(() =>
             {
-                app.UseCors(corsOptions);
-            }
+                HttpConfiguration config = builder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+                app.UseWebApi(config);
+            });
 
-            app.UseWebApi(config);
-
-            builder.SetData(Constants.HttpConfigurationDataKey, config);
-            return builder;
-        }
-
-        public static TrendyolAppBuilder UseHttpsGuard(this TrendyolAppBuilder builder, IAppBuilder app)
-        {
-            HttpConfiguration config = builder.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
-
-            if (config == null)
-            {
-                throw new ConfigurationErrorsException("You must register your app with UseWebApi method before calling UseHttpsGuard.");
-            }
-
-            config.MessageHandlers.Add(new HttpsGuard());
-
-            return builder;
+            return new TrendyolWebApiBuilder(builder, app, applicationName);
         }
 
         private static JsonMediaTypeFormatter CreateJsonFormatter()

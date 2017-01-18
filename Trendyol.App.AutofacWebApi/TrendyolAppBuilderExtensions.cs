@@ -9,15 +9,18 @@ namespace Trendyol.App.AutofacWebApi
     {
         public static TrendyolAppBuilder UseAutofacWebApi(this TrendyolAppBuilder builder, Assembly controllerAssembly)
         {
-            HttpConfiguration config = builder.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
-            IContainer container = builder.GetData<IContainer>(Constants.AutofacContainerDataKey);
+            builder.BeforeBuild(() =>
+            {
+                ContainerBuilder containerBuilder = builder.DataStore.GetData<ContainerBuilder>(Autofac.Constants.AutofacContainerBuilderDataKey);
+                containerBuilder.RegisterApiControllers(controllerAssembly);
+            });
 
-            ContainerBuilder containerBuilder = new ContainerBuilder();
-
-            containerBuilder.RegisterApiControllers(controllerAssembly);
-            containerBuilder.Update(container);
-
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            builder.AfterBuild(() =>
+            {
+                HttpConfiguration config = builder.DataStore.GetData<HttpConfiguration>(WebApi.Constants.HttpConfigurationDataKey);
+                IContainer container = builder.DataStore.GetData<IContainer>(Autofac.Constants.AutofacContainerDataKey);
+                config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            });
 
             return builder;
         }

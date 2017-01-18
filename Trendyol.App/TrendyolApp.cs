@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace Trendyol.App
+﻿namespace Trendyol.App
 {
-    public class TrendyolApp : InMemoryDataStore
+    public class TrendyolApp
     {
         public static TrendyolApp Instance { get; set; }
 
-        public TrendyolApp(Dictionary<string, object> data)
+        public InMemoryDataStore DataStore { get; set; }
+
+        public TrendyolApp(InMemoryDataStore dataStore)
         {
-            _data = data;
+            DataStore = dataStore;
         }
     }
 }

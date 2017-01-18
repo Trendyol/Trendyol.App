@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Trendyol.App.Autofac;
-using Trendyol.App.Domain;
 using Trendyol.App.Mvc.ControllerHandlers;
 
 namespace Trendyol.App.AutofacMvc
@@ -12,19 +11,22 @@ namespace Trendyol.App.AutofacMvc
     {
         public static TrendyolAppBuilder UseAutofacMvc(this TrendyolAppBuilder builder, Assembly controllerAssembly)
         {
-            IContainer container = builder.GetData<IContainer>(Constants.AutofacContainerDataKey);
+            builder.BeforeBuild(() =>
+            {
+                IContainer container = builder.DataStore.GetData<IContainer>(Constants.AutofacContainerDataKey);
 
-            ContainerBuilder containerBuilder = new ContainerBuilder();
+                ContainerBuilder containerBuilder = new ContainerBuilder();
 
-            containerBuilder
-                    .RegisterAssemblyTypes(controllerAssembly)
-                    .Where(item => item.Implements(typeof(IControllerHandler)) && item.IsAbstract == false)
-                    .AsImplementedInterfaces()
-                    .InstancePerLifetimeScope();
-            containerBuilder.RegisterControllers(controllerAssembly);
-            containerBuilder.Update(container);
+                containerBuilder
+                        .RegisterAssemblyTypes(controllerAssembly)
+                        .Where(item => item.Implements(typeof(IControllerHandler)) && item.IsAbstract == false)
+                        .AsImplementedInterfaces()
+                        .InstancePerLifetimeScope();
+                containerBuilder.RegisterControllers(controllerAssembly);
+                containerBuilder.Update(container);
 
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+                DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            });
 
             return builder;
         }

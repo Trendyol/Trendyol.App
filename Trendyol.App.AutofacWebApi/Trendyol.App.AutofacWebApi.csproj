@@ -64,7 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="TrendyolAppBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,6 +71,10 @@
     <ProjectReference Include="..\Trendyol.App.Autofac\Trendyol.App.Autofac.csproj">
       <Project>{e6583126-21be-479d-862d-97da0bbfd9c3}</Project>
       <Name>Trendyol.App.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trendyol.App.WebApi\Trendyol.App.WebApi.csproj">
+      <Project>{ed0af6b3-c534-4f46-a7b0-b59ad9ddfc88}</Project>
+      <Name>Trendyol.App.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
       <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>

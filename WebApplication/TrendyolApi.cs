@@ -3,6 +3,7 @@ using Autofac;
 using Data;
 using Domain.Services;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Owin;
 using Trendyol.App;
 using Trendyol.App.Autofac;
@@ -20,6 +21,8 @@ namespace WebApplication
         {
             TrendyolAppBuilder.Instance
                 .UseWebApi(app, "Sample Api")
+                    .WithCors(CorsOptions.AllowAll)
+                    .Then()
                 .UseAutofac(RegisterDependencies, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()

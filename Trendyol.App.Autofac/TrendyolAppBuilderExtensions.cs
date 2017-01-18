@@ -11,31 +11,39 @@ namespace Trendyol.App.Autofac
     {
         public static TrendyolAppBuilder UseAutofac(this TrendyolAppBuilder builder, Action<ContainerBuilder> action = null, Assembly serviceAssembly = null, Assembly dataAssembly = null)
         {
-            ContainerBuilder containerBuilder = new ContainerBuilder();
-
-            if (serviceAssembly != null)
+            builder.BeforeBuild(() =>
             {
-                containerBuilder
-                    .RegisterAssemblyTypes(serviceAssembly)
-                    .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
-                    .AsImplementedInterfaces()
-                    .SingleInstance();
-            }
+                ContainerBuilder containerBuilder = new ContainerBuilder();
 
-            if (dataAssembly != null)
+                if (serviceAssembly != null)
+                {
+                    containerBuilder
+                        .RegisterAssemblyTypes(serviceAssembly)
+                        .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
+                        .AsImplementedInterfaces()
+                        .SingleInstance();
+                }
+
+                if (dataAssembly != null)
+                {
+                    containerBuilder
+                        .RegisterAssemblyTypes(dataAssembly)
+                        .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
+                        .AsImplementedInterfaces()
+                        .SingleInstance();
+                }
+
+                action?.Invoke(containerBuilder);
+
+                builder.DataStore.SetData(Constants.AutofacContainerBuilderDataKey, containerBuilder);
+            });
+
+            builder.AfterBuild(() =>
             {
-                containerBuilder
-                    .RegisterAssemblyTypes(dataAssembly)
-                    .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
-                    .AsImplementedInterfaces()
-                    .SingleInstance();
-            }
-
-            action?.Invoke(containerBuilder);
-
-            IContainer container = containerBuilder.Build();
-
-            builder.SetData(Constants.AutofacContainerDataKey, container);
+                ContainerBuilder containerBuilder = builder.DataStore.GetData<ContainerBuilder>(Constants.AutofacContainerBuilderDataKey);
+                IContainer container = containerBuilder.Build();
+                builder.DataStore.SetData(Constants.AutofacContainerDataKey, container);
+            });
 
             return builder;
         }

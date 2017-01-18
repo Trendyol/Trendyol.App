@@ -6,7 +6,7 @@ namespace Trendyol.App.Autofac
     {
         public static IContainer GetAutofacContainer(this TrendyolApp app)
         {
-            IContainer container = app.GetData<IContainer>(Constants.AutofacContainerDataKey);
+            IContainer container = app.DataStore.GetData<IContainer>(Constants.AutofacContainerDataKey);
             return container;
         }
     }
