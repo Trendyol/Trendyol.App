@@ -8,32 +8,18 @@ using Trendyol.App.WebApi.Handlers;
 
 namespace Trendyol.App.WebApi
 {
-    public class TrendyolWebApiBuilder : ITrendyolAppBuilder
+    public class TrendyolWebApiBuilder : TrendyolAppModule
     {
         private readonly IAppBuilder _owinBuilder;
         private readonly TrendyolAppBuilder _appBuilder;
         private readonly string _applicationName;
 
         public TrendyolWebApiBuilder(TrendyolAppBuilder builder, IAppBuilder owinBuilder, string applicationName)
+            : base(builder)
         {
             _appBuilder = builder;
             _applicationName = applicationName;
             _owinBuilder = owinBuilder;
-        }
-
-        public void BeforeBuild(Action action)
-        {
-            _appBuilder.BeforeBuild(action);
-        }
-
-        public TrendyolApp Build()
-        {
-            return _appBuilder.Build();
-        }
-
-        public void AfterBuild(Action action)
-        {
-            _appBuilder.AfterBuild(action);
         }
 
         public TrendyolWebApiBuilder WithHttpsGuard()
@@ -82,11 +68,6 @@ namespace Trendyol.App.WebApi
             });
 
             return this;
-        }
-
-        public TrendyolAppBuilder Then()
-        {
-            return _appBuilder;
         }
     }
 }

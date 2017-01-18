@@ -13,18 +13,20 @@ namespace Trendyol.App.AutofacMvc
         {
             builder.BeforeBuild(() =>
             {
-                IContainer container = builder.DataStore.GetData<IContainer>(Constants.AutofacContainerDataKey);
-
-                ContainerBuilder containerBuilder = new ContainerBuilder();
+                ContainerBuilder containerBuilder = builder.DataStore.GetData<ContainerBuilder>(Constants.AutofacContainerBuilderDataKey);
 
                 containerBuilder
                         .RegisterAssemblyTypes(controllerAssembly)
                         .Where(item => item.Implements(typeof(IControllerHandler)) && item.IsAbstract == false)
                         .AsImplementedInterfaces()
                         .InstancePerLifetimeScope();
-                containerBuilder.RegisterControllers(controllerAssembly);
-                containerBuilder.Update(container);
 
+                containerBuilder.RegisterControllers(controllerAssembly);
+            });
+
+            builder.AfterBuild(() =>
+            {
+                IContainer container = builder.DataStore.GetData<IContainer>(Constants.AutofacContainerDataKey);
                 DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             });
 
