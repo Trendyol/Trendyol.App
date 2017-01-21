@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +57,7 @@
     <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />
     <Compile Include="Domain\Enums\MessageType.cs" />
+    <Compile Include="Domain\Objects\OperationParameter.cs" />
     <Compile Include="Domain\Services\IService.cs" />
     <Compile Include="Domain\Responses\BaseResponse.cs" />
     <Compile Include="InMemoryDataStore.cs" />

@@ -5,7 +5,7 @@ using Common.Logging;
 using Domain.Objects;
 using Domain.Requests;
 using Domain.Services;
-using Trendyol.App.WebApi.Models;
+using Trendyol.App.Domain.Objects;
 
 namespace WebApplication.Controllers
 {
@@ -59,7 +59,7 @@ namespace WebApplication.Controllers
 
         [Route("{id}")]
         [HttpPatch]
-        public void Patch(long id, List<PatchParameter> parameters)
+        public void Patch(long id, List<OperationParameter> parameters)
         {
         }
 
