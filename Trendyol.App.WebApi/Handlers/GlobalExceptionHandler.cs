@@ -28,6 +28,8 @@ namespace Trendyol.App.WebApi.Handlers
 
             _logger.Error(exception.Message, exception);
 
+            while (exception.InnerException != null) exception = exception.InnerException;
+
             ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.DisplayMessage = "İşlem sırasında beklenmeyen bir hata oluştu.";
             errorResponse.AddMessage(exception.Message, MessageType.Error);
