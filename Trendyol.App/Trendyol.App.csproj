@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\IEntity.cs" />
+    <Compile Include="Data\IIdentityProvider.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />

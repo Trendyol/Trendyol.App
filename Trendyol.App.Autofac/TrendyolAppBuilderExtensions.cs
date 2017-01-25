@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Trendyol.App.Data;
@@ -28,6 +29,12 @@ namespace Trendyol.App.Autofac
                     containerBuilder
                         .RegisterAssemblyTypes(dataAssembly)
                         .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
+                        .AsImplementedInterfaces()
+                        .SingleInstance();
+
+                    containerBuilder
+                        .RegisterAssemblyTypes(dataAssembly)
+                        .Where(item => item.Implements(typeof(IIdentityProvider)) && item.IsAbstract == false)
                         .AsImplementedInterfaces()
                         .SingleInstance();
                 }

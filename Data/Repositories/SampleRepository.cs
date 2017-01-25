@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Domain.Objects;
 using Domain.Repositories;
+using Trendyol.App.Data;
 
 namespace Data.Repositories
 {
     public class SampleRepository : ISampleRepository
     {
+        private readonly IIdentityProvider<Sample, long> _identityProvider;
+
+        public SampleRepository(IIdentityProvider<Sample, long> identityProvider)
+        {
+            _identityProvider = identityProvider;
+        }
+
         public List<Sample> QuerySamples(string fields, string name)
         {
+            var id = _identityProvider.Next();
             List<Sample> samples;
 
             using (var context = new DataContext())
