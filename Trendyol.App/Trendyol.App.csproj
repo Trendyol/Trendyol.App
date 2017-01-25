@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Attributes\SequenceAttribute.cs" />
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IIdentityProvider.cs" />
     <Compile Include="Data\IRepository.cs" />

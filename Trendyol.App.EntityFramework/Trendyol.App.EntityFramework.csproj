@@ -51,12 +51,19 @@
   <ItemGroup>
     <Compile Include="DataContextBase.cs" />
     <Compile Include="DataEntityTypeConfiguration.cs" />
+    <Compile Include="Extensions\DbContextExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Trendyol.App.EntityFramework.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
+      <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>
+      <Name>Trendyol.App</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
