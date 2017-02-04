@@ -20,6 +20,26 @@ namespace Trendyol.App.Domain.Responses
         {
             Messages.Add(new MessageDto(content, type));
         }
+
+        public void AddErrorMessage(string content)
+        {
+            AddMessage(content, MessageType.Error);
+        }
+
+        public void AddInfoMessage(string content)
+        {
+            AddMessage(content, MessageType.Info);
+        }
+
+        public void AddSuccessMessage(string content)
+        {
+            AddMessage(content, MessageType.Success);
+        }
+
+        public void AddWarningMessage(string content)
+        {
+            AddMessage(content, MessageType.Warning);
+        }
     }
 
     public abstract class BaseResponse<T> : BaseResponse
