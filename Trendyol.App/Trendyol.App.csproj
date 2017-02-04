@@ -53,13 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Data\Attributes\SequenceAttribute.cs" />
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IIdentityProvider.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />
-    <Compile Include="Domain\Enums\MessageType.cs" />
     <Compile Include="Domain\Objects\OperationParameter.cs" />
     <Compile Include="Domain\Services\IService.cs" />
     <Compile Include="Domain\Responses\BaseResponse.cs" />
@@ -73,6 +73,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Trendyol.App.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\Enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

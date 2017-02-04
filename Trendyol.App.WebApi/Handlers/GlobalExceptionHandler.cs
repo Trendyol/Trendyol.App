@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Results;
 using Common.Logging;
-using Trendyol.App.Domain.Enums;
 using Trendyol.App.WebApi.Models;
 
 namespace Trendyol.App.WebApi.Handlers
@@ -31,8 +30,9 @@ namespace Trendyol.App.WebApi.Handlers
             while (exception.InnerException != null) exception = exception.InnerException;
 
             ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.DisplayMessage = "İşlem sırasında beklenmeyen bir hata oluştu.";
-            errorResponse.AddMessage(exception.Message, MessageType.Error);
+            errorResponse.AdditionalInfo = exception.Message;
+            errorResponse.ErrorCode = "InternalServerError";
+            errorResponse.AddErrorMessage("İşlem sırasında beklenmeyen bir hata oluştu.");
 
             var response = context.Request.CreateResponse(HttpStatusCode.InternalServerError, errorResponse);
 

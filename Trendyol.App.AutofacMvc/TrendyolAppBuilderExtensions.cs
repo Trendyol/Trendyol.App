@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Trendyol.App.Autofac;
 using Trendyol.App.Mvc.ControllerHandlers;
 
 namespace Trendyol.App.AutofacMvc
@@ -13,7 +12,7 @@ namespace Trendyol.App.AutofacMvc
         {
             builder.BeforeBuild(() =>
             {
-                ContainerBuilder containerBuilder = builder.DataStore.GetData<ContainerBuilder>(Constants.AutofacContainerBuilderDataKey);
+                ContainerBuilder containerBuilder = builder.DataStore.GetData<ContainerBuilder>(Autofac.Constants.AutofacContainerBuilderDataKey);
 
                 containerBuilder
                         .RegisterAssemblyTypes(controllerAssembly)
@@ -26,7 +25,7 @@ namespace Trendyol.App.AutofacMvc
 
             builder.AfterBuild(() =>
             {
-                IContainer container = builder.DataStore.GetData<IContainer>(Constants.AutofacContainerDataKey);
+                IContainer container = builder.DataStore.GetData<IContainer>(Autofac.Constants.AutofacContainerDataKey);
                 DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             });
 

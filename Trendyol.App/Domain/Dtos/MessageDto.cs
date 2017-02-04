@@ -1,14 +1,12 @@
-﻿using Trendyol.App.Domain.Enums;
-
-namespace Trendyol.App.Domain.Dtos
+﻿namespace Trendyol.App.Domain.Dtos
 {
     public class MessageDto
     {
-        public MessageType Type { get; set; }
+        public string Type { get; set; }
 
         public string Content { get; set; }
 
-        public MessageDto(string content, MessageType type)
+        public MessageDto(string content, string type)
         {
             Content = content;
             Type = type;
