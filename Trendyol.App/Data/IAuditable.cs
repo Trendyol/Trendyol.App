@@ -2,7 +2,7 @@
 
 namespace Trendyol.App.Data
 {
-    public interface IAuditableEntity<T> : IEntity<T>
+    public interface IAuditable
     {
         DateTime CreatedOn { get; set; }
 
