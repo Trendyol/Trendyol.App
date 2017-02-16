@@ -23,8 +23,6 @@ namespace Data.Repositories
 
             using (var context = new DataContext())
             {
-                long nextId = context.GetNextId<Sample, long>();
-
                 IQueryable<Sample> query = context.Samples;
 
                 if (!String.IsNullOrEmpty(name))

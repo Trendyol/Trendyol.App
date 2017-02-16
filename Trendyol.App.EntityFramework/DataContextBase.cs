@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Linq;
+using EntityFramework.Filters;
+using Trendyol.App.Data;
 
 namespace Trendyol.App.EntityFramework
 {
@@ -11,6 +14,7 @@ namespace Trendyol.App.EntityFramework
         {
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             Database.SetInitializer<T>(null);
+            DbInterception.Add(new FilterInterceptor());
         }
 
         public DataContextBase(string connectionStringName)
@@ -18,6 +22,7 @@ namespace Trendyol.App.EntityFramework
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
+            this.EnableFilter("SoftDeleteFilter");
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -29,6 +34,8 @@ namespace Trendyol.App.EntityFramework
                 dynamic configurationInstance = Activator.CreateInstance(type);
                 modelBuilder.Configurations.Add(configurationInstance);
             }
+
+            modelBuilder.Conventions.Add(FilterConvention.Create<ISoftDeletable>("SoftDeleteFilter", (e) => e.IsDeleted == false));
         }
     }
 }

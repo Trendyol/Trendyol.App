@@ -1,11 +1,9 @@
 ﻿using System;
 using Trendyol.App.Data;
-using Trendyol.App.Data.Attributes;
 
 namespace Domain.Objects
 {
-    [Sequence(Name = "TestSequence")]
-    public class Sample : IEntity<long>
+    public class Sample : IEntity<long>, ISoftDeletable
     {
         public long Id { get; set; }
 
@@ -14,5 +12,6 @@ namespace Domain.Objects
         public int Size { get; set; }
 
         public DateTime CreatedOn { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
