@@ -12,6 +12,9 @@ namespace Domain.Objects
         public int Size { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
         public bool IsDeleted { get; set; }
+
+        public string TestField { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
@@ -65,6 +67,30 @@ namespace Trendyol.App.WebApi
             _appBuilder.BeforeBuild(() =>
             {
                 _owinBuilder.UseOAuthBearerAuthentication(oAuthBearerAuthenticationOptions);
+            });
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithLanguages(params string[] supportedLanguages)
+        {
+            _appBuilder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
+
+                if (supportedLanguages.IsEmpty())
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must add at least 1 language to use localization support.");
+                }
+
+                config.MessageHandlers.Insert(1, new LanguageHandler(supportedLanguages.ToList()));
             });
 
             return this;

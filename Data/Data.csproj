@@ -55,6 +55,19 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="IdentityProvider.cs" />
+    <Compile Include="Migrations\201702161220546_Initial.cs" />
+    <Compile Include="Migrations\201702161220546_Initial.Designer.cs">
+      <DependentUpon>201702161220546_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161222531_SoftDeleteUpdate.cs" />
+    <Compile Include="Migrations\201702161222531_SoftDeleteUpdate.Designer.cs">
+      <DependentUpon>201702161222531_SoftDeleteUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161226595_SampleUpdate.cs" />
+    <Compile Include="Migrations\201702161226595_SampleUpdate.Designer.cs">
+      <DependentUpon>201702161226595_SampleUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SampleRepository.cs" />
   </ItemGroup>
@@ -77,6 +90,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702161220546_Initial.resx">
+      <DependentUpon>201702161220546_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161222531_SoftDeleteUpdate.resx">
+      <DependentUpon>201702161222531_SoftDeleteUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161226595_SampleUpdate.resx">
+      <DependentUpon>201702161226595_SampleUpdate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

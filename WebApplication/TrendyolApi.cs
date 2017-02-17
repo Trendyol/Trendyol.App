@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using Autofac;
 using Data;
 using Domain.Services;
@@ -22,6 +23,7 @@ namespace WebApplication
             TrendyolAppBuilder.Instance
                 .UseWebApi(app, "Sample Api")
                     .WithCors(CorsOptions.AllowAll)
+                    .WithLanguages("tr-TR")
                     .Then()
                 .UseAutofac(RegisterDependencies, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())

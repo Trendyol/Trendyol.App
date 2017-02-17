@@ -32,7 +32,7 @@ namespace Trendyol.App.WebApi.Handlers
             ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.AdditionalInfo = exception.Message;
             errorResponse.ErrorCode = "InternalServerError";
-            errorResponse.AddErrorMessage("İşlem sırasında beklenmeyen bir hata oluştu.");
+            errorResponse.AddErrorMessage(Resources.GlobalError);
 
             var response = context.Request.CreateResponse(HttpStatusCode.InternalServerError, errorResponse);
 
