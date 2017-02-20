@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
+using Trendyol.App.Data;
 using Trendyol.App.WebApi.Models;
 
 namespace Trendyol.App.WebApi.Controllers
@@ -25,6 +27,36 @@ namespace Trendyol.App.WebApi.Controllers
             errorResponse.AddErrorMessage(errorMessage);
 
             return Content(HttpStatusCode.BadRequest, errorResponse);
+        }
+
+        protected IHttpActionResult Created(object returnValue)
+        {
+            string id = GetIdFromReturnValue(returnValue);
+
+            if (String.IsNullOrEmpty(id))
+            {
+                return Created(String.Empty, returnValue);
+            }
+
+            string url = Request.RequestUri.AbsoluteUri;
+            return Created($"{url.TrimEnd('/')}/{id}", returnValue);
+        }
+
+        private string GetIdFromReturnValue(object returnValue)
+        {
+            PropertyInfo propertyInfo = returnValue.GetType().GetProperty("Id");
+
+            if (propertyInfo != null)
+            {
+                object idValue = propertyInfo.GetValue(returnValue, null);
+
+                if (idValue != null)
+                {
+                    return idValue.ToString();
+                }
+            }
+
+            return String.Empty;
         }
     }
 }
