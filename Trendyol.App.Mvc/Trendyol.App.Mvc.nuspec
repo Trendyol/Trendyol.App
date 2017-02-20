@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Trendyol.App.Mvc</id>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <title>Trendyol.App.Mvc</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -11,7 +11,7 @@
     <description>A simple application wrapper.</description>
     <summary>A simple application wrapper.</summary>
     <copyright>Copyright 2016</copyright>
-    <tags>tredyol boilerplate</tags>
+    <tags>trendyol boilerplate</tags>
     <dependencies>
       <dependency id="Trendyol.App" version="2.1.0" />
       <dependency id="Common.Logging" version="3.3.1" />
