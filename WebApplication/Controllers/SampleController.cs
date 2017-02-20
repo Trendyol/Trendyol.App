@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 using Common.Logging;
 using Domain.Objects;
 using Domain.Requests;
 using Domain.Services;
+using Swashbuckle.Swagger.Annotations;
 using Trendyol.App.Domain.Objects;
+using Trendyol.App.WebApi.Controllers;
+using Trendyol.App.WebApi.Models;
 
 namespace WebApplication.Controllers
 {
     [RoutePrefix("samples")]
-    public class SampleController : ApiController
+    public class SampleController : TrendyolApiController
     {
         private static readonly ILog Logger = LogManager.GetLogger<SampleController>();
 
@@ -23,13 +27,19 @@ namespace WebApplication.Controllers
 
         [Route("")]
         [HttpGet]
-        public IEnumerable<Sample> Filter(string fields = null, string name = null)
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Sample>))]
+        public IHttpActionResult Filter(string fields = null, string name = null)
         {
             Logger.Trace("Fetching samples.");
 
+            if (name == "badrequest")
+            {
+                return InvalidRequest("Dude, that's a bad request.", "ValidationError");
+            }
+
             var response = _sampleService.QuerySamples(new QuerySamplesRequest() { Fields = fields, Name = name });
 
-            return response.Samples;
+            return Ok(response.Samples);
         }
 
         [Route("")]

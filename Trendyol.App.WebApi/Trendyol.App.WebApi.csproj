@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\TrendyolApiController.cs" />
     <Compile Include="Enums\DataType.cs" />
     <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Handlers\HttpsGuard.cs" />
