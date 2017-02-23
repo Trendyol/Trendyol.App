@@ -16,5 +16,7 @@ namespace Domain.Objects
         public bool IsDeleted { get; set; }
 
         public string TestField { get; set; }
+
+        public long TestLongFieldWithLongName { get; set; }
     }
 }

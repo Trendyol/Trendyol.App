@@ -26,8 +26,6 @@ namespace MvcApplication.ControllerHandlers
                 return result;
             }
 
-            result.Samples = response.Samples;
-
             return result;
         }
 

@@ -1,6 +1,8 @@
-﻿namespace Domain.Requests
+﻿using Trendyol.App.Domain.Requests;
+
+namespace Domain.Requests
 {
-    public class QuerySamplesRequest
+    public class QuerySamplesRequest : PagedRequest
     {
         public string Fields { get; set; }
 

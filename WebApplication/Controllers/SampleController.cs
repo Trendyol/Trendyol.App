@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using Common.Logging;
+using Data;
 using Domain.Objects;
 using Domain.Requests;
+using Domain.Responses;
 using Domain.Services;
 using Swashbuckle.Swagger.Annotations;
 using Trendyol.App.Domain.Objects;
+using Trendyol.App.EntityFramework.Extensions;
 using Trendyol.App.WebApi.Controllers;
 using Trendyol.App.WebApi.Models;
 
@@ -27,19 +31,31 @@ namespace WebApplication.Controllers
 
         [Route("")]
         [HttpGet]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Sample>))]
-        public IHttpActionResult Filter(string fields = null, string name = null)
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(QuerySamplesResponse))]
+        public IHttpActionResult Filter([FromUri(Name = "")]QuerySamplesRequest request)
         {
             Logger.Trace("Fetching samples.");
 
-            if (name == "badrequest")
+            if (request.Name == "badrequest")
             {
                 return InvalidRequest("Dude, that's a bad request.", "ValidationError");
             }
 
-            var response = _sampleService.QuerySamples(new QuerySamplesRequest() { Fields = fields, Name = name });
+            QuerySamplesResponse response;
 
-            return Ok(response.Samples);
+            using (var context = new DataContext())
+            {
+                IQueryable<Sample> query = context.Samples;
+
+                if (!String.IsNullOrEmpty(request.Name))
+                {
+                    query = query.Where(s => s.Name == request.Name);
+                }
+
+                response = new QuerySamplesResponse(query.Select(request.Fields).ToPage(request));
+            }
+
+            return Ok(response);
         }
 
         [Route("")]

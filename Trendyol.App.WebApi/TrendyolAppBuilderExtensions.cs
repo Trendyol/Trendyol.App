@@ -27,6 +27,7 @@ namespace Trendyol.App.WebApi
                 {
                     c.SingleApiVersion("v1", applicationName)
                      .Description($"{applicationName} documentation.");
+                    c.DescribeAllEnumsAsStrings(true);
                 })
                 .EnableSwaggerUi("help/{*assetPath}", c =>
                 {

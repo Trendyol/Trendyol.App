@@ -15,9 +15,9 @@ namespace Domain.Services
 
         public QuerySamplesResponse QuerySamples(QuerySamplesRequest request)
         {
-            QuerySamplesResponse response = new QuerySamplesResponse();
+            QuerySamplesResponse response = new QuerySamplesResponse(null);
 
-            response.Samples = _sampleRepository.QuerySamples(request.Fields, request.Name);
+            _sampleRepository.QuerySamples(request.Fields, request.Name);
 
             return response;
         }

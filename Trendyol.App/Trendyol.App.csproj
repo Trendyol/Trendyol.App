@@ -42,6 +42,10 @@
       <HintPath>..\packages\Jarvis.1.3.6\lib\net40\Jarvis.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -60,9 +64,14 @@
     <Compile Include="Data\IIdentityProvider.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\ISoftDeletable.cs" />
+    <Compile Include="Domain\Abstractions\IPage.cs" />
     <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />
+    <Compile Include="Domain\Enums\OrderType.cs" />
     <Compile Include="Domain\Objects\OperationParameter.cs" />
+    <Compile Include="Domain\Objects\Page.cs" />
+    <Compile Include="Domain\Requests\PagedRequest.cs" />
+    <Compile Include="Domain\Responses\PagedResponse.cs" />
     <Compile Include="Domain\Services\IService.cs" />
     <Compile Include="Domain\Responses\BaseResponse.cs" />
     <Compile Include="InMemoryDataStore.cs" />
@@ -76,9 +85,7 @@
     <None Include="packages.config" />
     <None Include="Trendyol.App.nuspec" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

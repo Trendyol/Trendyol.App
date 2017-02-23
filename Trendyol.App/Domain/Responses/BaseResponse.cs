@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Trendyol.App.Domain.Dtos;
 
 namespace Trendyol.App.Domain.Responses
@@ -43,6 +44,7 @@ namespace Trendyol.App.Domain.Responses
 
     public abstract class BaseResponse<T> : BaseResponse
     {
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate, NullValueHandling = NullValueHandling.Include)]
         public abstract T Data { get; set; }
     }
 }

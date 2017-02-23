@@ -4,6 +4,7 @@ using System.Linq;
 using Domain.Objects;
 using Domain.Repositories;
 using Trendyol.App.Data;
+using Trendyol.App.Domain.Requests;
 using Trendyol.App.EntityFramework.Extensions;
 
 namespace Data.Repositories
@@ -29,7 +30,7 @@ namespace Data.Repositories
                 {
                     query = query.Where(s => s.Name == name);
                 }
-
+                
                 samples = query.Select(fields).ToList();
             }
 
