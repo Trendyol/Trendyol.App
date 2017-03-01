@@ -9,34 +9,63 @@ namespace Trendyol.App.Autofac
 {
     public static class TrendyolAppBuilderExtensions
     {
-        public static TrendyolAppBuilder UseAutofac(this TrendyolAppBuilder builder, Action<ContainerBuilder> action = null, Assembly serviceAssembly = null, Assembly dataAssembly = null)
+        public static TrendyolAppBuilder UseAutofac(this TrendyolAppBuilder builder, Action<ContainerBuilder> action = null, bool isAllSystemSingleInstance = true, Assembly serviceAssembly = null, Assembly dataAssembly = null)
         {
             builder.BeforeBuild(() =>
             {
                 ContainerBuilder containerBuilder = new ContainerBuilder();
 
-                if (serviceAssembly != null)
+                if (isAllSystemSingleInstance)
                 {
-                    containerBuilder
-                        .RegisterAssemblyTypes(serviceAssembly)
-                        .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
-                        .AsImplementedInterfaces()
-                        .SingleInstance();
+                    if (serviceAssembly != null)
+                    {
+                        containerBuilder
+                            .RegisterAssemblyTypes(serviceAssembly)
+                            .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
+                            .AsImplementedInterfaces()
+                            .SingleInstance();
+                    }
+
+                    if (dataAssembly != null)
+                    {
+                        containerBuilder
+                            .RegisterAssemblyTypes(dataAssembly)
+                            .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
+                            .AsImplementedInterfaces()
+                            .SingleInstance();
+
+                        containerBuilder
+                            .RegisterAssemblyTypes(dataAssembly)
+                            .Where(item => item.Implements(typeof(IIdentityProvider)) && item.IsAbstract == false)
+                            .AsImplementedInterfaces()
+                            .SingleInstance();
+                    }
                 }
-
-                if (dataAssembly != null)
+                else
                 {
-                    containerBuilder
-                        .RegisterAssemblyTypes(dataAssembly)
-                        .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
-                        .AsImplementedInterfaces()
-                        .SingleInstance();
+                    if (serviceAssembly != null)
+                    {
+                        containerBuilder
+                            .RegisterAssemblyTypes(serviceAssembly)
+                            .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
+                            .AsImplementedInterfaces()
+                            .InstancePerLifetimeScope();
+                    }
 
-                    containerBuilder
-                        .RegisterAssemblyTypes(dataAssembly)
-                        .Where(item => item.Implements(typeof(IIdentityProvider)) && item.IsAbstract == false)
-                        .AsImplementedInterfaces()
-                        .SingleInstance();
+                    if (dataAssembly != null)
+                    {
+                        containerBuilder
+                            .RegisterAssemblyTypes(dataAssembly)
+                            .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
+                            .AsImplementedInterfaces()
+                            .InstancePerLifetimeScope();
+
+                        containerBuilder
+                            .RegisterAssemblyTypes(dataAssembly)
+                            .Where(item => item.Implements(typeof(IIdentityProvider)) && item.IsAbstract == false)
+                            .AsImplementedInterfaces()
+                            .InstancePerLifetimeScope();
+                    }
                 }
 
                 action?.Invoke(containerBuilder);

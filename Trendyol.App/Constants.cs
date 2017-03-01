@@ -9,5 +9,7 @@
             public const string Warning = "warning";
             public const string Success = "success";
         }
+
+        public const string DateTimeProvider = "DateTimeProvider";
     }
 }

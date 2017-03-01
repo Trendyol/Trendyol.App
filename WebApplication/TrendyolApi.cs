@@ -25,7 +25,7 @@ namespace WebApplication
                     .WithCors(CorsOptions.AllowAll)
                     .WithLanguages("tr-TR")
                     .Then()
-                .UseAutofac(RegisterDependencies, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
+                .UseAutofac(RegisterDependencies, true, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
                 .Build();

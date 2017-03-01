@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Linq;
+using System.Threading;
 using EntityFramework.Filters;
 using Trendyol.App.Data;
 
@@ -36,6 +38,41 @@ namespace Trendyol.App.EntityFramework
             }
 
             modelBuilder.Conventions.Add(FilterConvention.Create<ISoftDeletable>("SoftDeleteFilter", (e) => e.IsDeleted == false));
+        }
+
+        public override int SaveChanges()
+        {
+            string currentUser = Thread.CurrentPrincipal.Identity.Name;
+
+            IEnumerable<DbEntityEntry> entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            foreach (DbEntityEntry entry in entities)
+            {
+                if (entry.Entity is IAuditable)
+                {
+                    IAuditable auditable = ((IAuditable)entry.Entity);
+
+                    if (entry.State == EntityState.Added)
+                    {
+                        if (auditable.CreatedOn == DateTime.MinValue)
+                        {
+                            auditable.CreatedOn = TrendyolApp.Instance.DateTimeProvider.Now;
+                        }
+
+                        if (String.IsNullOrEmpty(auditable.CreatedBy))
+                        {
+                            auditable.CreatedBy = currentUser;
+                        }
+                    }
+                    else
+                    {
+                        auditable.UpdatedOn = TrendyolApp.Instance.DateTimeProvider.Now;
+                        auditable.UpdatedBy = currentUser;
+                    }
+                }
+            }
+
+            return base.SaveChanges();
         }
     }
 }

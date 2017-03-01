@@ -64,10 +64,13 @@
     <Compile Include="Data\IIdentityProvider.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\ISoftDeletable.cs" />
+    <Compile Include="Domain\Abstractions\IDateTimeProvider.cs" />
     <Compile Include="Domain\Abstractions\IPage.cs" />
     <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />
     <Compile Include="Domain\Enums\OrderType.cs" />
+    <Compile Include="Domain\Objects\DateTimeProviders\LocalDateTimeProvider.cs" />
+    <Compile Include="Domain\Objects\DateTimeProviders\UtcDateTimeProvider.cs" />
     <Compile Include="Domain\Objects\OperationParameter.cs" />
     <Compile Include="Domain\Objects\Page.cs" />
     <Compile Include="Domain\Requests\PagedRequest.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="TrendyolApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrendyolAppBuilder.cs" />
+    <Compile Include="TrendyolAppBuilderExtensions.cs" />
     <Compile Include="TrendyolAppModule.cs" />
   </ItemGroup>
   <ItemGroup>
