@@ -21,11 +21,12 @@ namespace WebApplication
         public void Configuration(IAppBuilder app)
         {
             TrendyolAppBuilder.Instance
+                .UseUtcTimes()
                 .UseWebApi(app, "Sample Api")
                     .WithCors(CorsOptions.AllowAll)
                     .WithLanguages("tr-TR")
                     .Then()
-                .UseAutofac(RegisterDependencies, true, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
+                .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
                 .Build();

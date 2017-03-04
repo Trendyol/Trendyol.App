@@ -11,5 +11,6 @@
         }
 
         public const string DateTimeProvider = "DateTimeProvider";
+        public const string ConfigManager = "ConfigManager";
     }
 }

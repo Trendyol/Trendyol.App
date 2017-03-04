@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Trendyol.App.Configuration;
 using Trendyol.App.Data;
+using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Services;
 
 namespace Trendyol.App.Autofac
@@ -68,6 +70,8 @@ namespace Trendyol.App.Autofac
                     }
                 }
 
+                containerBuilder.Register<IConfigManager>(c => TrendyolApp.Instance.ConfigManager).SingleInstance();
+                containerBuilder.Register<IDateTimeProvider>(c => TrendyolApp.Instance.DateTimeProvider).SingleInstance();
                 action?.Invoke(containerBuilder);
 
                 builder.DataStore.SetData(Constants.AutofacContainerBuilderDataKey, containerBuilder);

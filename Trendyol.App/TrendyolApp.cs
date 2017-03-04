@@ -1,4 +1,5 @@
-﻿using Trendyol.App.Domain.Abstractions;
+﻿using Trendyol.App.Configuration;
+using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Objects.DateTimeProviders;
 
 namespace Trendyol.App
@@ -25,6 +26,25 @@ namespace Trendyol.App
                 }
 
                 return _dateTimeProvider;
+            }
+        }
+
+        private IConfigManager _configManager;
+        public IConfigManager ConfigManager
+        {
+            get
+            {
+                if (_configManager == null)
+                {
+                    _configManager = DataStore.GetData<IConfigManager>(Constants.ConfigManager);
+
+                    if (_configManager == null)
+                    {
+                        _configManager = new DefaultConfigManager();
+                    }
+                }
+
+                return _configManager;
             }
         }
 

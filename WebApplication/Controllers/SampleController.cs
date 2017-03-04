@@ -10,6 +10,8 @@ using Domain.Requests;
 using Domain.Responses;
 using Domain.Services;
 using Swashbuckle.Swagger.Annotations;
+using Trendyol.App.Configuration;
+using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Objects;
 using Trendyol.App.EntityFramework.Extensions;
 using Trendyol.App.WebApi.Controllers;
@@ -23,10 +25,14 @@ namespace WebApplication.Controllers
         private static readonly ILog Logger = LogManager.GetLogger<SampleController>();
 
         private readonly ISampleService _sampleService;
+        private readonly IConfigManager _configManager;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public SampleController(ISampleService sampleService)
+        public SampleController(ISampleService sampleService, IConfigManager configManager, IDateTimeProvider dateTimeProvider)
         {
             _sampleService = sampleService;
+            _configManager = configManager;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         [Route("")]

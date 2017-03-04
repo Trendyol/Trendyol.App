@@ -47,6 +47,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DefaultConfigManager.cs" />
+    <Compile Include="Configuration\IConfigManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Attributes\SequenceAttribute.cs" />
     <Compile Include="Data\IAuditable.cs" />
