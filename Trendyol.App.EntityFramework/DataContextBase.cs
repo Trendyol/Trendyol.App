@@ -77,7 +77,7 @@ namespace Trendyol.App.EntityFramework
             return base.SaveChanges();
         }
 
-        public TId GetNextId<TEntity, TId>() where TEntity : IEntity<TId>
+        public virtual TId GetNextId<TEntity, TId>() where TEntity : IEntity<TId>
         {
             Type entityType = typeof(TEntity);
 
