@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Common.Logging;
 using EntityFramework.Filters;
 using Trendyol.App.Data;
 using Trendyol.App.Data.Attributes;
@@ -14,6 +15,8 @@ namespace Trendyol.App.EntityFramework
 {
     public abstract class DataContextBase<T> : DbContext where T : DbContext
     {
+        private static readonly ILog Logger = LogManager.GetLogger<T>();
+
         static DataContextBase()
         {
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
@@ -21,12 +24,17 @@ namespace Trendyol.App.EntityFramework
             DbInterception.Add(new FilterInterceptor());
         }
 
-        public DataContextBase(string connectionStringName)
+        public DataContextBase(string connectionStringName, bool logExecutedQueries = false)
             : base(connectionStringName)
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
             this.EnableFilter("SoftDeleteFilter");
+
+            if (logExecutedQueries)
+            {
+                Database.Log = Logger.Trace;
+            }
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
