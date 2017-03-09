@@ -4,17 +4,19 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
+using Castle.DynamicProxy;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Enums;
 using Trendyol.App.Domain.Objects;
 using Trendyol.App.Domain.Requests;
 using Trendyol.App.EntityFramework.DynamicFiltering;
-using Trendyol.App.EntityFramework.Helpers;
 
 namespace Trendyol.App.EntityFramework.Extensions
 {
     public static class QueryableExtensions
     {
+        private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
+
         public static IPage<T> ToPage<T>(this IEnumerable<T> source, PagedRequest request)
         {
             if (source == null)
@@ -73,14 +75,14 @@ namespace Trendyol.App.EntityFramework.Extensions
             IDictionary<string, PropertyInfo> sourceProperties = GetTypeProperties<T>(selectedProperties);
 
             // Construct runtime type by given property configuration
-            Type runtimeType = RuntimeTypeBuilder.GetRuntimeType(sourceProperties);
+            Type runtimeType = _proxyGenerator.CreateClassProxy<T>().GetType();
             Type sourceType = typeof(T);
 
             // Create instance of source parameter
             ParameterExpression sourceParameter = Expression.Parameter(sourceType, "t");
 
             // Take fields from generated runtime type
-            FieldInfo[] runtimeTypeFields = runtimeType.GetFields();
+            PropertyInfo[] runtimeTypeFields = runtimeType.GetProperties().Where(pi => selectedProperties.Any(p => pi.Name.ToLowerInvariant() == p.ToLowerInvariant())).ToArray();
 
             // Generate bindings from source type to runtime type
             IEnumerable<MemberBinding> bindingsToRuntimeType = runtimeTypeFields
@@ -88,7 +90,7 @@ namespace Trendyol.App.EntityFramework.Extensions
                     field,
                     Expression.Property(
                         sourceParameter,
-                        sourceProperties[field.Name]
+                        sourceProperties[field.Name.ToLowerInvariant()]
                     )
                 ));
 

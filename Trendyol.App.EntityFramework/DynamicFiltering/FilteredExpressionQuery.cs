@@ -17,7 +17,7 @@ namespace Trendyol.App.EntityFramework.DynamicFiltering
 
         public Type RuntimeType { get; set; }
 
-        public FieldInfo[] RuntimeTypeFields { get; set; }
+        public PropertyInfo[] RuntimeTypeFields { get; set; }
 
         public IDictionary<string, PropertyInfo> SourceProperties { get; set; }
 
@@ -94,14 +94,14 @@ namespace Trendyol.App.EntityFramework.DynamicFiltering
             // Create instance of runtime type parameter
             ParameterExpression runtimeParameter = Expression.Parameter(RuntimeType, "p");
 
-            IDictionary<string, FieldInfo> dynamicTypeFieldsDict =
-                RuntimeTypeFields.ToDictionary(f => f.Name, f => f);
+            IDictionary<string, PropertyInfo> dynamicTypeFieldsDict =
+                RuntimeTypeFields.ToDictionary(f => f.Name.ToLowerInvariant(), f => f);
 
             // Generate bindings from runtime type to source type
             IEnumerable<MemberBinding> bindingsToTargetType = SourceProperties.Values
                 .Select(property => Expression.Bind(
                     property,
-                    Expression.Field(
+                    Expression.Property(
                         runtimeParameter,
                         dynamicTypeFieldsDict[property.Name.ToLowerInvariant()]
                     )

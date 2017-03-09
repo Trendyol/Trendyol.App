@@ -18,6 +18,7 @@
       <dependency id="Trendyol.App" version="2.2.1" />
       <dependency id="System.Linq.Dynamic" version="1.0.7" />
       <dependency id="Jarvis" version="1.4.0" />
+      <dependency id="Castle.Core" version="4.0.0" />
     </dependencies>
   </metadata>
 </package>
