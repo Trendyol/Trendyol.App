@@ -69,7 +69,7 @@ namespace Trendyol.App.EntityFramework.Extensions
 
         public static IFilteredExpressionQuery<T> Select<T>(this IQueryable<T> source, string fields) where T : class
         {
-            IEnumerable<string> selectedProperties = (fields ?? "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            IEnumerable<string> selectedProperties = (fields ?? "").ToLowerInvariant().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim());
 
             // Take properties from the mapped entitiy that match selected properties
             IDictionary<string, PropertyInfo> sourceProperties = GetTypeProperties<T>(selectedProperties);
@@ -87,7 +87,7 @@ namespace Trendyol.App.EntityFramework.Extensions
             // Elect selected fields if any.
             if (selectedProperties.Any())
             {
-                runtimeTypeFields = runtimeTypeFields.Where(pi => selectedProperties.Any(p => pi.Name.ToLowerInvariant() == p.ToLowerInvariant())).ToArray();
+                runtimeTypeFields = runtimeTypeFields.Where(pi => selectedProperties.Any(p => pi.Name.ToLowerInvariant() == p)).ToArray();
             }
 
             // Generate bindings from source type to runtime type
