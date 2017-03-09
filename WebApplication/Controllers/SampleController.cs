@@ -15,7 +15,6 @@ using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Objects;
 using Trendyol.App.EntityFramework.Extensions;
 using Trendyol.App.WebApi.Controllers;
-using Trendyol.App.WebApi.Models;
 
 namespace WebApplication.Controllers
 {

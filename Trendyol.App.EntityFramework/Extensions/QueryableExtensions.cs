@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Dynamic;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Threading;
-using Common.Logging;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Enums;
 using Trendyol.App.Domain.Objects;
 using Trendyol.App.Domain.Requests;
+using Trendyol.App.EntityFramework.DynamicFiltering;
+using Trendyol.App.EntityFramework.Helpers;
 
 namespace Trendyol.App.EntityFramework.Extensions
 {
@@ -68,60 +65,67 @@ namespace Trendyol.App.EntityFramework.Extensions
             return new Page<T>(source.Skip(skip).Take(take), request.Page, request.PageSize, totalItemCount);
         }
 
-        public static IEnumerable<T> Select<T>(this IEnumerable<T> source, string fields) where T : class
+        public static IFilteredExpressionQuery<T> Select<T>(this IQueryable<T> source, string fields) where T : class
         {
-            // Check source.
-            if (source == null)
+            IEnumerable<string> selectedProperties = fields?.Split(',');
+
+            // Take properties from the mapped entitiy that match selected properties
+            IDictionary<string, PropertyInfo> sourceProperties = GetTypeProperties<T>(selectedProperties);
+
+            // Construct runtime type by given property configuration
+            Type runtimeType = RuntimeTypeBuilder.GetRuntimeType(sourceProperties);
+            Type sourceType = typeof(T);
+
+            // Create instance of source parameter
+            ParameterExpression sourceParameter = Expression.Parameter(sourceType, "t");
+
+            // Take fields from generated runtime type
+            FieldInfo[] runtimeTypeFields = runtimeType.GetFields();
+
+            // Generate bindings from source type to runtime type
+            IEnumerable<MemberBinding> bindingsToRuntimeType = runtimeTypeFields
+                .Select(field => Expression.Bind(
+                    field,
+                    Expression.Property(
+                        sourceParameter,
+                        sourceProperties[field.Name]
+                    )
+                ));
+
+            // Generate projection trom T to runtimeType and cast as IQueryable<object>
+            IQueryable<object> runtimeTypeSelectExpressionQuery
+                = ExpressionMapper.GenerateProjectedQuery<object>(
+                    sourceType,
+                    runtimeType,
+                    bindingsToRuntimeType,
+                    source,
+                    sourceParameter
+            );
+
+            FilteredExpressionQuery<T> resultQuery = new FilteredExpressionQuery<T>();
+            resultQuery.PureQuery = runtimeTypeSelectExpressionQuery;
+            resultQuery.RuntimeType = runtimeType;
+            resultQuery.RuntimeTypeFields = runtimeTypeFields;
+            resultQuery.SourceProperties = sourceProperties;
+            return resultQuery;
+        }
+
+        private static IDictionary<string, PropertyInfo> GetTypeProperties<T>(IEnumerable<string> selectedProperties) where T : class
+        {
+            var existedProperties = typeof(T)
+                .GetProperties()
+                .ToDictionary(p => p.Name.ToLowerInvariant());
+
+            IEnumerable<string> properties = selectedProperties as string[] ?? selectedProperties.ToArray();
+
+            if (properties.Any())
             {
-                throw new ArgumentNullException(nameof(source));
+                return properties
+                   .Where(p => existedProperties.ContainsKey(p.ToLowerInvariant()))
+                   .ToDictionary(p => p, p => existedProperties[p.ToLowerInvariant()]);
             }
 
-            // Check if we have any parameters.
-            if (String.IsNullOrEmpty(fields))
-            {
-                return source;
-            }
-
-            // Create input parameter "o".
-            ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "o");
-
-            // Create new statement "new Data()".
-            NewExpression newExpression = Expression.New(typeof(T));
-
-            // Get a list of assignable members.
-            IEnumerable<string> assignableMembers = fields
-                .Split(',')
-                .Where(o => typeof(T).GetProperty(o, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null)
-                .Select(o => o.Trim());
-
-            // Check if we have any assignable member.
-            if (!assignableMembers.Any())
-            {
-                throw new ArgumentException($"None of the given names ({fields}) is assignable to a property on type: {typeof(T).FullName}", nameof(fields));
-            }
-
-            // Create initializers.
-            IEnumerable<MemberAssignment> memberAssignments = assignableMembers
-                .Select(o =>
-                {
-                 // Property "Field1".
-                 PropertyInfo propertyInfo = typeof(T).GetProperty(o, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-
-                 // Original value "o.Field1".
-                 MemberExpression memberExpression = Expression.Property(parameterExpression, propertyInfo);
-
-                 // Set value "Field1 = o.Field1".
-                 return Expression.Bind(propertyInfo, memberExpression);
-                });
-
-            // Initialization "new Data { Field1 = o.Field1, Field2 = o.Field2 }".
-            MemberInitExpression memberInitExpression = Expression.MemberInit(newExpression, memberAssignments);
-
-            // Expression "o => new Data { Field1 = o.Field1, Field2 = o.Field2 }".
-            Expression<Func<T, T>> lambda = Expression.Lambda<Func<T, T>>(memberInitExpression, parameterExpression);
-
-            // Compile to Func<Data, Data>.
-            return source.Select(lambda.Compile());
+            return existedProperties;
         }
     }
 }
