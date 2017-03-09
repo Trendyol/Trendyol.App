@@ -11,7 +11,7 @@ namespace Tests
 {
     public class SampleControllerTests
     {
-        [Test]
+        [Test, Ignore("Integration Test")]
         public void Get_ShouldReturnEntity_WhenIdAndNameRequested()
         {
             SampleController controller = new SampleController(null, null, null);
