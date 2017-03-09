@@ -30,7 +30,7 @@ namespace Trendyol.App.EntityFramework.Tests
 
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var orderedSamples = samples.ToPage(request);
+                var orderedSamples = samples.AsQueryable().ToPage(request);
             });
         }
 
@@ -51,7 +51,7 @@ namespace Trendyol.App.EntityFramework.Tests
 
             Assert.Throws<ParseException>(() =>
             {
-                var orderedSamples = samples.ToPage(request);
+                var orderedSamples = samples.AsQueryable().ToPage(request);
             });
         }
 
@@ -70,7 +70,7 @@ namespace Trendyol.App.EntityFramework.Tests
                 Page = 2
             };
 
-            var orderedSamples = samples.ToPage(request).Items;
+            var orderedSamples = samples.AsQueryable().ToPage(request).Items;
 
             var expectedSamples = samples.OrderByDescending(s => s.TestLongFieldWithLongName).Skip(5).Take(5).ToList();
 
@@ -99,7 +99,7 @@ namespace Trendyol.App.EntityFramework.Tests
                 Page = 2
             };
 
-            var orderedSamples = samples.ToPage(request).Items;
+            var orderedSamples = samples.AsQueryable().ToPage(request).Items;
 
             var expectedSamples = samples.OrderByDescending(s => s.TestLongFieldWithLongName).Skip(5).Take(5).ToList();
 
@@ -128,7 +128,7 @@ namespace Trendyol.App.EntityFramework.Tests
                 Page = 2
             };
 
-            var orderedSamples = samples.ToPage(request).Items;
+            var orderedSamples = samples.AsQueryable().ToPage(request).Items;
 
             var expectedSamples = samples.OrderByDescending(s => s.TestLongFieldWithLongName).Skip(5).Take(5).ToList();
 
@@ -157,7 +157,7 @@ namespace Trendyol.App.EntityFramework.Tests
                 Page = 2
             };
 
-            var orderedSamples = samples.ToPage(request).Items;
+            var orderedSamples = samples.AsQueryable().ToPage(request).Items;
 
             var expectedSamples = samples.OrderByDescending(s => s.TestLongFieldWithLongName).Skip(5).Take(5).ToList();
 

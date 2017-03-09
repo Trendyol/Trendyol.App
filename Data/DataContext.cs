@@ -12,7 +12,7 @@ namespace Data
         }
 
         public DataContext(string connectionStringName) 
-            : base(connectionStringName)
+            : base(connectionStringName, true)
         {
         }
 

@@ -38,8 +38,8 @@
       <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jarvis, Version=1.3.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jarvis.1.3.6\lib\net40\Jarvis.dll</HintPath>
+    <Reference Include="Jarvis, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jarvis.1.4.0\lib\net40\Jarvis.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

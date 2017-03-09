@@ -42,6 +42,11 @@ namespace WebApplication.Controllers
         {
             Logger.Trace("Fetching samples.");
 
+            if (request == null)
+            {
+                request = new QuerySamplesRequest();
+            }
+
             if (request.Name == "badrequest")
             {
                 return InvalidRequest("Dude, that's a bad request.", "ValidationError");

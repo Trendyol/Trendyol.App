@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="DataContextBase.cs" />
     <Compile Include="DataEntityTypeConfiguration.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
