@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -74,6 +75,16 @@ namespace Trendyol.App.EntityFramework.DynamicFiltering
             int totalItemCount = PureQuery.Count();
 
             return new Page<TResult>(ToList(PureQuery.Skip(skip).Take(take)), request.Page, request.PageSize, totalItemCount);
+        }
+
+        public TResult First()
+        {
+            return (TResult)PureQuery.First();
+        }
+
+        public TResult FirstOrDefault()
+        {
+            return (TResult)PureQuery.FirstOrDefault();
         }
 
         private List<TResult> ToList(IQueryable<object> query)
