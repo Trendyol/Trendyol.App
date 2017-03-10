@@ -5,6 +5,7 @@ using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
 using Castle.DynamicProxy;
+using Newtonsoft.Json;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Enums;
 using Trendyol.App.Domain.Objects;
@@ -72,7 +73,8 @@ namespace Trendyol.App.EntityFramework.Extensions
             IEnumerable<string> selectedProperties = (fields ?? "").ToLowerInvariant().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim());
 
             // Take properties from the mapped entitiy that match selected properties
-            IDictionary<string, PropertyInfo> sourceProperties = GetTypeProperties<T>(selectedProperties);
+            IDictionary<string, PropertyInfo> sourceProperties = GetSelectableProperties<T>(selectedProperties);
+            selectedProperties = sourceProperties.Keys;
 
             // Construct runtime type by given property configuration
             Type runtimeType = _proxyGenerator.CreateClassProxy<T>().GetType();
@@ -118,10 +120,11 @@ namespace Trendyol.App.EntityFramework.Extensions
             return resultQuery;
         }
 
-        private static IDictionary<string, PropertyInfo> GetTypeProperties<T>(IEnumerable<string> selectedProperties) where T : class
+        private static IDictionary<string, PropertyInfo> GetSelectableProperties<T>(IEnumerable<string> selectedProperties) where T : class
         {
             var existedProperties = typeof(T)
                 .GetProperties()
+                .Where(p => p.GetCustomAttribute<JsonIgnoreAttribute>() == null)
                 .ToDictionary(p => p.Name.ToLowerInvariant());
 
             IEnumerable<string> properties = selectedProperties as string[] ?? selectedProperties.ToArray();

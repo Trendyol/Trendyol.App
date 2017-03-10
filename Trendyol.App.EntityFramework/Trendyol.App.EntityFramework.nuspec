@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.EntityFramework</id>
-    <version>2.4.2</version>
+    <version>2.4.3</version>
     <title>Trendyol.App.EntityFramework</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -19,6 +19,7 @@
       <dependency id="System.Linq.Dynamic" version="1.0.7" />
       <dependency id="Jarvis" version="1.4.0" />
       <dependency id="Castle.Core" version="4.0.0" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
   </metadata>
 </package>
