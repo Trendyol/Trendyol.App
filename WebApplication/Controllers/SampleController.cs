@@ -85,7 +85,14 @@ namespace WebApplication.Controllers
         {
             Logger.Trace($"Fetching sample by id: {id}.");
 
-            return null;
+            Sample sample;
+
+            using (var context = new DataContext())
+            {
+                sample = context.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
+            }
+
+            return sample;
         }
 
         [Route("{id}")]

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Requests;
 
 namespace Trendyol.App.EntityFramework.DynamicFiltering
 {
-    public interface IFilteredExpressionQuery<TResult>
+    public interface IFilteredExpressionQuery<TResult> where TResult : class
     {
         List<TResult> ToList();
 
