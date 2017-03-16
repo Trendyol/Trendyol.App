@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Trendyol.App.Daemon</id>
+    <version>1.0.0</version>
+    <title>Trendyol.App.Daemon</title>
+    <authors>trendyol ocinbat</authors>
+    <owners>trendyol ocinbat</owners>
+    <projectUrl>https://github.com/Trendyol/Trendyol.App</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple application wrapper.</description>
+    <summary>A simple application wrapper.</summary>
+    <copyright>Copyright 2016</copyright>
+    <tags>trendyol boilerplate windows service topshelf</tags>
+    <dependencies>
+      <dependency id="Common.Logging" version="3.3.1" />
+      <dependency id="Common.Logging.Core" version="3.3.1" />
+      <dependency id="Trendyol.App" version="2.2.1" />
+      <dependency id="Topshelf" version="4.0.3" />
+    </dependencies>
+  </metadata>
+</package>
