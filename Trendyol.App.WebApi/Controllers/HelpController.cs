@@ -12,5 +12,11 @@ namespace Trendyol.App.WebApi.Controllers
         {
             return Redirect($"{Request.RequestUri.AbsoluteUri}help/index");
         }
+
+        [HttpGet, Route("healthcheck")]
+        public IHttpActionResult HealthCheck()
+        {
+            return Ok();
+        }
     }
 }
