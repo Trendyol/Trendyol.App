@@ -21,7 +21,7 @@ namespace WebApplication
         public void Configuration(IAppBuilder app)
         {
             TrendyolAppBuilder.Instance
-                .UseUtcTimes()
+                .UseLocalTimes()
                 .UseWebApi(app, "Sample Api")
                     .WithCors(CorsOptions.AllowAll)
                     .WithLanguages("tr-TR")

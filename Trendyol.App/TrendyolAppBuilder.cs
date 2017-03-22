@@ -15,14 +15,12 @@ namespace Trendyol.App
 
         public TrendyolApp Build()
         {
-            InMemoryDataStore dataStore = new InMemoryDataStore();
-
             foreach (var task in _beforeBuildTasks)
             {
                 task.Invoke();
             }
 
-            TrendyolApp.Instance = new TrendyolApp(dataStore);
+            TrendyolApp.Instance = new TrendyolApp(DataStore);
 
             foreach (var task in _afterBuildTasks)
             {
