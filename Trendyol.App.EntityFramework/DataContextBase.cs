@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -27,14 +29,13 @@ namespace Trendyol.App.EntityFramework
         public DataContextBase(string connectionStringName, bool logExecutedQueries = false)
             : base(connectionStringName)
         {
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
-            this.EnableFilter("SoftDeleteFilter");
+            InitializeContext(logExecutedQueries);
+        }
 
-            if (logExecutedQueries)
-            {
-                Database.Log = Logger.Trace;
-            }
+        public DataContextBase(DbConnection existingConnection, bool contextOwnsConnection, bool logExecutedQueries = false)
+            : base(existingConnection, contextOwnsConnection)
+        {
+            InitializeContext(logExecutedQueries);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -108,6 +109,18 @@ namespace Trendyol.App.EntityFramework
             }
 
             return id;
+        }
+
+        private void InitializeContext(bool logExecutedQueries)
+        {
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+            this.EnableFilter("SoftDeleteFilter");
+
+            if (logExecutedQueries)
+            {
+                Database.Log = Logger.Trace;
+            }
         }
     }
 }
