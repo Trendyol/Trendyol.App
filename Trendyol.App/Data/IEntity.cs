@@ -1,7 +1,7 @@
 ﻿namespace Trendyol.App.Data
 {
-    public interface IEntity<T>
+    public interface IEntity<out T>
     {
-        T Id { get; set; }
+        T Id { get; }
     }
 }
