@@ -30,5 +30,36 @@ namespace Trendyol.App.EntityFramework.Testing
 
             return mockDbSet;
         }
+
+        public static IEnumerable<TEntity> SetupDbSet<TContext, TEntity>(this IEnumerable<TEntity> source,
+            Expression<Func<TContext, DbSet<TEntity>>> dbSetExp, Mock<TContext> mockDataContext)
+            where TContext : DataContextBase<TContext>
+            where TEntity : class
+        {
+            var data = source as IList<TEntity> ?? source.ToList();
+            var mockDbSet = new Mock<DbSet<TEntity>>().SetupData(data.ToList());
+
+            mockDbSet.Setup(x => x.Find(It.IsAny<object[]>())).Returns((object[] args) =>
+            {
+                ParameterExpression peA = Expression.Parameter(typeof(TEntity), "d");
+                Expression member = Expression.Property(peA, "Id");
+                ConstantExpression constant = Expression.Constant(args.First());
+                BinaryExpression body = Expression.Equal(member, constant);
+                Expression<Func<TEntity, bool>> finalExpression = Expression.Lambda<Func<TEntity, bool>>(body, peA);
+                return data.FirstOrDefault(finalExpression.Compile());
+            });
+
+            mockDataContext.Setup(dbSetExp).Returns(mockDbSet.Object);
+
+            return data;
+        }
+
+        public static TEntity SetupDbSet<TContext, TEntity>(this TEntity source,
+            Expression<Func<TContext, DbSet<TEntity>>> dbSetExp, Mock<TContext> mockDataContext)
+            where TContext : DataContextBase<TContext>
+            where TEntity : class
+        {
+            return new[] {source}.SetupDbSet(dbSetExp, mockDataContext).FirstOrDefault();
+        }
     }
 }
