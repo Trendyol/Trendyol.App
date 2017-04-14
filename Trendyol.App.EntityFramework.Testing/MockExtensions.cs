@@ -31,6 +31,14 @@ namespace Trendyol.App.EntityFramework.Testing
             return mockDbSet;
         }
 
+        public static Mock<DbSet<TEntity>> SetupDbSet<TContext, TEntity>(this Mock<TContext> source,
+            Expression<Func<TContext, DbSet<TEntity>>> dbSetExp)
+            where TContext : DataContextBase<TContext>
+            where TEntity : class
+        {
+            return SetupDbSet(source, dbSetExp, new List<TEntity>());
+        }
+
         public static IEnumerable<TEntity> SetupDbSet<TContext, TEntity>(this IEnumerable<TEntity> source,
             Expression<Func<TContext, DbSet<TEntity>>> dbSetExp, Mock<TContext> mockDataContext)
             where TContext : DataContextBase<TContext>
