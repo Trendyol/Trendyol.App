@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.EntityFramework.Testing</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Trendyol.App.EntityFramework.Testing</title>
     <authors>trendyol metehansenol</authors>
     <owners>trendyol metehansenol</owners>
