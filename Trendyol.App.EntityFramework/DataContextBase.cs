@@ -18,6 +18,7 @@ namespace Trendyol.App.EntityFramework
     public abstract class DataContextBase<T> : DbContext where T : DbContext
     {
         private static readonly ILog Logger = LogManager.GetLogger<T>();
+        protected bool SetUpdatedOnSameAsCreatedOnForNewObjects { get; set; }
 
         static DataContextBase()
         {
@@ -68,6 +69,10 @@ namespace Trendyol.App.EntityFramework
                         if (auditable.CreatedOn == DateTime.MinValue)
                         {
                             auditable.CreatedOn = TrendyolApp.Instance.DateTimeProvider.Now;
+                            if (SetUpdatedOnSameAsCreatedOnForNewObjects)
+                            {
+                                auditable.UpdatedOn = auditable.CreatedOn;
+                            }
                         }
 
                         if (String.IsNullOrEmpty(auditable.CreatedBy))
