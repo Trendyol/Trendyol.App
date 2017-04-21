@@ -33,6 +33,15 @@ namespace Trendyol.App.Validation.Aspects
 
             foreach (object argument in args.Arguments)
             {
+                if (argument == null)
+                {
+                    BaseResponse response = Activator.CreateInstance(methodInfo.ReturnType) as BaseResponse;
+                    response.AddErrorMessage("Invalid request.");
+                    args.FlowBehavior = FlowBehavior.Return;
+                    args.ReturnValue = response;
+                    return;
+                }
+
                 Type requestType = argument.GetType();
 
                 ValidatorAttribute validatorAttribute = requestType.GetCustomAttribute<ValidatorAttribute>();

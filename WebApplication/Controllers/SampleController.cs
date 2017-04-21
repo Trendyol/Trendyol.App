@@ -76,7 +76,7 @@ namespace WebApplication.Controllers
         {
             Logger.Trace("Creating sample.");
 
-            CreateSampleResponse response = _sampleService.CreateSample(request);
+            CreateSampleResponse response = _sampleService.CreateSample(null);
             return Ok(response);
         }
 
