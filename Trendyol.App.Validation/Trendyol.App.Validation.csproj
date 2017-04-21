@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{676BBB64-B7A6-47F1-8EA4-30F03E372B69}</ProjectGuid>
+    <ProjectGuid>{736F1669-0D3F-47DD-B35D-F54BFD639890}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Domain</RootNamespace>
-    <AssemblyName>Domain</AssemblyName>
+    <RootNamespace>Trendyol.App.Validation</RootNamespace>
+    <AssemblyName>Trendyol.App.Validation</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <DontImportPostSharp>True</DontImportPostSharp>
@@ -35,10 +35,6 @@
       <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jarvis, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jarvis.1.4.0\lib\net40\Jarvis.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PostSharp, Version=4.3.31.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.4.3.31\lib\net35-client\PostSharp.dll</HintPath>
       <Private>True</Private>
@@ -53,29 +49,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Objects\Sample.cs" />
+    <Compile Include="Aspects\Validate.cs" />
+    <Compile Include="Extensions\ValidationResultExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ISampleRepository.cs" />
-    <Compile Include="Requests\CreateSampleRequest.cs" />
-    <Compile Include="Requests\QuerySamplesRequest.cs" />
-    <Compile Include="Responses\CreateSampleResponse.cs" />
-    <Compile Include="Responses\QuerySamplesResponse.cs" />
-    <Compile Include="Services\ISampleService.cs" />
-    <Compile Include="Services\SampleService.cs" />
-    <Compile Include="Validator\CreateSampleRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Trendyol.App.Validation\Trendyol.App.Validation.csproj">
-      <Project>{736f1669-0d3f-47dd-b35d-f54bfd639890}</Project>
-      <Name>Trendyol.App.Validation</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+    <None Include="Trendyol.App.Validation.nuspec" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
       <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>
       <Name>Trendyol.App</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\PostSharp.4.3.31\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.3.31\tools\PostSharp.targets')" />

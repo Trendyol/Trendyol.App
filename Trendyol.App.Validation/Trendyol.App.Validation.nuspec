@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Trendyol.App.Validation</id>
+    <version>1.0.0</version>
+    <title>Trendyol.App.Validation</title>
+    <authors>trendyol ocinbat</authors>
+    <owners>trendyol ocinbat</owners>
+    <projectUrl>https://github.com/Trendyol/Trendyol.App</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple application wrapper.</description>
+    <summary>A simple application wrapper.</summary>
+    <copyright>Copyright 2016</copyright>
+    <tags>trendyol boilerplate</tags>
+    <dependencies>
+      <dependency id="Trendyol.App" version="2.2.3" />
+      <dependency id="FluentValidation" version="6.4.1" />
+      <dependency id="PostSharp" version="4.3.31" />
+    </dependencies>
+  </metadata>
+</package>

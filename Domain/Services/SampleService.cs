@@ -1,6 +1,7 @@
 ﻿using Domain.Repositories;
 using Domain.Requests;
 using Domain.Responses;
+using Trendyol.App.Validation.Aspects;
 
 namespace Domain.Services
 {
@@ -22,6 +23,7 @@ namespace Domain.Services
             return response;
         }
 
+        [Validate]
         public CreateSampleResponse CreateSample(CreateSampleRequest request)
         {
             CreateSampleResponse response = new CreateSampleResponse();
