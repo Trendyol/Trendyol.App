@@ -6,8 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Swashbuckle.Swagger.Annotations;
 using Trendyol.App.Data;
+using Trendyol.App.Domain.Responses;
 using Trendyol.App.WebApi.Models;
 
 namespace Trendyol.App.WebApi.Controllers
@@ -15,6 +17,21 @@ namespace Trendyol.App.WebApi.Controllers
     [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest", typeof(ErrorResponse))]
     public class TrendyolApiController : ApiController
     {
+        protected new IHttpActionResult Ok<T>(T content)
+        {
+            if (typeof(BaseResponse).IsAssignableFrom(typeof(T)))
+            {
+                BaseResponse baseResponse = content as BaseResponse;
+
+                if (baseResponse != null && baseResponse.HasError)
+                {
+                    return Content(HttpStatusCode.BadRequest, content);
+                }
+            }
+
+            return base.Ok(content);
+        }
+
         protected IHttpActionResult InvalidRequest(string errorMessage)
         {
             return InvalidRequest(errorMessage, String.Empty);

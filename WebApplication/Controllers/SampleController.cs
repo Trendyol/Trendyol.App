@@ -14,6 +14,7 @@ using Trendyol.App.Configuration;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Objects;
 using Trendyol.App.EntityFramework.Extensions;
+using Trendyol.App.Validation.Aspects;
 using Trendyol.App.WebApi.Controllers;
 
 namespace WebApplication.Controllers
@@ -75,8 +76,8 @@ namespace WebApplication.Controllers
         {
             Logger.Trace("Creating sample.");
 
-            Sample sample = _sampleService.CreateSample(request).Data;
-            return Created(sample);
+            CreateSampleResponse response = _sampleService.CreateSample(request);
+            return Ok(response);
         }
 
         [Route("{id}")]

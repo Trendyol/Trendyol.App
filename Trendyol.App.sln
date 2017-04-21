@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService", "WindowsSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.EntityFramework.Testing", "Trendyol.App.EntityFramework.Testing\Trendyol.App.EntityFramework.Testing.csproj", "{024AD090-BAE3-427F-95DB-934F3AA67BEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.Validation", "Trendyol.App.Validation\Trendyol.App.Validation.csproj", "{736F1669-0D3F-47DD-B35D-F54BFD639890}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,10 @@ Global
 		{024AD090-BAE3-427F-95DB-934F3AA67BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{024AD090-BAE3-427F-95DB-934F3AA67BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{024AD090-BAE3-427F-95DB-934F3AA67BEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
