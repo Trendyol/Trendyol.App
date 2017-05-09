@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
@@ -91,6 +90,29 @@ namespace Trendyol.App.WebApi
                 }
 
                 config.MessageHandlers.Insert(1, new LanguageHandler(supportedLanguages.ToList()));
+            });
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithMediaTypeFormatters(params MediaTypeFormatter[] formatters)
+        {
+            _appBuilder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
+
+                config.Formatters.Clear();
+
+                foreach (MediaTypeFormatter formatter in formatters)
+                {
+                    config.Formatters.Add(formatter);
+                }
             });
 
             return this;
