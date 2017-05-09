@@ -146,6 +146,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TrendyolAppBuilderExtensions.cs" />
+    <Compile Include="TrendyolAppExtensions.cs" />
     <Compile Include="TrendyolWebApiBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

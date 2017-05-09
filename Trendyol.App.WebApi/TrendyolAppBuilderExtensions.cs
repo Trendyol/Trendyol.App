@@ -74,12 +74,5 @@ namespace Trendyol.App.WebApi
 
             return formatter;
         }
-
-        public static HttpConfiguration GetHttpConfiguration(this TrendyolApp app)
-        {
-            HttpConfiguration config = app.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
-
-            return config;
-        }
     }
 }
