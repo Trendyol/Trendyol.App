@@ -79,6 +79,7 @@
     <Compile Include="Domain\Enums\OrderType.cs" />
     <Compile Include="Domain\Objects\DateTimeProviders\LocalDateTimeProvider.cs" />
     <Compile Include="Domain\Objects\DateTimeProviders\UtcDateTimeProvider.cs" />
+    <Compile Include="Domain\Objects\HealthCheckResult.cs" />
     <Compile Include="Domain\Objects\OperationParameter.cs" />
     <Compile Include="Domain\Objects\Page.cs" />
     <Compile Include="Domain\Requests\PagedRequest.cs" />

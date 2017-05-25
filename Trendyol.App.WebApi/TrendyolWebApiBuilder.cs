@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
@@ -6,6 +8,7 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Trendyol.App.WebApi.Handlers;
+using Trendyol.App.WebApi.HealthCheck;
 
 namespace Trendyol.App.WebApi
 {
@@ -114,6 +117,29 @@ namespace Trendyol.App.WebApi
                     config.Formatters.Add(formatter);
                 }
             });
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithHealthCheckerActivator(IHealthCheckerActivator activator)
+        {
+            _appBuilder.DataStore.SetData(Constants.HealthCheckerActivatorDataKey, activator);
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithHealthChecker<T>(string key, bool isCritical = false) where T : IHealthChecker
+        {
+            HealthCheckerContainer container = _appBuilder.DataStore.GetData<HealthCheckerContainer>(Constants.HealthCheckerContainerDataKey);
+
+            if (container == null)
+            {
+                container = new HealthCheckerContainer();
+            }
+
+            container.AddHealthChecker(key, typeof(T), isCritical);
+
+            _appBuilder.DataStore.SetData(Constants.HealthCheckerContainerDataKey, container);
 
             return this;
         }

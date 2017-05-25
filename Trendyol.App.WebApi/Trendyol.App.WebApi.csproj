@@ -133,6 +133,12 @@
     <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Handlers\HttpsGuard.cs" />
     <Compile Include="Handlers\LanguageHandler.cs" />
+    <Compile Include="HealthCheck\DefaultHealthCheckerActivator.cs" />
+    <Compile Include="HealthCheck\HealthChecker.cs" />
+    <Compile Include="HealthCheck\HealthCheckerContainer.cs" />
+    <Compile Include="HealthCheck\HealthCheckResponse.cs" />
+    <Compile Include="HealthCheck\IHealthChecker.cs" />
+    <Compile Include="HealthCheck\IHealthCheckerActivator.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.tr-TR.Designer.cs">
