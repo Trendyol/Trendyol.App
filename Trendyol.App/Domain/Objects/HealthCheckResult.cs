@@ -6,7 +6,7 @@
 
         public string Message { get; set; }
 
-        public bool Success { get; set; }
+        public bool? Success { get; set; }
 
         public bool IsCtirical { get; set; }
     }

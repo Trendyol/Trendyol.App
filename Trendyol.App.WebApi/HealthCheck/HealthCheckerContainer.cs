@@ -12,13 +12,11 @@ namespace Trendyol.App.WebApi.HealthCheck
             HealthCheckers = new List<HealthChecker>();
         }
 
-        public void AddHealthChecker(string key, Type healthCheckerType, bool isCritical)
+        public void AddHealthChecker(Type healthCheckerType)
         {
             HealthChecker checker = new HealthChecker
             {
-                Name = key,
-                HealthCheckerType = healthCheckerType,
-                IsCritical = isCritical
+                HealthCheckerType = healthCheckerType
             };
 
             HealthCheckers.Add(checker);

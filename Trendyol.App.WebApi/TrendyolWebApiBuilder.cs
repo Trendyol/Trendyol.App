@@ -128,7 +128,7 @@ namespace Trendyol.App.WebApi
             return this;
         }
 
-        public TrendyolWebApiBuilder WithHealthChecker<T>(string key, bool isCritical = false) where T : IHealthChecker
+        public TrendyolWebApiBuilder WithHealthChecker<T>() where T : IHealthChecker
         {
             HealthCheckerContainer container = _appBuilder.DataStore.GetData<HealthCheckerContainer>(Constants.HealthCheckerContainerDataKey);
 
@@ -137,7 +137,7 @@ namespace Trendyol.App.WebApi
                 container = new HealthCheckerContainer();
             }
 
-            container.AddHealthChecker(key, typeof(T), isCritical);
+            container.AddHealthChecker(typeof(T));
 
             _appBuilder.DataStore.SetData(Constants.HealthCheckerContainerDataKey, container);
 

@@ -13,7 +13,7 @@ using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
 using Trendyol.App.WebApi.HealthCheck;
 using WebApplication;
-using WebApplication.HelathCheckers;
+using WebApplication.HealthCheckers;
 
 [assembly: OwinStartup(typeof(TrendyolApi))]
 namespace WebApplication
@@ -26,6 +26,7 @@ namespace WebApplication
                 .UseLocalTimes()
                 .UseWebApi(app, "Sample Api")
                     .WithCors(CorsOptions.AllowAll)
+                    .WithHealthChecker<DatabaseHealthChecker>()
                     .WithLanguages("tr-TR")
                     .Then()
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)

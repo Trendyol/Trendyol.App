@@ -1,9 +1,11 @@
-﻿using Trendyol.App.Domain.Objects;
-
-namespace Trendyol.App.WebApi.HealthCheck
+﻿namespace Trendyol.App.WebApi.HealthCheck
 {
     public interface IHealthChecker
     {
-        HealthCheckResult CheckHealth();
+        string Key { get; }
+
+        bool IsCritical { get; }
+
+        bool CheckHealth();
     }
 }

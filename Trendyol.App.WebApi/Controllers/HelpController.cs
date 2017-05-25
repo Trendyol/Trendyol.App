@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -41,19 +42,23 @@ namespace Trendyol.App.WebApi.Controllers
             {
                 IHealthChecker checkerInstance = healthCheckerActivator.CreateHealthCheckerInstance(checker.HealthCheckerType);
 
-                HealthCheckResult result;
+                if (checkerInstance == null)
+                {
+                    throw new ConfigurationErrorsException($"There was a problem while creating healthchecker instance for type:{checker.HealthCheckerType.FullName}. Check if your type implements IHealthChecker interface.");
+                }
+
+                HealthCheckResult result = new HealthCheckResult();
+                result.Key = checkerInstance.Key;
+                result.IsCtirical = checkerInstance.IsCritical;
 
                 try
                 {
-                    result = checkerInstance.CheckHealth();
+                    result.Success = checkerInstance.CheckHealth();
                 }
                 catch (Exception ex)
                 {
                     Logger.Error(ex);
 
-                    result = new HealthCheckResult();
-                    result.Key = checker.Name;
-                    result.IsCtirical = checker.IsCritical;
                     result.Message = ex.Message;
                     result.Success = false;
                 }
