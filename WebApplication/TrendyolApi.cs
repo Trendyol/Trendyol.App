@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using Data;
 using Domain.Services;
@@ -11,7 +10,7 @@ using Trendyol.App.Autofac;
 using Trendyol.App.AutofacWebApi;
 using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
-using Trendyol.App.WebApi.HealthCheck;
+using Trendyol.App.WebApi.DeepLogging;
 using WebApplication;
 using WebApplication.HealthCheckers;
 
@@ -28,6 +27,7 @@ namespace WebApplication
                     .WithCors(CorsOptions.AllowAll)
                     .WithHealthChecker<DatabaseHealthChecker>()
                     .WithLanguages("tr-TR")
+                    .WithDeepLogging(new SqlDeepLogger("DataContext"))
                     .Then()
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())

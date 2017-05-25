@@ -7,6 +7,7 @@ using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using Trendyol.App.WebApi.DeepLogging;
 using Trendyol.App.WebApi.Handlers;
 using Trendyol.App.WebApi.HealthCheck;
 
@@ -140,6 +141,30 @@ namespace Trendyol.App.WebApi
             container.AddHealthChecker(typeof(T));
 
             _appBuilder.DataStore.SetData(Constants.HealthCheckerContainerDataKey, container);
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithDeepLogging(IDeepLogger deepLogger)
+        {
+            _appBuilder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
+
+                if (deepLogger == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must provide a IDeepLogger instance in order to be able to use deep logging feature.");
+                }
+
+                config.MessageHandlers.Insert(1, new DeepLoggingHandler(deepLogger));
+            });
 
             return this;
         }
