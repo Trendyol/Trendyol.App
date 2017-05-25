@@ -133,6 +133,7 @@
     <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Handlers\HttpsGuard.cs" />
     <Compile Include="Handlers\LanguageHandler.cs" />
+    <Compile Include="Handlers\RequestCorrelationHandler.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.tr-TR.Designer.cs">

@@ -117,5 +117,23 @@ namespace Trendyol.App.WebApi
 
             return this;
         }
+
+        public TrendyolWebApiBuilder WithRequestCorrelation()
+        {
+            _appBuilder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
+
+                config.MessageHandlers.Add(new RequestCorrelationHandler());
+            });
+
+            return this;
+        }
     }
 }
