@@ -137,6 +137,7 @@
     <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Handlers\HttpsGuard.cs" />
     <Compile Include="Handlers\LanguageHandler.cs" />
+    <Compile Include="Handlers\RequestCorrelationHandler.cs" />
     <Compile Include="HealthCheck\DefaultHealthCheckerActivator.cs" />
     <Compile Include="HealthCheck\HealthChecker.cs" />
     <Compile Include="HealthCheck\HealthCheckerContainer.cs" />
