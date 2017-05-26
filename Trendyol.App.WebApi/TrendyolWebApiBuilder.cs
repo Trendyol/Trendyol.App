@@ -121,8 +121,26 @@ namespace Trendyol.App.WebApi
 
             return this;
         }
+        
+       public TrendyolWebApiBuilder WithRequestCorrelation()
+        {
+            _appBuilder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-        public TrendyolWebApiBuilder WithHealthCheckerActivator(IHealthCheckerActivator activator)
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must register your app with UseWebApi method before calling WithRequestCorrelation.");
+                }
+
+                config.MessageHandlers.Insert(1, new RequestCorrelationHandler());
+            });
+
+            return this;
+        }
+        
+                public TrendyolWebApiBuilder WithHealthCheckerActivator(IHealthCheckerActivator activator)
         {
             _appBuilder.DataStore.SetData(Constants.HealthCheckerActivatorDataKey, activator);
 
