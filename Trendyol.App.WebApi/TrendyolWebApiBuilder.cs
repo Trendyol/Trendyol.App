@@ -1,11 +1,15 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using Trendyol.App.WebApi.DeepLogging;
 using Trendyol.App.WebApi.Handlers;
+using Trendyol.App.WebApi.HealthCheck;
 
 namespace Trendyol.App.WebApi
 {
@@ -117,8 +121,8 @@ namespace Trendyol.App.WebApi
 
             return this;
         }
-
-        public TrendyolWebApiBuilder WithRequestCorrelation()
+        
+       public TrendyolWebApiBuilder WithRequestCorrelation()
         {
             _appBuilder.BeforeBuild(() =>
             {
@@ -131,6 +135,53 @@ namespace Trendyol.App.WebApi
                 }
 
                 config.MessageHandlers.Insert(1, new RequestCorrelationHandler());
+            });
+
+            return this;
+        }
+        
+                public TrendyolWebApiBuilder WithHealthCheckerActivator(IHealthCheckerActivator activator)
+        {
+            _appBuilder.DataStore.SetData(Constants.HealthCheckerActivatorDataKey, activator);
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithHealthChecker<T>() where T : IHealthChecker
+        {
+            HealthCheckerContainer container = _appBuilder.DataStore.GetData<HealthCheckerContainer>(Constants.HealthCheckerContainerDataKey);
+
+            if (container == null)
+            {
+                container = new HealthCheckerContainer();
+            }
+
+            container.AddHealthChecker(typeof(T));
+
+            _appBuilder.DataStore.SetData(Constants.HealthCheckerContainerDataKey, container);
+
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithDeepLogging(IDeepLogger deepLogger)
+        {
+            _appBuilder.BeforeBuild(() =>
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
+
+                if (deepLogger == null)
+                {
+                    throw new ConfigurationErrorsException(
+                        "You must provide a IDeepLogger instance in order to be able to use deep logging feature.");
+                }
+
+                config.MessageHandlers.Insert(1, new DeepLoggingHandler(deepLogger));
             });
 
             return this;

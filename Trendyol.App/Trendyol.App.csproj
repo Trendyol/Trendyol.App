@@ -58,6 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundProcessing\BackgroundJobManager.cs" />
+    <Compile Include="BackgroundProcessing\BackgroundJobTimer.cs" />
+    <Compile Include="BackgroundProcessing\DefaultJobActivator.cs" />
+    <Compile Include="BackgroundProcessing\IJob.cs" />
+    <Compile Include="BackgroundProcessing\IJobActivator.cs" />
     <Compile Include="Configuration\DefaultConfigManager.cs" />
     <Compile Include="Configuration\IConfigManager.cs" />
     <Compile Include="Constants.cs" />
@@ -74,6 +79,7 @@
     <Compile Include="Domain\Enums\OrderType.cs" />
     <Compile Include="Domain\Objects\DateTimeProviders\LocalDateTimeProvider.cs" />
     <Compile Include="Domain\Objects\DateTimeProviders\UtcDateTimeProvider.cs" />
+    <Compile Include="Domain\Objects\HealthCheckResult.cs" />
     <Compile Include="Domain\Objects\OperationParameter.cs" />
     <Compile Include="Domain\Objects\Page.cs" />
     <Compile Include="Domain\Requests\PagedRequest.cs" />

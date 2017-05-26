@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web.Http;
 using Common.Logging;
 using Data;
@@ -76,7 +77,7 @@ namespace WebApplication.Controllers
         {
             Logger.Trace("Creating sample.");
 
-            CreateSampleResponse response = _sampleService.CreateSample(null);
+            CreateSampleResponse response = _sampleService.CreateSample(request);
             return Ok(response);
         }
 
