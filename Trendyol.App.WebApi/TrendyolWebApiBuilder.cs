@@ -127,10 +127,10 @@ namespace Trendyol.App.WebApi
                 if (config == null)
                 {
                     throw new ConfigurationErrorsException(
-                        "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                        "You must register your app with UseWebApi method before calling WithRequestCorrelation.");
                 }
 
-                config.MessageHandlers.Add(new RequestCorrelationHandler());
+                config.MessageHandlers.Insert(1, new RequestCorrelationHandler());
             });
 
             return this;
