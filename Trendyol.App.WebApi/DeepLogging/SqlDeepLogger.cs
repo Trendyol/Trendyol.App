@@ -7,10 +7,17 @@ namespace Trendyol.App.WebApi.DeepLogging
     public class SqlDeepLogger : IDeepLogger
     {
         private readonly string _connectionString;
+        private readonly string _tableName;
 
-        public SqlDeepLogger(string connectionStringName)
+        public SqlDeepLogger(string connectionStringName, string tableName = null)
         {
             _connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ToString();
+            _tableName = tableName;
+
+            if (String.IsNullOrWhiteSpace(_tableName))
+            {
+                _tableName = "DeepLogs";
+            }
 
             CreateDeepLoggingTableIfNotPresent();
         }
@@ -18,7 +25,7 @@ namespace Trendyol.App.WebApi.DeepLogging
         public void Log(string correlationId, DateTime startedOn, DateTime finishedOn, string requestUrl, string requestMethod,
             string requestHeaders, string requestContent, string responseCode, string responseHeaders, string responseContent)
         {
-            string query = @"INSERT INTO [dbo].[DeepLogs]
+            string query = $@"INSERT INTO [dbo].[{_tableName}]
                                    ([CorrelationId]
                                    ,[StartedOn]
                                    ,[FinishedOn]
@@ -66,7 +73,7 @@ namespace Trendyol.App.WebApi.DeepLogging
 
         private void CreateDeepLoggingTableIfNotPresent()
         {
-            string query = @"if not exists (select * from sys.tables t join sys.schemas s on (t.schema_id = s.schema_id) where s.name = 'dbo' and t.name = 'DeepLogs') CREATE TABLE dbo.DeepLogs
+            string query = $@"if not exists (select * from sys.tables t join sys.schemas s on (t.schema_id = s.schema_id) where s.name = 'dbo' and t.name = '{_tableName}') CREATE TABLE dbo.{_tableName}
                                                     (
                                                         CorrelationId nvarchar(200) NOT NULL,
                                                         StartedOn datetime NOT NULL,
