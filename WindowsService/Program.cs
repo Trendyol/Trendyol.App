@@ -7,6 +7,7 @@ using System.Timers;
 using Topshelf;
 using Trendyol.App;
 using Trendyol.App.Daemon;
+using Trendyol.App.NLog;
 
 namespace WindowsService
 {
@@ -15,6 +16,7 @@ namespace WindowsService
         static void Main(string[] args)
         {
             TrendyolAppBuilder.Instance
+                .UseNLog()
                 .UseDaemon<SampleWindowsService>("SampleWindowsService")
                 .Build();
         }

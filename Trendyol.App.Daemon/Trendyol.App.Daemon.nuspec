@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.Daemon</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Trendyol.App.Daemon</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -17,6 +17,7 @@
       <dependency id="Common.Logging.Core" version="3.3.1" />
       <dependency id="Trendyol.App" version="2.2.1" />
       <dependency id="Topshelf" version="4.0.3" />
+      <dependency id="Topshelf.Common.Logging" version="4.0.1" />
     </dependencies>
   </metadata>
 </package>

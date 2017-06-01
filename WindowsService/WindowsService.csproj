@@ -55,12 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Trendyol.App.Daemon\Trendyol.App.Daemon.csproj">
       <Project>{672169ec-ba63-429e-bf7b-25a7ea3d29d9}</Project>
       <Name>Trendyol.App.Daemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trendyol.App.NLog\Trendyol.App.NLog.csproj">
+      <Project>{ad6fc708-ba35-4dda-a09d-a052b9e8ef0a}</Project>
+      <Name>Trendyol.App.NLog</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
       <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>
