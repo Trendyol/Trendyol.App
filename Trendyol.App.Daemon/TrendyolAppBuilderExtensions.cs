@@ -2,6 +2,7 @@
 using System.Linq;
 using Common.Logging;
 using Topshelf;
+using Topshelf.Common.Logging;
 
 namespace Trendyol.App.Daemon
 {
@@ -27,6 +28,8 @@ namespace Trendyol.App.Daemon
                         s.WhenStarted(srv => srv.Start());
                         s.WhenStopped(srv => srv.Stop());
                     });
+
+                    x.UseCommonLogging();
 
                     x.OnException((ex) =>
                     {
