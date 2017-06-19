@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Threading;
 using Common.Logging;
 using EntityFramework.Filters;
+using EntityFramework.InterceptorEx;
 using Trendyol.App.Data;
 using Trendyol.App.Data.Attributes;
 
@@ -25,6 +26,7 @@ namespace Trendyol.App.EntityFramework
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             Database.SetInitializer<T>(null);
             DbInterception.Add(new FilterInterceptor());
+            DbInterception.Add(new WithNoLockInterceptor());
         }
 
         public DataContextBase(string connectionStringName, bool logExecutedQueries = false)

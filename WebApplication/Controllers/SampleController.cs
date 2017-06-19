@@ -64,7 +64,7 @@ namespace WebApplication.Controllers
                     query = query.Where(s => s.Name == request.Name);
                 }
 
-                response = new QuerySamplesResponse(query.Select(request.Fields).ToPage(request));
+                response = new QuerySamplesResponse(query.WithNoLock(q => q.Select(request.Fields).ToPage(request)));
             }
 
             return Ok(response);
