@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext.cs" />
+    <Compile Include="SampleDataContext.cs" />
     <Compile Include="IdentityProvider.cs" />
     <Compile Include="Migrations\201702161220546_Initial.cs" />
     <Compile Include="Migrations\201702161220546_Initial.Designer.cs">

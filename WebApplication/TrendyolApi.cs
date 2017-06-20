@@ -27,9 +27,9 @@ namespace WebApplication
                     .WithCors(CorsOptions.AllowAll)
                     .WithHealthChecker<DatabaseHealthChecker>()
                     .WithLanguages("tr-TR")
-                    .WithDeepLogging(new SqlDeepLogger("DataContext", "TestLogs"))
+                    .WithDeepLogging(new SqlDeepLogger("SampleDataContext", "TestLogs"))
                     .Then()
-                .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
+                .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
                 .Build();
