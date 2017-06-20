@@ -19,7 +19,7 @@ namespace MvcApplication
         {
             TrendyolAppBuilder.Instance
                 .UseMvc(RouteConfig.RegisterRoutes)
-                .UseAutofac(RegisterDependencies, true, typeof(ISampleService).Assembly, typeof(DataContext).Assembly)
+                .UseAutofac(RegisterDependencies, true, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacMvc(Assembly.GetExecutingAssembly())
                 .Build();
         }

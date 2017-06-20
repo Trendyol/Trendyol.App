@@ -4,14 +4,14 @@ using Trendyol.App.EntityFramework;
 
 namespace Data
 {
-    public class DataContext : DataContextBase<DataContext>
+    public class SampleDataContext : DataContextBase<SampleDataContext>
     {
-        public DataContext()
-            : this("DataContext")
+        public SampleDataContext()
+            : this("SampleDataContext")
         {
         }
 
-        public DataContext(string connectionStringName) 
+        public SampleDataContext(string connectionStringName) 
             : base(connectionStringName, true)
         {
         }

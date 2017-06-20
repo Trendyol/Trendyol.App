@@ -13,6 +13,7 @@ using EntityFramework.Filters;
 using EntityFramework.InterceptorEx;
 using Trendyol.App.Data;
 using Trendyol.App.Data.Attributes;
+using Trendyol.App.EntityFramework.Mapping;
 
 namespace Trendyol.App.EntityFramework
 {
@@ -43,12 +44,22 @@ namespace Trendyol.App.EntityFramework
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            IEnumerable<Type> typesToRegister = typeof(T).Assembly.GetTypes().Where(type => !String.IsNullOrEmpty(type.Namespace)).Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(DataEntityTypeConfiguration<>));
+            IEnumerable<Type> typesToRegister = typeof(T).Assembly.GetTypes()
+                .Where(type => !String.IsNullOrEmpty(type.Namespace))
+                .Where(
+                    type =>
+                        type.BaseType != null && type.BaseType.IsGenericType &&
+                        type.BaseType.GetGenericTypeDefinition() == typeof(DataEntityTypeConfiguration<>));
 
             foreach (var type in typesToRegister)
             {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.Configurations.Add(configurationInstance);
+                DataContextAttribute dataContextAttribute = type.GetCustomAttribute<DataContextAttribute>();
+
+                if (dataContextAttribute == null || dataContextAttribute.Type == typeof(T))
+                {
+                    dynamic configurationInstance = Activator.CreateInstance(type);
+                    modelBuilder.Configurations.Add(configurationInstance);
+                }
             }
 
             modelBuilder.Conventions.Add(FilterConvention.Create<ISoftDeletable>("SoftDeleteFilter", (e) => e.IsDeleted == false));

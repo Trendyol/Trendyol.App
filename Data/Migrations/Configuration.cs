@@ -5,14 +5,14 @@ namespace Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Data.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Data.SampleDataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Data.DataContext context)
+        protected override void Seed(Data.SampleDataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

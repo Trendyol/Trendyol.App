@@ -17,6 +17,7 @@ using Trendyol.App.Domain.Objects;
 using Trendyol.App.EntityFramework.Extensions;
 using Trendyol.App.Validation.Aspects;
 using Trendyol.App.WebApi.Controllers;
+using Trendyol.App.EntityFramework.Mapping;
 
 namespace WebApplication.Controllers
 {
@@ -55,7 +56,7 @@ namespace WebApplication.Controllers
 
             QuerySamplesResponse response;
 
-            using (var context = new DataContext())
+            using (var context = new SampleDataContext())
             {
                 IQueryable<Sample> query = context.Samples;
 
@@ -89,7 +90,7 @@ namespace WebApplication.Controllers
 
             Sample sample;
 
-            using (var context = new DataContext())
+            using (var context = new SampleDataContext())
             {
                 sample = context.Samples.Where(s => s.Id == id).Select(fields).FirstOrDefault();
             }

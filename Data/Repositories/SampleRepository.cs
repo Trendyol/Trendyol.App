@@ -4,8 +4,8 @@ using System.Linq;
 using Domain.Objects;
 using Domain.Repositories;
 using Trendyol.App.Data;
-using Trendyol.App.Domain.Requests;
 using Trendyol.App.EntityFramework.Extensions;
+using Trendyol.App.EntityFramework.Mapping;
 
 namespace Data.Repositories
 {
@@ -22,7 +22,7 @@ namespace Data.Repositories
         {
             List<Sample> samples;
 
-            using (var context = new DataContext())
+            using (var context = new SampleDataContext())
             {
                 IQueryable<Sample> query = context.Samples;
 
@@ -43,7 +43,7 @@ namespace Data.Repositories
             sample.Name = name;
             sample.Size = 0;
 
-            using (var context = new DataContext())
+            using (var context = new SampleDataContext())
             {
                 context.Samples.Add(sample);
                 context.SaveChanges();
