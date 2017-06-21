@@ -32,17 +32,16 @@ namespace Trendyol.App.WebApi
         public TrendyolWebApiBuilder WithHttpsGuard()
         {
             _appBuilder.BeforeBuild(() =>
-                                    {
-                                        HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                                        if (config == null)
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must register your app with UseWebApi method before calling UseHttpsGuard.");
-                                        }
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException("You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
 
-                                        config.MessageHandlers.Add(new HttpsGuard());
-                                    });
+                config.MessageHandlers.Add(new HttpsGuard());
+            });
 
             return this;
         }
@@ -71,14 +70,14 @@ namespace Trendyol.App.WebApi
         public TrendyolWebApiBuilder WithBasicOAut(IAuthenticationChecker authenticationChecker)
         {
             _appBuilder.BeforeBuild(() =>
-                                    {
-                                        HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                                        BasicAuthenticationFilter basicAuthenticationFilter = new BasicAuthenticationFilter(authenticationChecker);
-                                        config.Filters.Add(basicAuthenticationFilter);
+                BasicAuthenticationFilter basicAuthenticationFilter = new BasicAuthenticationFilter(authenticationChecker);
+                config.Filters.Add(basicAuthenticationFilter);
 
-                                        config.SuppressHostPrincipal();
-                                    });
+                config.SuppressHostPrincipal();
+            });
 
             return this;
         }
@@ -86,23 +85,23 @@ namespace Trendyol.App.WebApi
         public TrendyolWebApiBuilder WithLanguages(params string[] supportedLanguages)
         {
             _appBuilder.BeforeBuild(() =>
-                                    {
-                                        HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                                        if (config == null)
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must register your app with UseWebApi method before calling UseHttpsGuard.");
-                                        }
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                                                           "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
 
-                                        if (supportedLanguages.IsEmpty())
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must add at least 1 language to use localization support.");
-                                        }
+                if (supportedLanguages.IsEmpty())
+                {
+                    throw new ConfigurationErrorsException(
+                                                           "You must add at least 1 language to use localization support.");
+                }
 
-                                        config.MessageHandlers.Insert(1, new LanguageHandler(supportedLanguages.ToList()));
-                                    });
+                config.MessageHandlers.Insert(1, new LanguageHandler(supportedLanguages.ToList()));
+            });
 
             return this;
         }
@@ -110,22 +109,22 @@ namespace Trendyol.App.WebApi
         public TrendyolWebApiBuilder WithMediaTypeFormatters(params MediaTypeFormatter[] formatters)
         {
             _appBuilder.BeforeBuild(() =>
-                                    {
-                                        HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                                        if (config == null)
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must register your app with UseWebApi method before calling UseHttpsGuard.");
-                                        }
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                                                           "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
 
-                                        config.Formatters.Clear();
+                config.Formatters.Clear();
 
-                                        foreach (MediaTypeFormatter formatter in formatters)
-                                        {
-                                            config.Formatters.Add(formatter);
-                                        }
-                                    });
+                foreach (MediaTypeFormatter formatter in formatters)
+                {
+                    config.Formatters.Add(formatter);
+                }
+            });
 
             return this;
         }
@@ -133,17 +132,17 @@ namespace Trendyol.App.WebApi
         public TrendyolWebApiBuilder WithRequestCorrelation()
         {
             _appBuilder.BeforeBuild(() =>
-                                    {
-                                        HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                                        if (config == null)
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must register your app with UseWebApi method before calling WithRequestCorrelation.");
-                                        }
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                                                           "You must register your app with UseWebApi method before calling WithRequestCorrelation.");
+                }
 
-                                        config.MessageHandlers.Insert(1, new RequestCorrelationHandler());
-                                    });
+                config.MessageHandlers.Insert(1, new RequestCorrelationHandler());
+            });
 
             return this;
         }
@@ -174,23 +173,23 @@ namespace Trendyol.App.WebApi
         public TrendyolWebApiBuilder WithDeepLogging(IDeepLogger deepLogger)
         {
             _appBuilder.BeforeBuild(() =>
-                                    {
-                                        HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
+            {
+                HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                                        if (config == null)
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must register your app with UseWebApi method before calling UseHttpsGuard.");
-                                        }
+                if (config == null)
+                {
+                    throw new ConfigurationErrorsException(
+                                                           "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                }
 
-                                        if (deepLogger == null)
-                                        {
-                                            throw new ConfigurationErrorsException(
-                                                                                   "You must provide a IDeepLogger instance in order to be able to use deep logging feature.");
-                                        }
+                if (deepLogger == null)
+                {
+                    throw new ConfigurationErrorsException(
+                                                           "You must provide a IDeepLogger instance in order to be able to use deep logging feature.");
+                }
 
-                                        config.MessageHandlers.Insert(1, new DeepLoggingHandler(deepLogger));
-                                    });
+                config.MessageHandlers.Insert(1, new DeepLoggingHandler(deepLogger));
+            });
 
             return this;
         }

@@ -19,7 +19,7 @@ namespace Trendyol.App.WebApi.Handlers
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-                                                               CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             if (request.RequestUri.LocalPath.ToLower().Equals("/") ||
                 request.RequestUri.LocalPath.ToLower().StartsWith("/help") ||
@@ -48,8 +48,8 @@ namespace Trendyol.App.WebApi.Handlers
         }
 
         private void Log(Guid correlationId, DateTime startedOn, DateTime finishedOn, HttpRequestMessage request,
-                         string requestBody, HttpResponseMessage response,
-                         string responseBody)
+            string requestBody, HttpResponseMessage response,
+            string responseBody)
         {
             string requestUrl = request.RequestUri.ToString();
             string httpMethod = request.Method.ToString();
@@ -59,16 +59,16 @@ namespace Trendyol.App.WebApi.Handlers
             string responseHeaders = response.Content.Headers.ToString();
 
             Task.Run(() =>
-                     {
-                         try
-                         {
-                             _deepLogger.Log(correlationId.ToString(), startedOn, finishedOn, requestUrl, httpMethod, requestHeaders, requestBody, responseCode, responseHeaders, responseBody);
-                         }
-                         catch (Exception ex)
-                         {
-                             Logger.Value.Error($"There was a problem while deep logging request:[{httpMethod}]{requestUrl}.", ex);
-                         }
-                     });
+            {
+                try
+                {
+                    _deepLogger.Log(correlationId.ToString(), startedOn, finishedOn, requestUrl, httpMethod, requestHeaders, requestBody, responseCode, responseHeaders, responseBody);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Value.Error($"There was a problem while deep logging request:[{httpMethod}]{requestUrl}.", ex);
+                }
+            });
         }
     }
 }
