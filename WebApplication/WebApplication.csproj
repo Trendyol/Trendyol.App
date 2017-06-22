@@ -165,6 +165,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\AuthenticationChecker.cs" />
+    <Compile Include="Authentication\UserStore.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="HealthCheckers\DatabaseHealthChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

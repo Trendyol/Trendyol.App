@@ -12,6 +12,7 @@ using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
 using Trendyol.App.WebApi.DeepLogging;
 using WebApplication;
+using WebApplication.Authentication;
 using WebApplication.HealthCheckers;
 
 [assembly: OwinStartup(typeof(TrendyolApi))]
@@ -28,6 +29,7 @@ namespace WebApplication
                     .WithHealthChecker<DatabaseHealthChecker>()
                     .WithLanguages("tr-TR")
                     .WithDeepLogging(new SqlDeepLogger("SampleDataContext", "TestLogs"))
+                    .WithBasicOAuth(new AuthenticationChecker(), new UserStore())
                     .Then()
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())

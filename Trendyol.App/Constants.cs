@@ -1,4 +1,7 @@
-﻿namespace Trendyol.App
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace Trendyol.App
 {
     public struct Constants
     {
@@ -12,5 +15,13 @@
 
         public const string DateTimeProvider = "DateTimeProvider";
         public const string ConfigManager = "ConfigManager";
+
+        public static JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling = NullValueHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
     }
 }

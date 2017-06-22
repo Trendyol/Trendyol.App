@@ -63,13 +63,7 @@ namespace Trendyol.App.WebApi
         {
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter()
             {
-                SerializerSettings = new JsonSerializerSettings()
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore,
-                    DefaultValueHandling = DefaultValueHandling.Ignore,
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }
+                SerializerSettings = App.Constants.JsonSerializerSettings
             };
 
             return formatter;
