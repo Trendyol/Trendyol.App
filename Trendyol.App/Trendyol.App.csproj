@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\IAuthenticationChecker.cs" />
+    <Compile Include="Authentication\IUserStore.cs" />
     <Compile Include="BackgroundProcessing\BackgroundJobManager.cs" />
     <Compile Include="BackgroundProcessing\BackgroundJobTimer.cs" />
     <Compile Include="BackgroundProcessing\DefaultJobActivator.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Data\ISoftDeletable.cs" />
     <Compile Include="Domain\Abstractions\IDateTimeProvider.cs" />
     <Compile Include="Domain\Abstractions\IPage.cs" />
+    <Compile Include="Domain\Abstractions\IUser.cs" />
     <Compile Include="Domain\Dtos\LookupDto.cs" />
     <Compile Include="Domain\Dtos\MessageDto.cs" />
     <Compile Include="Domain\Enums\OrderType.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Domain\Objects\HealthCheckResult.cs" />
     <Compile Include="Domain\Objects\OperationParameter.cs" />
     <Compile Include="Domain\Objects\Page.cs" />
+    <Compile Include="Domain\Objects\SimpleUser.cs" />
     <Compile Include="Domain\Requests\PagedRequest.cs" />
     <Compile Include="Domain\Responses\PagedResponse.cs" />
     <Compile Include="Domain\Services\IService.cs" />

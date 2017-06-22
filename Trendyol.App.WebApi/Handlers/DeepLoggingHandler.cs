@@ -36,7 +36,11 @@ namespace Trendyol.App.WebApi.Handlers
             DateTime finishedOn = TrendyolApp.Instance.DateTimeProvider.Now;
 
             HttpResponseMessage response = responseAwaitingTask.Result;
-            string responseContent = response.Content.ReadAsStringAsync().Result;
+            string responseContent = string.Empty;
+            if (response.Content != null)
+            {
+                responseContent = response.Content.ReadAsStringAsync().Result;
+            }
 
             Log(correlationId, startedOn, finishedOn, request, requestContent, response, responseContent);
             Logger.Value.Trace($"[{request.Method}]{request.RequestUri} finished.");
