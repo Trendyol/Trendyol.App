@@ -71,6 +71,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="README.md" />
     <None Include="Trendyol.App.EntityFramework.Testing.nuspec" />
   </ItemGroup>
   <ItemGroup>
