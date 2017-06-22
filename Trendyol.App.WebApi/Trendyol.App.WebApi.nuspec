@@ -13,7 +13,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>trendyol boilerplate</tags>
     <dependencies>
-      <dependency id="Trendyol.App" version="2.2.6" />
+      <dependency id="Trendyol.App" version="2.2.7" />
       <dependency id="Common.Logging" version="3.3.1" />
       <dependency id="Common.Logging.Core" version="3.3.1" />
       <dependency id="Microsoft.AspNet.WebApi" version="5.2.3" />

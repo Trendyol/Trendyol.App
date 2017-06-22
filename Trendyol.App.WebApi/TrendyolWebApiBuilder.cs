@@ -8,6 +8,7 @@ using System.Web.Http.Filters;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using Trendyol.App.Authentication;
 using Trendyol.App.WebApi.DeepLogging;
 using Trendyol.App.WebApi.Filters;
 using Trendyol.App.WebApi.Handlers;
@@ -67,13 +68,13 @@ namespace Trendyol.App.WebApi
             return this;
         }
 
-        public TrendyolWebApiBuilder WithBasicOAut(IAuthenticationChecker authenticationChecker)
+        public TrendyolWebApiBuilder WithBasicOAuth(IAuthenticationChecker authenticationChecker, IUserStore userStore)
         {
             _appBuilder.BeforeBuild(() =>
             {
                 HttpConfiguration config = _appBuilder.DataStore.GetData<HttpConfiguration>(Constants.HttpConfigurationDataKey);
 
-                BasicAuthenticationFilter basicAuthenticationFilter = new BasicAuthenticationFilter(authenticationChecker);
+                BasicAuthenticationFilter basicAuthenticationFilter = new BasicAuthenticationFilter(authenticationChecker, userStore);
                 config.Filters.Add(basicAuthenticationFilter);
 
                 config.SuppressHostPrincipal();
@@ -90,14 +91,12 @@ namespace Trendyol.App.WebApi
 
                 if (config == null)
                 {
-                    throw new ConfigurationErrorsException(
-                                                           "You must register your app with UseWebApi method before calling UseHttpsGuard.");
+                    throw new ConfigurationErrorsException("You must register your app with UseWebApi method before calling UseHttpsGuard.");
                 }
 
                 if (supportedLanguages.IsEmpty())
                 {
-                    throw new ConfigurationErrorsException(
-                                                           "You must add at least 1 language to use localization support.");
+                    throw new ConfigurationErrorsException("You must add at least 1 language to use localization support.");
                 }
 
                 config.MessageHandlers.Insert(1, new LanguageHandler(supportedLanguages.ToList()));

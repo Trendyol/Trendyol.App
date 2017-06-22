@@ -5,25 +5,33 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Filters;
+using Newtonsoft.Json;
+using Trendyol.App.Authentication;
+using Trendyol.App.Domain.Abstractions;
+using Trendyol.App.Domain.Responses;
+using Trendyol.App.WebApi.Models;
 
 namespace Trendyol.App.WebApi.Filters
 {
     internal class BasicAuthenticationFilter : IAuthenticationFilter
     {
         private readonly IAuthenticationChecker _checker;
+        private readonly IUserStore _userStore;
 
-        public BasicAuthenticationFilter(IAuthenticationChecker checker)
+        public BasicAuthenticationFilter(IAuthenticationChecker checker, IUserStore userStore)
         {
             _checker = checker;
+            _userStore = userStore;
         }
 
-        public bool AllowMultiple => true;
+        public bool AllowMultiple => false;
 
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
@@ -57,10 +65,25 @@ namespace Trendyol.App.WebApi.Filters
             string password = userNameAndPasword.Item2;
 
             IPrincipal principal = null;
-            if (_checker.Check(userName, password, cancellationToken))
+            if (_checker.Check(userName, password))
             {
-                GenericIdentity identity = new GenericIdentity(userName);
-                principal = new GenericPrincipal(identity, new List<string>().ToArray());
+                IUser user = _userStore.GetUserByUsername(userName);
+                if (user == null)
+                {
+                    return;
+                }
+
+                GenericIdentity identity = new GenericIdentity(user.Username);
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
+                if (user.Roles != null)
+                {
+                    foreach (string userRole in user.Roles)
+                    {
+                        identity.AddClaim(new Claim(ClaimTypes.Role, userRole));
+                    }
+                }
+
+                principal = new ClaimsPrincipal(identity);
             }
 
             if (principal == null)
@@ -113,6 +136,12 @@ namespace Trendyol.App.WebApi.Filters
                     if (response.Headers.WwwAuthenticate.All(h => h.Scheme != Challenge.Scheme))
                     {
                         response.Headers.WwwAuthenticate.Add(Challenge);
+
+
+                        ErrorResponse errorResponse = new ErrorResponse();
+                        errorResponse.AddErrorMessage("Unauthorized");
+
+                        response.Content = new StringContent(JsonConvert.SerializeObject(errorResponse, App.Constants.JsonSerializerSettings));
                     }
                 }
 
@@ -139,11 +168,16 @@ namespace Trendyol.App.WebApi.Filters
 
             private HttpResponseMessage Execute()
             {
+                ErrorResponse errorResponse = new ErrorResponse();
+                errorResponse.AddErrorMessage(ReasonPhrase);
+
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
-                                               {
-                                                   RequestMessage = Request,
-                                                   ReasonPhrase = ReasonPhrase
-                                               };
+                {
+                    RequestMessage = Request,
+                    ReasonPhrase = ReasonPhrase,
+                    Content = new StringContent(JsonConvert.SerializeObject(errorResponse, App.Constants.JsonSerializerSettings))
+                };
+
                 return response;
             }
         }
