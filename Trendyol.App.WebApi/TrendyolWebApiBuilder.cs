@@ -68,7 +68,7 @@ namespace Trendyol.App.WebApi
             return this;
         }
 
-        public TrendyolWebApiBuilder WithBasicOAuth(IAuthenticationChecker authenticationChecker, IUserStore userStore)
+        public TrendyolWebApiBuilder WithBasicAuth(IAuthenticationChecker authenticationChecker, IUserStore userStore)
         {
             _appBuilder.BeforeBuild(() =>
             {
