@@ -29,7 +29,7 @@ namespace WebApplication
                     .WithHealthChecker<DatabaseHealthChecker>()
                     .WithLanguages("tr-TR")
                     .WithDeepLogging(new SqlDeepLogger("SampleDataContext", "TestLogs"))
-                    .WithBasicOAuth(new AuthenticationChecker(), new UserStore())
+                    .WithBasicAuth(new AuthenticationChecker(), new UserStore())
                     .Then()
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
