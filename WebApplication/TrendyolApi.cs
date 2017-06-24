@@ -8,6 +8,7 @@ using Owin;
 using Trendyol.App;
 using Trendyol.App.Autofac;
 using Trendyol.App.AutofacWebApi;
+using Trendyol.App.EntityFramework;
 using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
 using Trendyol.App.WebApi.DeepLogging;
@@ -34,6 +35,7 @@ namespace WebApplication
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
+                .UseAutomaticMigrations<Data.Migrations.Configuration>()
                 .Build();
         }
 

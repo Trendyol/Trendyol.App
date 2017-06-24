@@ -89,6 +89,7 @@
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Mapping\DataContextAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrendyolAppBuilderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
