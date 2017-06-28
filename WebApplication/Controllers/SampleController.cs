@@ -73,13 +73,14 @@ namespace WebApplication.Controllers
 
         [Route("")]
         [HttpPost]
-        [SwaggerResponse(HttpStatusCode.Created, "Created", typeof(Sample))]
+        [SwaggerResponse(HttpStatusCode.Created, "Created", typeof(CreateSampleResponse))]
         public IHttpActionResult Post(CreateSampleRequest request)
         {
             Logger.Trace("Creating sample.");
 
             CreateSampleResponse response = _sampleService.CreateSample(request);
-            return Ok(response);
+            response.AddErrorMessage("test");
+            return Created(null);
         }
 
         [Route("{id}")]

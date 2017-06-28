@@ -48,6 +48,13 @@ namespace Trendyol.App.WebApi.Controllers
 
         protected IHttpActionResult Created(object returnValue)
         {
+            BaseResponse baseResponse = returnValue as BaseResponse;
+
+            if (baseResponse != null && baseResponse.HasError)
+            {
+                return Content(HttpStatusCode.BadRequest, returnValue);
+            }
+
             string id = GetIdFromReturnValue(returnValue);
 
             if (String.IsNullOrEmpty(id))
@@ -61,15 +68,18 @@ namespace Trendyol.App.WebApi.Controllers
 
         private string GetIdFromReturnValue(object returnValue)
         {
-            PropertyInfo propertyInfo = returnValue.GetType().GetProperty("Id");
-
-            if (propertyInfo != null)
+            if (returnValue != null)
             {
-                object idValue = propertyInfo.GetValue(returnValue, null);
+                PropertyInfo propertyInfo = returnValue.GetType().GetProperty("Id");
 
-                if (idValue != null)
+                if (propertyInfo != null)
                 {
-                    return idValue.ToString();
+                    object idValue = propertyInfo.GetValue(returnValue, null);
+
+                    if (idValue != null)
+                    {
+                        return idValue.ToString();
+                    }
                 }
             }
 

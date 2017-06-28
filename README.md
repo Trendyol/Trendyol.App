@@ -3,18 +3,10 @@ Trendyol.App is an application framework based on .NET framework 4.6.1.
 It's designed to minimize code written to achieve recurring requirements.
 
 ## NuGet Packages
-### Trendyol.App
+#### Trendyol.App | [Source](https://github.com/Trendyol/Trendyol.App/tree/develop/Trendyol.App) | [Documentation](https://github.com/Trendyol/Trendyol.App/tree/develop/Trendyol.App/README.md)
 ``` 
 Install-Package Trendyol.App
 ```
-This is the core library for building apps with this framework.
-It includes most of abstractions and a simple thread runner.
-To initialize Trendyol.App you need to build an application instance as follows:
-```csharp
-TrendyolAppBuilder.Instance
-                .Build();
-```
-### Other Packages
 #### Trendyol.App.Autofac | [Source](https://github.com/Trendyol/Trendyol.App/tree/develop/Trendyol.App.Autofac) | [Documentation](https://github.com/Trendyol/Trendyol.App/tree/develop/Trendyol.App.Autofac/README.md)
 ``` 
 Install-Package Trendyol.App.Autofac
