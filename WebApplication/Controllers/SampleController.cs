@@ -116,6 +116,12 @@ namespace WebApplication.Controllers
         [HttpDelete]
         public void Delete(long id)
         {
+            using (var context = new SampleDataContext())
+            {
+                Sample sample = context.Samples.Find(id);
+                context.Samples.Remove(sample);
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -4,12 +4,11 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Interception;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Common.Logging;
-using EntityFramework.Filters;
+using EntityFramework.DynamicFilters;
 using EntityFramework.InterceptorEx;
 using Trendyol.App.Data;
 using Trendyol.App.Data.Attributes;
@@ -26,7 +25,6 @@ namespace Trendyol.App.EntityFramework
         {
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             Database.SetInitializer<T>(null);
-            DbInterception.Add(new FilterInterceptor());
             DbInterception.Add(new WithNoLockInterceptor());
         }
 
@@ -62,10 +60,30 @@ namespace Trendyol.App.EntityFramework
                 }
             }
 
-            modelBuilder.Conventions.Add(FilterConvention.Create<ISoftDeletable>("SoftDeleteFilter", (e) => e.IsDeleted == false));
+            modelBuilder.Filter("SoftDeleteFilter", (ISoftDeletable d) => d.IsDeleted, false);
         }
 
         public override int SaveChanges()
+        {
+            HandleSoftDeletableEntities();
+            HandleAuditableEntities();
+
+            return base.SaveChanges();
+        }
+
+        private void HandleSoftDeletableEntities()
+        {
+            IEnumerable<DbEntityEntry> entries = ChangeTracker.Entries().Where(x => x.Entity is ISoftDeletable && x.State == EntityState.Deleted);
+
+            foreach (var entry in entries)
+            {
+                entry.State = EntityState.Modified;
+                ISoftDeletable entity = (ISoftDeletable)entry.Entity;
+                entity.IsDeleted = true;
+            }
+        }
+
+        private void HandleAuditableEntities()
         {
             string currentUser = Thread.CurrentPrincipal.Identity.Name;
 
@@ -100,8 +118,6 @@ namespace Trendyol.App.EntityFramework
                     }
                 }
             }
-
-            return base.SaveChanges();
         }
 
         public virtual TId GetNextId<TEntity, TId>() where TEntity : IEntity<TId>
@@ -133,7 +149,6 @@ namespace Trendyol.App.EntityFramework
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
-            this.EnableFilter("SoftDeleteFilter");
 
             if (logExecutedQueries)
             {

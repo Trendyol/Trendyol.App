@@ -53,6 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201706301833189_Filter.cs" />
+    <Compile Include="Migrations\201706301833189_Filter.Designer.cs">
+      <DependentUpon>201706301833189_Filter.cs</DependentUpon>
+    </Compile>
     <Compile Include="SampleDataContext.cs" />
     <Compile Include="IdentityProvider.cs" />
     <Compile Include="Migrations\201702161220546_Initial.cs" />
@@ -114,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703220723204_SampleUpdate1.resx">
       <DependentUpon>201703220723204_SampleUpdate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706301833189_Filter.resx">
+      <DependentUpon>201706301833189_Filter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

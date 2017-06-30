@@ -55,8 +55,8 @@ namespace Trendyol.App.WebApi.Handlers
             string httpMethod = request.Method.ToString();
             string requestHeaders = request.Headers.ToString();
 
-            string responseCode = response.StatusCode.ToString();
-            string responseHeaders = response.Content.Headers.ToString();
+            string responseCode = response?.StatusCode.ToString();
+            string responseHeaders = response?.Content?.Headers?.ToString();
 
             Task.Run(() =>
             {
