@@ -10,6 +10,7 @@ using Domain.Objects;
 using Domain.Requests;
 using Domain.Responses;
 using Domain.Services;
+using Newtonsoft.Json;
 using Swashbuckle.Swagger.Annotations;
 using Trendyol.App.Configuration;
 using Trendyol.App.Domain.Abstractions;
@@ -79,8 +80,7 @@ namespace WebApplication.Controllers
             Logger.Trace("Creating sample.");
 
             CreateSampleResponse response = _sampleService.CreateSample(request);
-            response.AddErrorMessage("test");
-            return Created(null);
+            return Created(response);
         }
 
         [Route("{id}")]
@@ -114,14 +114,19 @@ namespace WebApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public void Delete(long id)
+        public IHttpActionResult Delete(long id)
         {
+            Sample deletedSample;
+
             using (var context = new SampleDataContext())
             {
                 Sample sample = context.Samples.Find(id);
+                deletedSample = JsonConvert.DeserializeObject<Sample>(JsonConvert.SerializeObject(sample));
                 context.Samples.Remove(sample);
                 context.SaveChanges();
             }
+
+            return Deleted(deletedSample);
         }
     }
 }

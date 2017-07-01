@@ -66,6 +66,16 @@ namespace Trendyol.App.WebApi.Controllers
             return Created($"{url.TrimEnd('/')}/{id}", returnValue);
         }
 
+        protected IHttpActionResult Deleted(object returnValue = null)
+        {
+            if (returnValue == null)
+            {
+                return Content(HttpStatusCode.NoContent, returnValue);
+            }
+
+            return Ok(returnValue);
+        }
+
         private string GetIdFromReturnValue(object returnValue)
         {
             if (returnValue != null)
