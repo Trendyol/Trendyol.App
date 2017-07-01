@@ -15,6 +15,7 @@ using Trendyol.App.WebApi.Models;
 namespace Trendyol.App.WebApi.Controllers
 {
     [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest", typeof(ErrorResponse))]
+    [SwaggerResponseRemoveDefaults]
     public class TrendyolApiController : ApiController
     {
         protected new IHttpActionResult Ok<T>(T content)
