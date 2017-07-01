@@ -7,6 +7,7 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using Common.Logging;
 using EntityFramework.DynamicFilters;
 using EntityFramework.InterceptorEx;
@@ -69,6 +70,14 @@ namespace Trendyol.App.EntityFramework
             HandleAuditableEntities();
 
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            HandleSoftDeletableEntities();
+            HandleAuditableEntities();
+
+            return base.SaveChangesAsync();
         }
 
         private void HandleSoftDeletableEntities()
