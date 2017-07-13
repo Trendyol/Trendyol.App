@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,10 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Filters;
-using Newtonsoft.Json;
 using Trendyol.App.Authentication;
 using Trendyol.App.Domain.Abstractions;
-using Trendyol.App.Domain.Responses;
 using Trendyol.App.WebApi.Models;
 
 namespace Trendyol.App.WebApi.Filters
@@ -141,7 +137,7 @@ namespace Trendyol.App.WebApi.Filters
                         ErrorResponse errorResponse = new ErrorResponse();
                         errorResponse.AddErrorMessage("Unauthorized");
 
-                        response.Content = new StringContent(JsonConvert.SerializeObject(errorResponse, App.Constants.JsonSerializerSettings));
+                        response = response.RequestMessage.CreateResponse(HttpStatusCode.Unauthorized, errorResponse);
                     }
                 }
 
@@ -171,13 +167,7 @@ namespace Trendyol.App.WebApi.Filters
                 ErrorResponse errorResponse = new ErrorResponse();
                 errorResponse.AddErrorMessage(ReasonPhrase);
 
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
-                {
-                    RequestMessage = Request,
-                    ReasonPhrase = ReasonPhrase,
-                    Content = new StringContent(JsonConvert.SerializeObject(errorResponse, App.Constants.JsonSerializerSettings))
-                };
-
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Unauthorized, errorResponse);
                 return response;
             }
         }

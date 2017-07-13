@@ -6,20 +6,14 @@ namespace Trendyol.App
     {
         public static TrendyolAppBuilder UseLocalTimes(this TrendyolAppBuilder builder)
         {
-            builder.BeforeBuild(() =>
-            {
-                builder.DataStore.SetData(Constants.DateTimeProvider, new LocalDateTimeProvider());
-            });
+            builder.DataStore.SetData(Constants.DateTimeProvider, new LocalDateTimeProvider());
 
             return builder;
         }
 
         public static TrendyolAppBuilder UseUtcTimes(this TrendyolAppBuilder builder)
         {
-            builder.BeforeBuild(() =>
-            {
-                builder.DataStore.SetData(Constants.DateTimeProvider, new UtcDateTimeProvider());
-            });
+            builder.DataStore.SetData(Constants.DateTimeProvider, new UtcDateTimeProvider());
 
             return builder;
         }

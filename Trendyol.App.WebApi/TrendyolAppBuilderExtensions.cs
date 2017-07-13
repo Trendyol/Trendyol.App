@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using Swashbuckle.Application;
+using Trendyol.App.Domain.Abstractions;
+using Trendyol.App.Domain.Objects.DateTimeProviders;
 using Trendyol.App.WebApi.Handlers;
 
 namespace Trendyol.App.WebApi
@@ -43,7 +45,7 @@ namespace Trendyol.App.WebApi
                 config.Routes.MapHttpRoute("Default", "{controller}/{id}", new { id = RouteParameter.Optional });
 
                 config.Formatters.Clear();
-                config.Formatters.Add(CreateJsonFormatter());
+                config.Formatters.Add(CreateJsonFormatter(builder));
                 config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
                 config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
@@ -59,11 +61,28 @@ namespace Trendyol.App.WebApi
             return new TrendyolWebApiBuilder(builder, app, applicationName);
         }
 
-        private static JsonMediaTypeFormatter CreateJsonFormatter()
+        private static JsonMediaTypeFormatter CreateJsonFormatter(TrendyolAppBuilder builder)
         {
+            IDateTimeProvider dateTimeProvider = builder.DataStore.GetData<IDateTimeProvider>(App.Constants.DateTimeProvider);
+
+            JsonSerializerSettings settings;
+
+            if (dateTimeProvider != null && dateTimeProvider.Kind == DateTimeKind.Local)
+            {
+                settings = TrendyolApp.GetJsonSerializerSettings(DateTimeZoneHandling.Local);
+            }
+            else if (dateTimeProvider != null && dateTimeProvider.Kind == DateTimeKind.Utc)
+            {
+                settings = TrendyolApp.GetJsonSerializerSettings(DateTimeZoneHandling.Utc);
+            }
+            else
+            {
+                settings = TrendyolApp.GetJsonSerializerSettings();
+            }
+
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter()
             {
-                SerializerSettings = App.Constants.JsonSerializerSettings
+                SerializerSettings = settings
             };
 
             return formatter;
