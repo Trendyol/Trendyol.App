@@ -34,5 +34,7 @@ namespace Trendyol.App.Domain.Objects
         public int TotalPages { get; }
         public bool HasPreviousPage { get; }
         public bool HasNextPage { get; }
+
+        public static IPage<T> Empty => new Page<T>(Enumerable.Empty<T>(), 0, 0, 0);
     }
 }
