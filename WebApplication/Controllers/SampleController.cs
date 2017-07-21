@@ -56,6 +56,7 @@ namespace WebApplication.Controllers
             }
 
             QuerySamplesResponse response;
+            return Ok(new QuerySamplesResponse(Page<Sample>.Empty));
 
             using (var context = new SampleDataContext())
             {
