@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Requests;
 
@@ -13,5 +14,13 @@ namespace Trendyol.App.EntityFramework.DynamicFiltering
         TResult First();
 
         TResult FirstOrDefault();
+
+        Task<List<TResult>> ToListAsync();
+
+        Task<IPage<TResult>> ToPageAsync(PagedRequest request);
+
+        Task<TResult> FirstAsync();
+
+        Task<TResult> FirstOrDefaultAsync();
     }
 }
