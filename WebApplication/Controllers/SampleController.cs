@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Common.Logging;
 using Data;
@@ -41,7 +42,7 @@ namespace WebApplication.Controllers
         [Route("")]
         [HttpGet]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(QuerySamplesResponse))]
-        public IHttpActionResult Filter([FromUri(Name = "")]QuerySamplesRequest request)
+        public async Task<IHttpActionResult> Filter([FromUri(Name = "")]QuerySamplesRequest request)
         {
             Logger.Trace("Fetching samples.");
 
@@ -56,7 +57,6 @@ namespace WebApplication.Controllers
             }
 
             QuerySamplesResponse response;
-            return Ok(new QuerySamplesResponse(Page<Sample>.Empty));
 
             using (var context = new SampleDataContext())
             {
@@ -67,7 +67,7 @@ namespace WebApplication.Controllers
                     query = query.Where(s => s.Name == request.Name);
                 }
 
-                response = new QuerySamplesResponse(query.WithNoLock(q => q.Select(request.Fields).ToPage(request)));
+                response = new QuerySamplesResponse(await query.WithNoLock(q => q.Select(request.Fields).ToPageAsync(request)));
             }
 
             return Ok(response);

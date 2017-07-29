@@ -25,7 +25,7 @@ namespace Tests
 
             for (int i = 0; i < 20000; i++)
             {
-                IHttpActionResult result = controller.Filter(request);
+                var result = controller.Filter(request);
             }
 
             long elapsed = watch.ElapsedMilliseconds;

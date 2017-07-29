@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Trendyol.App.Domain.Abstractions;
@@ -104,6 +106,74 @@ namespace Trendyol.App.EntityFramework.DynamicFiltering
             return (TResult)obj;
         }
 
+        public async Task<List<TResult>> ToListAsync()
+        {
+            return await ToListAsync(_source);
+        }
+
+        public async Task<IPage<TResult>> ToPageAsync(PagedRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException($"You need to initialize a paging request before paging on a list. The parameter request should be initialized.", nameof(request));
+            }
+
+            if (request.Page == 0)
+            {
+                if (!String.IsNullOrEmpty(request.OrderBy))
+                {
+                    if (request.Order == OrderType.Asc)
+                    {
+                        _source = _source.OrderBy(request.OrderBy);
+                    }
+                    else
+                    {
+                        _source = _source.OrderBy(request.OrderBy + " descending");
+                    }
+                }
+
+                return new Page<TResult>(await ToListAsync(), 0, 0, 0);
+            }
+
+            if (String.IsNullOrEmpty(request.OrderBy))
+            {
+                throw new InvalidOperationException($"In order to use paging extensions you need to supply an OrderBy parameter.");
+            }
+
+            if (request.Order == OrderType.Asc)
+            {
+                _source = _source.OrderBy(request.OrderBy);
+            }
+            else
+            {
+                _source = _source.OrderBy(request.OrderBy + " descending");
+            }
+
+            int skip = (request.Page - 1) * request.PageSize;
+            int take = request.PageSize;
+            int totalItemCount = await _source.CountAsync();
+
+            return new Page<TResult>(await ToListAsync(_source.Skip(skip).Take(take)), request.Page, request.PageSize, totalItemCount);
+        }
+
+        public async Task<TResult> FirstAsync()
+        {
+            object obj = await ToObjectQuery(_source).FirstAsync();
+
+            ClearInterceptors(obj);
+
+            return (TResult)obj;
+        }
+
+        public async Task<TResult> FirstOrDefaultAsync()
+        {
+            object obj = await ToObjectQuery(_source).FirstOrDefaultAsync();
+
+            ClearInterceptors(obj);
+
+            return (TResult)obj;
+        }
+
         private List<TResult> ToList(IQueryable<TResult> query)
         {
             IQueryable<object> runtimeTypeSelectExpressionQuery = ToObjectQuery(query);
@@ -146,6 +216,53 @@ namespace Trendyol.App.EntityFramework.DynamicFiltering
                     castedSource,
                     runtimeParameter
             );
+
+            // Return list of T
+            return targetTypeSelectExpressionQuery.ToList();
+        }
+
+        private async Task<List<TResult>> ToListAsync(IQueryable<TResult> query)
+        {
+            IQueryable<object> runtimeTypeSelectExpressionQuery = ToObjectQuery(query);
+
+            // Get result from database
+            List<object> listOfObjects = await runtimeTypeSelectExpressionQuery.ToListAsync();
+
+            MethodInfo castMethod = typeof(Queryable)
+                .GetMethod("Cast", BindingFlags.Public | BindingFlags.Static)
+                .MakeGenericMethod(_proxyType);
+
+            // Cast list<objects> to IQueryable<runtimeType>
+            IQueryable castedSource = castMethod.Invoke(
+                null,
+                new Object[] { listOfObjects.AsQueryable() }
+            ) as IQueryable;
+
+            // Create instance of runtime type parameter
+            ParameterExpression runtimeParameter = Expression.Parameter(_proxyType, "p");
+
+            IDictionary<string, PropertyInfo> dynamicTypeFieldsDict =
+                _proxyProperties.ToDictionary(f => f.Name.ToLowerInvariant(), f => f);
+
+            // Generate bindings from runtime type to source type
+            IEnumerable<MemberBinding> bindingsToTargetType = _selectedProperties.Values
+                .Select(property => Expression.Bind(
+                    property,
+                    Expression.Property(
+                        runtimeParameter,
+                        dynamicTypeFieldsDict[property.Name.ToLowerInvariant()]
+                    )
+                ));
+
+            // Generate projection trom runtimeType to T and cast as IQueryable<object>
+            IQueryable<TResult> targetTypeSelectExpressionQuery
+                = ExpressionMapper.GenerateProjectedQuery<TResult>(
+                    _proxyType,
+                    typeof(TResult),
+                    bindingsToTargetType,
+                    castedSource,
+                    runtimeParameter
+                );
 
             // Return list of T
             return targetTypeSelectExpressionQuery.ToList();
