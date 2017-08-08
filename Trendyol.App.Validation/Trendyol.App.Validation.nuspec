@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.Validation</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>Trendyol.App.Validation</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -15,7 +15,6 @@
     <dependencies>
       <dependency id="Trendyol.App" version="2.2.3" />
       <dependency id="FluentValidation" version="6.4.1" />
-      <dependency id="PostSharp" version="4.3.31" />
     </dependencies>
   </metadata>
 </package>

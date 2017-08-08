@@ -13,6 +13,7 @@ using Domain.Responses;
 using Domain.Services;
 using Newtonsoft.Json;
 using Swashbuckle.Swagger.Annotations;
+using Trendyol.App.Aspects;
 using Trendyol.App.Configuration;
 using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Objects;
@@ -41,6 +42,7 @@ namespace WebApplication.Controllers
 
         [Route("")]
         [HttpGet]
+        [LogExecutionTime]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(QuerySamplesResponse))]
         public async Task<IHttpActionResult> Filter([FromUri(Name = "")]QuerySamplesRequest request)
         {
