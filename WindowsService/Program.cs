@@ -19,7 +19,7 @@ namespace WindowsService
         {
             TrendyolAppBuilder.Instance
                 .UseNLog()
-                .UseDaemon<SampleWindowsService>()
+                .UseDaemon<SampleWindowsService>("SampleWindowsService")
                 .Build();
         }
     }
