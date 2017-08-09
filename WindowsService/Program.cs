@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using Common.Logging;
 using Topshelf;
 using Trendyol.App;
+using Trendyol.App.Aspects;
 using Trendyol.App.Daemon;
 using Trendyol.App.NLog;
 
@@ -17,7 +19,7 @@ namespace WindowsService
         {
             TrendyolAppBuilder.Instance
                 .UseNLog()
-                .UseDaemon<SampleWindowsService>("SampleWindowsService")
+                .UseDaemon<SampleWindowsService>()
                 .Build();
         }
     }
