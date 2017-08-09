@@ -7,6 +7,7 @@ namespace Trendyol.App.Aspects
 {
     [Serializable]
     [DebuggerStepThrough]
+    [LinesOfCodeAvoided(31)]
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class LogExecutionTimeAttribute : MethodInterceptionAspect
     {
@@ -22,13 +23,35 @@ namespace Trendyol.App.Aspects
         public override void OnInvoke(MethodInterceptionArgs args)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            args.Proceed();
+
+            try
+            {
+                args.Proceed();
+                HandleExecutionTimeMeasurementProcess(args, stopwatch);
+            }
+            catch (Exception ex)
+            {
+                HandleExecutionTimeMeasurementProcess(args, stopwatch, ex);
+                throw;
+            }
+        }
+
+        private void HandleExecutionTimeMeasurementProcess(MethodInterceptionArgs args, Stopwatch stopwatch, Exception exception = null)
+        {
             stopwatch.Stop();
             long timeSpent = stopwatch.ElapsedMilliseconds;
+            string className = args.Method?.DeclaringType?.Name;
+            string methodName = args.Method?.Name;
+
+            if (exception != null)
+            {
+                Logger.Trace($"Method [{className}.{methodName}] finished in [{timeSpent}] milliseconds with an exception [{exception.Message}].");
+                return;
+            }
 
             if (timeSpent > Threshold)
             {
-                Logger.Debug($"Method [{args.Method?.DeclaringType?.Name}.{args.Method?.Name}] took [{timeSpent}] milliseconds to execute.");
+                Logger.Trace($"Method [{className}.{methodName}] finished in [{timeSpent}] milliseconds.");
             }
         }
     }

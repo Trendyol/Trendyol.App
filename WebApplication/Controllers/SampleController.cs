@@ -46,8 +46,6 @@ namespace WebApplication.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(QuerySamplesResponse))]
         public async Task<IHttpActionResult> Filter([FromUri(Name = "")]QuerySamplesRequest request)
         {
-            Logger.Trace("Fetching samples.");
-
             if (request == null)
             {
                 request = new QuerySamplesRequest();
