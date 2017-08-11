@@ -11,7 +11,6 @@ using Trendyol.App.AutofacWebApi;
 using Trendyol.App.EntityFramework;
 using Trendyol.App.NLog;
 using Trendyol.App.WebApi;
-using Trendyol.App.WebApi.DeepLogging;
 using WebApplication;
 using WebApplication.Authentication;
 using WebApplication.HealthCheckers;
@@ -35,7 +34,7 @@ namespace WebApplication
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
                 .UseNLog()
-                .UseAutomaticMigrations<Data.Migrations.Configuration>()
+                .UseDataContext<SampleDataContext>()
                 .Build();
         }
 

@@ -4,7 +4,7 @@ using Trendyol.App.EntityFramework;
 
 namespace Data
 {
-    public class SampleDataContext : DataContextBase<SampleDataContext>
+    public class SampleDataContext : DataContextBase
     {
         public SampleDataContext()
             : this("SampleDataContext")
