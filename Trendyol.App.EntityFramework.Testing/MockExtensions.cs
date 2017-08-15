@@ -11,7 +11,7 @@ namespace Trendyol.App.EntityFramework.Testing
     {
         public static Mock<DbSet<TEntity>> SetupDbSet<TContext, TEntity>(this Mock<TContext> source,
             Expression<Func<TContext, DbSet<TEntity>>> dbSetExp, ICollection<TEntity> data)
-            where TContext : DataContextBase<TContext>
+            where TContext : DataContextBase
             where TEntity : class
         {
             var mockDbSet = new Mock<DbSet<TEntity>>().SetupData(data);
@@ -33,7 +33,7 @@ namespace Trendyol.App.EntityFramework.Testing
 
         public static Mock<DbSet<TEntity>> SetupDbSet<TContext, TEntity>(this Mock<TContext> source,
             Expression<Func<TContext, DbSet<TEntity>>> dbSetExp)
-            where TContext : DataContextBase<TContext>
+            where TContext : DataContextBase
             where TEntity : class
         {
             return SetupDbSet(source, dbSetExp, new List<TEntity>());
@@ -41,7 +41,7 @@ namespace Trendyol.App.EntityFramework.Testing
 
         public static IEnumerable<TEntity> SetupDbSet<TContext, TEntity>(this IEnumerable<TEntity> source,
             Expression<Func<TContext, DbSet<TEntity>>> dbSetExp, Mock<TContext> mockDataContext)
-            where TContext : DataContextBase<TContext>
+            where TContext : DataContextBase
             where TEntity : class
         {
             var data = source as IList<TEntity> ?? source.ToList();
@@ -64,7 +64,7 @@ namespace Trendyol.App.EntityFramework.Testing
 
         public static TEntity SetupDbSet<TContext, TEntity>(this TEntity source,
             Expression<Func<TContext, DbSet<TEntity>>> dbSetExp, Mock<TContext> mockDataContext)
-            where TContext : DataContextBase<TContext>
+            where TContext : DataContextBase
             where TEntity : class
         {
             return new[] {source}.SetupDbSet(dbSetExp, mockDataContext).FirstOrDefault();

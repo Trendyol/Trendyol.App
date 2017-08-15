@@ -12,7 +12,7 @@ namespace Trendyol.App.EntityFramework.Mapping
             get { return _type; }
             set
             {
-                if (!value.IsSubClassOfGeneric(typeof(DataContextBase<>)))
+                if (!value.IsAssignableFrom(typeof(DataContextBase)))
                 {
                     throw new InvalidOperationException($"Only types those derive from DataContextBase can be assigned to DataContextAttribute's Type property. The type {value.FullName} is not derived from DataContextBase.");
                 }

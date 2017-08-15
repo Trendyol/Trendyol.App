@@ -1,20 +1,21 @@
-﻿using System;
-using System.Data.Entity.Migrations;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Interception;
+using EntityFramework.InterceptorEx;
 
 namespace Trendyol.App.EntityFramework
 {
     public static class TrendyolAppBuilderExtensions
     {
-        public static TrendyolAppBuilder UseAutomaticMigrations<T>(this TrendyolAppBuilder builder) where T : DbMigrationsConfiguration
+        public static TrendyolDataContextBuilder<T> UseDataContext<T>(this TrendyolAppBuilder builder) where T : DataContextBase
         {
-            builder.AfterBuild(() =>
+            builder.BeforeBuild(() =>
             {
-                T configuration = Activator.CreateInstance<T>();
-                DbMigrator migrator = new DbMigrator(configuration);
-                migrator.Update();
+                Database.SetInitializer<T>(null);
+                var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+                DbInterception.Add(new WithNoLockInterceptor());
             });
 
-            return builder;
+            return new TrendyolDataContextBuilder<T>(builder);
         }
     }
 }

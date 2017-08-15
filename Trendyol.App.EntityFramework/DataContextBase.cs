@@ -17,17 +17,10 @@ using Trendyol.App.EntityFramework.Mapping;
 
 namespace Trendyol.App.EntityFramework
 {
-    public abstract class DataContextBase<T> : DbContext where T : DbContext
+    public abstract class DataContextBase : DbContext
     {
-        private static readonly ILog Logger = LogManager.GetLogger<T>();
+        private static readonly ILog Logger = LogManager.GetLogger<DataContextBase>();
         protected bool SetUpdatedOnSameAsCreatedOnForNewObjects { get; set; }
-
-        static DataContextBase()
-        {
-            var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
-            Database.SetInitializer<T>(null);
-            DbInterception.Add(new WithNoLockInterceptor());
-        }
 
         public DataContextBase(string connectionStringName, bool logExecutedQueries = false)
             : base(connectionStringName)
@@ -43,7 +36,7 @@ namespace Trendyol.App.EntityFramework
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            IEnumerable<Type> typesToRegister = typeof(T).Assembly.GetTypes()
+            IEnumerable<Type> typesToRegister = GetType().Assembly.GetTypes()
                 .Where(type => !String.IsNullOrEmpty(type.Namespace))
                 .Where(
                     type =>
@@ -54,7 +47,7 @@ namespace Trendyol.App.EntityFramework
             {
                 DataContextAttribute dataContextAttribute = type.GetCustomAttribute<DataContextAttribute>();
 
-                if (dataContextAttribute == null || dataContextAttribute.Type == typeof(T))
+                if (dataContextAttribute == null || dataContextAttribute.Type == GetType())
                 {
                     dynamic configurationInstance = Activator.CreateInstance(type);
                     modelBuilder.Configurations.Add(configurationInstance);
