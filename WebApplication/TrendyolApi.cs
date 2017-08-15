@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
 using Data;
+using Data.Migrations;
 using Domain.Services;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
@@ -33,8 +34,10 @@ namespace WebApplication
                     .Then()
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
-                .UseNLog()
                 .UseDataContext<SampleDataContext>()
+                    .WithAutomaticMigrations<Configuration>()
+                    .Then()
+                .UseNLog()
                 .Build();
         }
 
