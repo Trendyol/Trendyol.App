@@ -16,6 +16,6 @@ namespace Data
         {
         }
 
-        public DbSet<Sample> Samples { get; set; }
+        public virtual DbSet<Sample> Samples { get; set; }
     }
 }
