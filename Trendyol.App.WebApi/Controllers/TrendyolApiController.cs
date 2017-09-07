@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Swashbuckle.Swagger.Annotations;
 using Trendyol.App.Data;
+using Trendyol.App.Domain.Abstractions;
 using Trendyol.App.Domain.Responses;
 using Trendyol.App.WebApi.Models;
 
@@ -31,6 +34,31 @@ namespace Trendyol.App.WebApi.Controllers
             }
 
             return base.Ok(content);
+        }
+
+        protected IHttpActionResult Page<T>(IPage<T> page)
+        {
+            if (page == null)
+            {
+                throw new ArgumentNullException(nameof(page), @"You need to provide a valid page object.");
+            }
+
+            if (page.Size == 0)
+            {
+                return Ok(page.Items);
+            }
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, page.Items);
+
+            response.Headers.Add("x-paging-index", page.Index.ToString());
+            response.Headers.Add("x-paging-size", page.Size.ToString());
+            response.Headers.Add("x-paging-totalcount", page.TotalCount.ToString());
+            response.Headers.Add("x-paging-totalpages", page.TotalPages.ToString());
+            response.Headers.Add("x-paging-haspreviouspage", page.HasPreviousPage.ToString().ToLowerInvariant());
+            response.Headers.Add("x-paging-hasnextpage", page.HasNextPage.ToString().ToLowerInvariant());
+            response.Headers.Add("Link", GetLinkHeaderForPageResult(page));
+
+            return ResponseMessage(response);
         }
 
         protected IHttpActionResult InvalidRequest(string errorMessage)
@@ -95,6 +123,31 @@ namespace Trendyol.App.WebApi.Controllers
             }
 
             return String.Empty;
+        }
+
+        private string GetLinkHeaderForPageResult<T>(IPage<T> page)
+        {
+            var requestUrl = Request.RequestUri.ToString();
+            string headerValue = String.Empty;
+
+            if (page.HasNextPage)
+            {
+                var nextPageUrl = requestUrl.Replace($"page={page.Index}", $"page={page.Index+1}");
+                headerValue = $"<{nextPageUrl}>; rel=\"next\",";
+            }
+
+            if (page.HasPreviousPage)
+            {
+                var previousPageUrl = requestUrl.Replace($"page={page.Index}", $"page={page.Index - 1}");
+                headerValue = $"<{previousPageUrl}>; rel=\"prev\",";
+            }
+
+            if (!String.IsNullOrEmpty(headerValue))
+            {
+                headerValue = headerValue.TrimEnd(',');
+            }
+
+            return headerValue;
         }
     }
 }

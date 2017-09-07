@@ -68,7 +68,8 @@ namespace WebApplication.Controllers
                     query = query.Where(s => s.Name == request.Name);
                 }
 
-                response = new QuerySamplesResponse(await query.WithNoLock(q => q.Select(request.Fields).ToPageAsync(request)));
+                var page = await query.WithNoLock(q => q.Select(request.Fields).ToPageAsync(request));
+                return Page(page);
             }
 
             return Ok(response);
