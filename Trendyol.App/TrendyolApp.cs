@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Trendyol.App.Configuration;
 using Trendyol.App.Domain.Abstractions;
@@ -57,7 +58,7 @@ namespace Trendyol.App
 
         public static JsonSerializerSettings GetJsonSerializerSettings(DateTimeZoneHandling dateTimeZoneHandling = DateTimeZoneHandling.Utc)
         {
-            return new JsonSerializerSettings()
+            var settings = new JsonSerializerSettings()
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
@@ -65,6 +66,9 @@ namespace Trendyol.App
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 DateTimeZoneHandling = dateTimeZoneHandling
             };
+
+            settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+            return settings;
         }
     }
 }
