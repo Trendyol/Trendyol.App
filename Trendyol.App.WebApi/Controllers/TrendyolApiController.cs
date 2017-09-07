@@ -50,12 +50,12 @@ namespace Trendyol.App.WebApi.Controllers
 
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, page.Items);
 
-            response.Headers.Add("x-paging-index", page.Index.ToString());
-            response.Headers.Add("x-paging-size", page.Size.ToString());
-            response.Headers.Add("x-paging-totalcount", page.TotalCount.ToString());
-            response.Headers.Add("x-paging-totalpages", page.TotalPages.ToString());
-            response.Headers.Add("x-paging-haspreviouspage", page.HasPreviousPage.ToString().ToLowerInvariant());
-            response.Headers.Add("x-paging-hasnextpage", page.HasNextPage.ToString().ToLowerInvariant());
+            response.Headers.Add("X-Paging-Index", page.Index.ToString());
+            response.Headers.Add("X-Paging-Size", page.Size.ToString());
+            response.Headers.Add("X-Paging-TotalCount", page.TotalCount.ToString());
+            response.Headers.Add("X-Paging-TotalPages", page.TotalPages.ToString());
+            response.Headers.Add("X-Paging-HasPreviousPage", page.HasPreviousPage.ToString().ToLowerInvariant());
+            response.Headers.Add("X-Paging-HasNextPage", page.HasNextPage.ToString().ToLowerInvariant());
             response.Headers.Add("Link", GetLinkHeaderForPageResult(page));
 
             return ResponseMessage(response);
