@@ -47,6 +47,16 @@ namespace Trendyol.App.WebApi
             return this;
         }
 
+        public TrendyolWebApiBuilder WithUrl(string rootUrl)
+        {
+            if (!String.IsNullOrEmpty(rootUrl))
+            {
+                _appBuilder.DataStore.SetData(Constants.ApiRootUrlDataKey, rootUrl.TrimEnd('/'));
+            }
+
+            return this;
+        }
+
         public TrendyolWebApiBuilder WithCors(CorsOptions corsOptions)
         {
             _appBuilder.BeforeBuild(() => { _owinBuilder.UseCors(corsOptions); });
