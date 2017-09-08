@@ -133,13 +133,13 @@ namespace Trendyol.App.WebApi.Controllers
             if (page.HasNextPage)
             {
                 var nextPageUrl = requestUrl.Replace($"page={page.Index}", $"page={page.Index+1}");
-                headerValue = $"<{nextPageUrl}>; rel=\"next\",";
+                headerValue += $"<{nextPageUrl}>; rel=\"next\",";
             }
 
             if (page.HasPreviousPage)
             {
                 var previousPageUrl = requestUrl.Replace($"page={page.Index}", $"page={page.Index - 1}");
-                headerValue = $"<{previousPageUrl}>; rel=\"prev\",";
+                headerValue += $"<{previousPageUrl}>; rel=\"prev\",";
             }
 
             if (!String.IsNullOrEmpty(headerValue))
