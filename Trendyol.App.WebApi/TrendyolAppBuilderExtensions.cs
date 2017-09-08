@@ -6,11 +6,9 @@ using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Owin;
 using Swashbuckle.Application;
 using Trendyol.App.Domain.Abstractions;
-using Trendyol.App.Domain.Objects.DateTimeProviders;
 using Trendyol.App.WebApi.Handlers;
 
 namespace Trendyol.App.WebApi
@@ -25,11 +23,18 @@ namespace Trendyol.App.WebApi
             {
                 HttpConfiguration config = new HttpConfiguration();
 
+                string rootUrl = builder.DataStore.GetData<string>(Constants.ApiRootUrlDataKey);
+
                 config.EnableSwagger("docs/{apiVersion}/swagger", c =>
                 {
                     c.SingleApiVersion("v1", applicationName)
                      .Description($"{applicationName} documentation.");
                     c.DescribeAllEnumsAsStrings(true);
+
+                    if (!String.IsNullOrEmpty(rootUrl))
+                    {
+                        c.RootUrl(r => rootUrl);
+                    }
                 })
                 .EnableSwaggerUi("help/{*assetPath}", c =>
                 {
