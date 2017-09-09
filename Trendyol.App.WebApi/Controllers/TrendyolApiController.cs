@@ -136,6 +136,12 @@ namespace Trendyol.App.WebApi.Controllers
                 headerValue += $"<{nextPageUrl}>; rel=\"next\",";
             }
 
+            var lastPageUrl = requestUrl.Replace($"page={page.Index}", $"page={page.TotalPages}");
+            headerValue += $"<{lastPageUrl}>; rel=\"last\",";
+
+            var firstPageUrl = requestUrl.Replace($"page={page.Index}", "page=1");
+            headerValue += $"<{firstPageUrl}>; rel=\"first\",";
+
             if (page.HasPreviousPage)
             {
                 var previousPageUrl = requestUrl.Replace($"page={page.Index}", $"page={page.Index - 1}");
