@@ -22,6 +22,7 @@ using Trendyol.App.EntityFramework.Extensions;
 using Trendyol.App.Validation.Aspects;
 using Trendyol.App.WebApi.Controllers;
 using Trendyol.App.EntityFramework.Mapping;
+using Trendyol.App.WebApi.Filters;
 
 namespace WebApplication.Controllers
 {
@@ -78,6 +79,7 @@ namespace WebApplication.Controllers
         [Route("")]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.Created, "Created", typeof(CreateSampleResponse))]
+        [ValidateModelState]
         public IHttpActionResult Post(CreateSampleRequest request)
         {
             Logger.Trace("Creating sample.");
