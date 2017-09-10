@@ -134,6 +134,7 @@
     <Compile Include="DeepLogging\SqlDeepLogger.cs" />
     <Compile Include="Enums\DataType.cs" />
     <Compile Include="Filters\BasicAuthenticationFilter.cs" />
+    <Compile Include="Filters\ValidateModelState.cs" />
     <Compile Include="Handlers\DeepLoggingHandler.cs" />
     <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Handlers\HttpsGuard.cs" />
