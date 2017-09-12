@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppBuilderExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\TrendyolApiController.cs" />
