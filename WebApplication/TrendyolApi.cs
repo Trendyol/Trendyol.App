@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Autofac;
+using Common.Logging;
 using Data;
 using Data.Migrations;
 using Domain.Services;
@@ -29,6 +30,7 @@ namespace WebApplication
                     .WithCors(CorsOptions.AllowAll)
                     .WithHealthChecker<DatabaseHealthChecker>()
                     .WithLanguages("tr-TR")
+                    .OnDisposing(Dispose)
                     .Then()
                 .UseAutofac(RegisterDependencies, false, typeof(ISampleService).Assembly, typeof(SampleDataContext).Assembly)
                 .UseAutofacWebApi(Assembly.GetExecutingAssembly())
@@ -41,6 +43,12 @@ namespace WebApplication
 
         private void RegisterDependencies(ContainerBuilder builder)
         {
+        }
+
+        private void Dispose()
+        {
+            ILog logger = LogManager.GetLogger("Startup");
+            logger.Debug("Disposing");
         }
     }
 }

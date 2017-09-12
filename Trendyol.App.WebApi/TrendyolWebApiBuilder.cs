@@ -202,5 +202,11 @@ namespace Trendyol.App.WebApi
 
             return this;
         }
+
+        public TrendyolWebApiBuilder OnDisposing(Action action)
+        {
+            _owinBuilder.BeforeDispose(action);
+            return this;
+        }
     }
 }
