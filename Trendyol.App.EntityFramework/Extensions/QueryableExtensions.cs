@@ -54,6 +54,8 @@ namespace Trendyol.App.EntityFramework.Extensions
                     $"In order to use paging extensions you need to supply an OrderBy parameter.");
             }
 
+            int totalItemCount = source.Count();
+
             if (request.Order == OrderType.Asc)
             {
                 source = source.OrderBy(request.OrderBy);
@@ -65,7 +67,6 @@ namespace Trendyol.App.EntityFramework.Extensions
 
             int skip = (request.Page - 1)*request.PageSize;
             int take = request.PageSize;
-            int totalItemCount = source.Count();
 
             return new Page<T>(source.Skip(skip).Take(take), request.Page, request.PageSize, totalItemCount);
         }
