@@ -105,6 +105,16 @@ namespace Trendyol.App.WebApi.Controllers
             return Ok(returnValue);
         }
 
+        protected IHttpActionResult InternalServerError(string errorMessage, string additionalInfo = null)
+        {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.ErrorCode = "InternalServerError";
+            errorResponse.AdditionalInfo = additionalInfo;
+            errorResponse.AddErrorMessage(errorMessage);
+
+            return Content(HttpStatusCode.InternalServerError, errorResponse);
+        }
+
         private string GetIdFromReturnValue(object returnValue)
         {
             if (returnValue != null)
