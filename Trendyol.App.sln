@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App", "Trendyol.App\Trendyol.App.csproj", "{5A4FC3B4-F64A-4E7C-A178-9BCD81CF6334}"
 EndProject
@@ -49,6 +49,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.EntityFramework.Testing", "Trendyol.App.EntityFramework.Testing\Trendyol.App.EntityFramework.Testing.csproj", "{024AD090-BAE3-427F-95DB-934F3AA67BEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.Validation", "Trendyol.App.Validation\Trendyol.App.Validation.csproj", "{736F1669-0D3F-47DD-B35D-F54BFD639890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendyol.App.Couchbase", "Trendyol.App.Couchbase\Trendyol.App.Couchbase.csproj", "{509735A2-61DD-4B50-93AB-8E654390E685}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CouchbaseClient", "CouchbaseClient\CouchbaseClient.csproj", "{12F3AE8D-7E08-4B0B-91CB-966613B4E933}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +132,14 @@ Global
 		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{736F1669-0D3F-47DD-B35D-F54BFD639890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{509735A2-61DD-4B50-93AB-8E654390E685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{509735A2-61DD-4B50-93AB-8E654390E685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{509735A2-61DD-4B50-93AB-8E654390E685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{509735A2-61DD-4B50-93AB-8E654390E685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12F3AE8D-7E08-4B0B-91CB-966613B4E933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12F3AE8D-7E08-4B0B-91CB-966613B4E933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12F3AE8D-7E08-4B0B-91CB-966613B4E933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12F3AE8D-7E08-4B0B-91CB-966613B4E933}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,5 +152,6 @@ Global
 		{F01BFD43-67CF-4EDD-AB8A-586FA8AF1421} = {4E9AD0AE-468B-4A0E-A9F4-DE0852011939}
 		{4AC41F8E-8B49-4AAF-832F-7C6EC2C9725C} = {C19A3477-D9F2-4D11-BFB6-5050C48911A7}
 		{B929EBA4-62E0-41BA-AE48-3EDE67953AAF} = {C19A3477-D9F2-4D11-BFB6-5050C48911A7}
+		{12F3AE8D-7E08-4B0B-91CB-966613B4E933} = {C19A3477-D9F2-4D11-BFB6-5050C48911A7}
 	EndGlobalSection
 EndGlobal

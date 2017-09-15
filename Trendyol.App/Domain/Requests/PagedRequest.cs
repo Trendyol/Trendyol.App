@@ -4,6 +4,8 @@ namespace Trendyol.App.Domain.Requests
 {
     public class PagedRequest
     {
+        public string Fields { get; set; }
+
         public int Page { get; set; }
 
         public int PageSize { get; set; }
