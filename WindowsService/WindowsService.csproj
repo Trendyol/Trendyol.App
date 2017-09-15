@@ -49,6 +49,10 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -82,6 +86,10 @@
     <ProjectReference Include="..\Trendyol.App.NLog\Trendyol.App.NLog.csproj">
       <Project>{ad6fc708-ba35-4dda-a09d-a052b9e8ef0a}</Project>
       <Name>Trendyol.App.NLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trendyol.App.RestClient\Trendyol.App.RestClient.csproj">
+      <Project>{a1f0f53d-c64a-44b9-8f51-361d562e5da6}</Project>
+      <Name>Trendyol.App.RestClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\Trendyol.App\Trendyol.App.csproj">
       <Project>{5a4fc3b4-f64a-4e7c-a178-9bcd81cf6334}</Project>

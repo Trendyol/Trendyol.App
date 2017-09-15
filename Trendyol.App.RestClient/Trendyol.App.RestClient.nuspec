@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Trendyol.App.RestClient</id>
+    <version>1.0.0</version>
+    <title>Trendyol.App.RestClient</title>
+    <authors>trendyol ocinbat</authors>
+    <owners>trendyol ocinbat</owners>
+    <projectUrl>https://github.com/Trendyol/Trendyol.App</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple application wrapper.</description>
+    <summary>A simple application wrapper.</summary>
+    <copyright>Copyright 2016</copyright>
+    <tags>trendyol boilerplate</tags>
+    <dependencies>
+      <dependency id="Trendyol.App" version="2.3.2" />
+      <dependency id="IdentityModel" version="2.11.0" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
+      <dependency id="RestSharp" version="105.2.3" />
+      <dependency id="System.Net.Http" version="4.3.2" />
+      <dependency id="System.Security.Cryptography.Algorithms" version="4.3.0" />
+      <dependency id="System.Security.Cryptography.Encoding" version="4.3.0" />
+      <dependency id="System.Security.Cryptography.Primitives" version="4.3.0" />
+      <dependency id="System.Security.Cryptography.X509Certificates" version="4.3.0" />
+      <dependency id="System.ValueTuple" version="4.3.1" />
+    </dependencies>
+  </metadata>
+</package>
