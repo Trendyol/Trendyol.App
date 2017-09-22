@@ -10,16 +10,14 @@ namespace Trendyol.App.RestClient.Decorators
 {
     public class OAuth2Decorator : RestClientDecorator
     {
-        private static readonly object SyncLock = new object();
-
+        private readonly object _syncLock = new object();
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly string _tokenUrl;
         private readonly string _scope;
-
-        private static string _accessToken = String.Empty;
-        private static bool _isExpired = false;
-        private static TokenClient _tokenClient;
+        private readonly TokenClient _tokenClient;
+        private string _accessToken = String.Empty;
+        private bool _isExpired = false;
 
         public OAuth2Decorator(RestSharp.RestClient decoratedClient, string clientId, string clientSecret, string tokenUrl, string scope) : 
             base(decoratedClient)
@@ -294,7 +292,7 @@ namespace Trendyol.App.RestClient.Decorators
 
             if (_isExpired)
             {
-                lock (SyncLock)
+                lock (_syncLock)
                 {
                     if (_isExpired)
                     {
