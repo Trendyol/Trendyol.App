@@ -101,7 +101,6 @@
     <Compile Include="TrendyolApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrendyolAppBuilder.cs" />
-    <Compile Include="TrendyolAppBuilderExtensions.cs" />
     <Compile Include="TrendyolAppModule.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 using Trendyol.App.RestClient.Decorators;
+using Trendyol.App.RestClient.Serialization;
 using IRestRequest = RestSharp.IRestRequest;
 using IRestResponse = RestSharp.IRestResponse;
 using RestRequestAsyncHandle = RestSharp.RestRequestAsyncHandle;
@@ -15,15 +16,14 @@ namespace Trendyol.App.RestClient
 
         public TrendyolRestClient(string baseUrl)
         {
-            DecoratedClient = new RestSharp.RestClient(baseUrl);
-            DecoratedClient = new LoggingDecorator(DecoratedClient);
+            InitializeDefaults(baseUrl);
         }
 
         public TrendyolRestClient(string baseUrl, string clientId, string clientSecret, string tokenUrl, string scope)
         {
-            DecoratedClient = new RestSharp.RestClient(baseUrl);
-            DecoratedClient = new OAuth2Decorator(DecoratedClient, clientId, clientSecret, tokenUrl, scope);
-            DecoratedClient = new LoggingDecorator(DecoratedClient);
+            InitializeDefaults(baseUrl);
+
+            DecoratedClient = new OAuth2DecoratorBase(DecoratedClient, clientId, clientSecret, tokenUrl, scope);
         }
 
         public override IRestResponse Execute(IRestRequest request)
@@ -124,6 +124,12 @@ namespace Trendyol.App.RestClient
         public override Task<IRestResponse<T>> ExecuteTaskAsync<T>(IRestRequest request, CancellationToken token)
         {
             return DecoratedClient.ExecuteTaskAsync<T>(request, token);
+        }
+
+        private void InitializeDefaults(string baseUrl)
+        {
+            DecoratedClient = new RestSharp.RestClient(baseUrl);
+            DecoratedClient.AddHandler("application/json", new CustomJsonSerializer());
         }
     }
 }

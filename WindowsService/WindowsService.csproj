@@ -66,8 +66,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetReceivingOrderItemResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceivingOrderItem.cs" />
     <Compile Include="SampleWindowsService.cs" />
     <Compile Include="TestJob.cs" />
   </ItemGroup>

@@ -5,11 +5,11 @@ using RestSharp;
 
 namespace Trendyol.App.RestClient.Decorators
 {
-    public abstract class RestClientDecorator : RestSharp.RestClient
+    public abstract class RestClientDecoratorBase : RestSharp.RestClient
     {
         protected RestSharp.RestClient DecoratedClient;
 
-        protected RestClientDecorator(RestSharp.RestClient decoratedClient)
+        protected RestClientDecoratorBase(RestSharp.RestClient decoratedClient)
         {
             DecoratedClient = decoratedClient;
         }
