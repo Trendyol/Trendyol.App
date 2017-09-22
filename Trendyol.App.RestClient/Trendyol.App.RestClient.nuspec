@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.RestClient</id>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <title>Trendyol.App.RestClient</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -13,7 +13,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>trendyol boilerplate</tags>
     <dependencies>
-      <dependency id="Trendyol.App" version="2.4.0" />
+      <dependency id="Trendyol.App" version="2.4.3" />
       <dependency id="IdentityModel" version="2.11.0" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
       <dependency id="RestSharp" version="105.2.3" />
