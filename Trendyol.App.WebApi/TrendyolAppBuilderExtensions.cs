@@ -50,7 +50,7 @@ namespace Trendyol.App.WebApi
                 config.Routes.MapHttpRoute("Default", "{controller}/{id}", new { id = RouteParameter.Optional });
 
                 config.Formatters.Clear();
-                config.Formatters.Add(CreateJsonFormatter(builder));
+                config.Formatters.Add(CreateJsonFormatter());
                 config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
                 config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
@@ -66,28 +66,11 @@ namespace Trendyol.App.WebApi
             return new TrendyolWebApiBuilder(builder, app, applicationName);
         }
 
-        private static JsonMediaTypeFormatter CreateJsonFormatter(TrendyolAppBuilder builder)
+        private static JsonMediaTypeFormatter CreateJsonFormatter()
         {
-            IDateTimeProvider dateTimeProvider = builder.DataStore.GetData<IDateTimeProvider>(App.Constants.DateTimeProvider);
-
-            JsonSerializerSettings settings;
-
-            if (dateTimeProvider != null && dateTimeProvider.Kind == DateTimeKind.Local)
-            {
-                settings = TrendyolApp.GetJsonSerializerSettings(DateTimeZoneHandling.Local);
-            }
-            else if (dateTimeProvider != null && dateTimeProvider.Kind == DateTimeKind.Utc)
-            {
-                settings = TrendyolApp.GetJsonSerializerSettings(DateTimeZoneHandling.Utc);
-            }
-            else
-            {
-                settings = TrendyolApp.GetJsonSerializerSettings();
-            }
-
             JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter()
             {
-                SerializerSettings = settings
+                SerializerSettings = TrendyolApp.JsonSerializerSettings
             };
 
             return formatter;

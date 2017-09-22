@@ -8,7 +8,7 @@ using RestSharp;
 
 namespace Trendyol.App.RestClient.Decorators
 {
-    public class OAuth2Decorator : RestClientDecorator
+    public class OAuth2DecoratorBase : RestClientDecoratorBase
     {
         private readonly object _syncLock = new object();
         private readonly string _clientId;
@@ -19,7 +19,7 @@ namespace Trendyol.App.RestClient.Decorators
         private string _accessToken = String.Empty;
         private bool _isExpired = false;
 
-        public OAuth2Decorator(RestSharp.RestClient decoratedClient, string clientId, string clientSecret, string tokenUrl, string scope) : 
+        public OAuth2DecoratorBase(RestSharp.RestClient decoratedClient, string clientId, string clientSecret, string tokenUrl, string scope) : 
             base(decoratedClient)
         {
             _clientId = clientId;

@@ -13,7 +13,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>trendyol boilerplate</tags>
     <dependencies>
-      <dependency id="Trendyol.App" version="2.3.2" />
+      <dependency id="Trendyol.App" version="2.4.0" />
       <dependency id="IdentityModel" version="2.11.0" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
       <dependency id="RestSharp" version="105.2.3" />

@@ -15,10 +15,10 @@ namespace WindowsService
         {
             var restClient = new TrendyolRestClient("http://devxeonreceivingapi.trendyol.com", "Xeon.StockService", "topsecret", "http://devxeonauth.trendyol.com/connect/token", "receiving");
 
-            var request = new RestRequest("pre-receivings/{id}");
-            request.AddUrlSegment("id", "1234");
+            var request = new RestRequest("receiving-order-items/{id}");
+            request.AddUrlSegment("id", "1830743");
 
-            var getResponse = restClient.Get(request);
+            var getResponse = restClient.Get<GetReceivingOrderItemResponse>(request);
 
             Logger.Info($"Example info text.");
             Console.WriteLine($"Job:{typeof(TestJob).FullName} running.");
