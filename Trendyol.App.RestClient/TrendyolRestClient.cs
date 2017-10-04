@@ -130,7 +130,7 @@ namespace Trendyol.App.RestClient
         {
             DecoratedClient = new RestSharp.RestClient(baseUrl);
             DecoratedClient.AddHandler("application/json", new CustomJsonSerializer());
-            DecoratedClient.AddDefaultHeader("Connection", "close");
+            DecoratedClient.UserAgent = "Trendyol.App.RestClient";
         }
     }
 }
