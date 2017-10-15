@@ -23,7 +23,7 @@ namespace Trendyol.App.RestClient
         {
             InitializeDefaults(baseUrl);
 
-            DecoratedClient = new OAuth2DecoratorBase(DecoratedClient, clientId, clientSecret, tokenUrl, scope);
+            DecoratedClient = new OAuth2Decorator(DecoratedClient, clientId, clientSecret, tokenUrl, scope);
         }
 
         public override IRestResponse Execute(IRestRequest request)
@@ -130,6 +130,7 @@ namespace Trendyol.App.RestClient
         {
             DecoratedClient = new RestSharp.RestClient(baseUrl);
             DecoratedClient.AddHandler("application/json", new CustomJsonSerializer());
+            DecoratedClient.UserAgent = "Trendyol.App.RestClient";
         }
     }
 }
