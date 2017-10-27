@@ -29,6 +29,10 @@ namespace Trendyol.App.WebApi.Controllers
 
                 if (baseResponse != null && baseResponse.HasError)
                 {
+                    if (baseResponse.Messages.Any(m => m.Content == Constants.MessageTypes.NotFound))
+                    {
+                        return Content(HttpStatusCode.NotFound, content);
+                    }
                     return Content(HttpStatusCode.BadRequest, content);
                 }
             }
