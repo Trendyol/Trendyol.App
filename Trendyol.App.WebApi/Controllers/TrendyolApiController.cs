@@ -61,6 +61,7 @@ namespace Trendyol.App.WebApi.Controllers
             response.Headers.Add("X-Paging-HasPreviousPage", page.HasPreviousPage.ToString().ToLowerInvariant());
             response.Headers.Add("X-Paging-HasNextPage", page.HasNextPage.ToString().ToLowerInvariant());
             response.Headers.Add("Link", GetLinkHeaderForPageResult(page));
+            response.Headers.Add("Access-Control-Expose-Headers", "X-Paging-TotalCount, X-Paging-TotalPages");
 
             return ResponseMessage(response);
         }
