@@ -1,21 +1,23 @@
-﻿using System;
-using System.Threading;
-using Trendyol.App.BackgroundProcessing;
+﻿using Trendyol.App.BackgroundProcessing;
 using Trendyol.App.Daemon;
+using Trendyol.App.Autofac.BackgroundProcessing;
 
 namespace WindowsService
 {
     public class SampleWindowsService : TrendyolWindowsService
     {
+        private static readonly BackgroundJobManager backgroundJobManager = new BackgroundJobManager();
+
         public override void Start()
         {
-            BackgroundJobManager.Register<TestJob>(5000);
-            BackgroundJobManager.Start();
+            backgroundJobManager.Register<TestJob>(5000);
+            backgroundJobManager.UseAutofacActivator();
+            backgroundJobManager.Start();
         }
 
         public override void Stop()
         {
-            BackgroundJobManager.Stop();
+            backgroundJobManager.Stop();
         }
     }
 }

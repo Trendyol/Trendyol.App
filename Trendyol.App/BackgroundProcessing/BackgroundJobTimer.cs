@@ -10,11 +10,13 @@ namespace Trendyol.App.BackgroundProcessing
         private readonly int _intervalInMs;
         internal readonly Type JobType;
 
+        private BackgroundJobManager _jobManager;
         private Timer _timer;
         private bool _isRunning;
 
-        public BackgroundJobTimer(Type jobType, int intervalInMs)
+        public BackgroundJobTimer(BackgroundJobManager jobManager, Type jobType, int intervalInMs)
         {
+            _jobManager = jobManager;
             JobType = jobType;
             _intervalInMs = intervalInMs;
         }
@@ -104,7 +106,7 @@ namespace Trendyol.App.BackgroundProcessing
             try
             {
                 Logger.Debug($"BackgroundJobManager: Trying to create a new instance of job:{JobType.FullName}.");
-                IJob job = (IJob)BackgroundJobManager.JobActivator.CreateJobInstance(JobType);
+                IJob job = (IJob)_jobManager.JobActivator.CreateJobInstance(JobType);
 
                 if (job != null)
                 {
