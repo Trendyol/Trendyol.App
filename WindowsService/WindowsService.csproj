@@ -36,6 +36,9 @@
     <StartupObject>WindowsService.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
@@ -81,6 +84,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Trendyol.App.Autofac\Trendyol.App.Autofac.csproj">
+      <Project>{e6583126-21be-479d-862d-97da0bbfd9c3}</Project>
+      <Name>Trendyol.App.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Trendyol.App.Daemon\Trendyol.App.Daemon.csproj">
       <Project>{672169ec-ba63-429e-bf7b-25a7ea3d29d9}</Project>
       <Name>Trendyol.App.Daemon</Name>

@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundProcessing\AutofacActivator.cs" />
+    <Compile Include="BackgroundProcessing\BackgroundJobManagerExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="TrendyolAppBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
