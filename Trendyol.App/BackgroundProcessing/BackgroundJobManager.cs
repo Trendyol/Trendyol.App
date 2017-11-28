@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Common.Logging;
 
@@ -8,10 +7,10 @@ namespace Trendyol.App.BackgroundProcessing
     public class BackgroundJobManager
     {
         private static readonly ILog Logger = LogManager.GetLogger<BackgroundJobManager>();
-        private static readonly List<BackgroundJobTimer> Timers = new List<BackgroundJobTimer>();
-        internal static IJobActivator JobActivator = new DefaultJobActivator();
+        private readonly List<BackgroundJobTimer> Timers = new List<BackgroundJobTimer>();
+        internal IJobActivator JobActivator = new DefaultJobActivator();
 
-        public static void Start()
+        public void Start()
         {
             Logger.Debug("BackgroundJobManager: Start requested.");
 
@@ -26,7 +25,7 @@ namespace Trendyol.App.BackgroundProcessing
             }
         }
 
-        public static void Stop()
+        public void Stop()
         {
             Logger.Debug("BackgroundJobManager: Stop requested.");
 
@@ -40,16 +39,16 @@ namespace Trendyol.App.BackgroundProcessing
             }
         }
 
-        public static void SetJobActivator(IJobActivator jobActivator)
+        public void SetJobActivator(IJobActivator jobActivator)
         {
             JobActivator = jobActivator;
             Logger.Debug($"BackgroundJobManager: JobActivator:{jobActivator.GetType().FullName} is registered.");
         }
 
-        public static void Register<T>(int jobIntervalInMs) where T : IJob
+        public void Register<T>(int jobIntervalInMs) where T : IJob
         {
             Logger.Debug($"BackgroundJobManager: Registering timer for job:{typeof(T).FullName}.");
-            Timers.Add(new BackgroundJobTimer(typeof(T), jobIntervalInMs));
+            Timers.Add(new BackgroundJobTimer(this, typeof(T), jobIntervalInMs));
         }
     }
 }
