@@ -87,7 +87,7 @@ namespace Trendyol.App.EntityFramework
 
         private void HandleAuditableEntities()
         {
-            string currentUser = Thread.CurrentPrincipal.Identity.Name;
+            string currentUser = Thread.CurrentPrincipal?.Identity?.Name;
 
             IEnumerable<DbEntityEntry> entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditable && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
@@ -102,6 +102,7 @@ namespace Trendyol.App.EntityFramework
                         if (auditable.CreatedOn == DateTime.MinValue)
                         {
                             auditable.CreatedOn = TrendyolApp.Instance.DateTimeProvider.Now;
+
                             if (SetUpdatedOnSameAsCreatedOnForNewObjects)
                             {
                                 auditable.UpdatedOn = auditable.CreatedOn;
