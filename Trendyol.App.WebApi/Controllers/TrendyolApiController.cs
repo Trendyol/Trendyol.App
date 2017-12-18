@@ -80,6 +80,34 @@ namespace Trendyol.App.WebApi.Controllers
             return Content(HttpStatusCode.BadRequest, errorResponse);
         }
 
+        protected IHttpActionResult Conflict(string errorMessage)
+        {
+            return Conflict(errorMessage, String.Empty);
+        }
+
+        protected IHttpActionResult Conflict(string errorMessage, string errorCode)
+        {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.ErrorCode = errorCode;
+            errorResponse.AddErrorMessage(errorMessage);
+
+            return Content(HttpStatusCode.Conflict, errorResponse);
+        }
+
+        protected IHttpActionResult Forbidden(string errorMessage)
+        {
+            return Forbidden(errorMessage, String.Empty);
+        }
+
+        protected IHttpActionResult Forbidden(string errorMessage, string errorCode)
+        {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.ErrorCode = errorCode;
+            errorResponse.AddErrorMessage(errorMessage);
+
+            return Content(HttpStatusCode.Forbidden, errorResponse);
+        }
+
         protected IHttpActionResult Created(object returnValue)
         {
             BaseResponse baseResponse = returnValue as BaseResponse;
