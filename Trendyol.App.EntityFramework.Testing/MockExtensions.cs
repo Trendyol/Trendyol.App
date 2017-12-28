@@ -57,7 +57,7 @@ namespace Trendyol.App.EntityFramework.Testing
             where TContext : DataContextBase
             where TEntity : class
         {
-            return new[] { source }.SetupDbSet(dbSetExp, mockDataContext).FirstOrDefault();
+            return new[] {source}.SetupDbSet(dbSetExp, mockDataContext).FirstOrDefault();
         }
 
         private static Func<TEntity, bool> BuildDbSetFindExpression<TEntity>(object[] args)
