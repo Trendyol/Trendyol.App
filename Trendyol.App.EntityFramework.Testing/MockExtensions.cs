@@ -47,6 +47,9 @@ namespace Trendyol.App.EntityFramework.Testing
             mockDbSet.Setup(x => x.Find(It.IsAny<object[]>()))
                 .Returns((object[] args) => data.FirstOrDefault(BuildDbSetFindExpression<TEntity>(args)));
 
+            mockDbSet.Setup(x => x.FindAsync(It.IsAny<object[]>()))
+                .Returns((object[] args) => Task.FromResult(data.FirstOrDefault(BuildDbSetFindExpression<TEntity>(args))));
+
             mockDataContext.Setup(dbSetExp).Returns(mockDbSet.Object);
 
             return data;
