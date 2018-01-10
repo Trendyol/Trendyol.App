@@ -108,7 +108,7 @@ namespace Trendyol.App.WebApi.Controllers
             return Content(HttpStatusCode.Forbidden, errorResponse);
         }
 
-        protected IHttpActionResult Created(object returnValue)
+        protected IHttpActionResult Created<T>(T returnValue)
         {
             BaseResponse baseResponse = returnValue as BaseResponse;
 
@@ -119,7 +119,7 @@ namespace Trendyol.App.WebApi.Controllers
 
             string id = GetIdFromReturnValue(returnValue);
 
-            if (String.IsNullOrEmpty(id) || Request == null)
+            if (String.IsNullOrEmpty(id))
             {
                 return Created(String.Empty, returnValue);
             }
