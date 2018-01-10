@@ -108,7 +108,7 @@ namespace Trendyol.App.WebApi.Controllers
             return Content(HttpStatusCode.Forbidden, errorResponse);
         }
 
-        protected IHttpActionResult Created(object returnValue)
+        protected IHttpActionResult Created<T>(T returnValue)
         {
             BaseResponse baseResponse = returnValue as BaseResponse;
 
