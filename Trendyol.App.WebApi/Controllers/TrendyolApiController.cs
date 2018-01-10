@@ -119,7 +119,7 @@ namespace Trendyol.App.WebApi.Controllers
 
             string id = GetIdFromReturnValue(returnValue);
 
-            if (String.IsNullOrEmpty(id))
+            if (String.IsNullOrEmpty(id) || Request == null)
             {
                 return Created(String.Empty, returnValue);
             }
