@@ -59,7 +59,7 @@ namespace Trendyol.App.BackgroundProcessing
         {
             _timer.Change(-1, -1);
 
-            Run();
+            Run().Wait();
 
             if (_timer != null)
             {
@@ -67,7 +67,7 @@ namespace Trendyol.App.BackgroundProcessing
             }
         }
 
-        private void Run()
+        private async Task Run()
         {
             Logger.Debug($"BackgroundJobManager: Timer hit for job:{JobType.FullName}.");
             if (_isRunning)
@@ -81,7 +81,7 @@ namespace Trendyol.App.BackgroundProcessing
             try
             {
                 Logger.Debug($"BackgroundJobManager: Trying to execute job:{JobType.FullName}.");
-                Execute();
+                await RunTaskInNewThread();
                 Logger.Debug($"BackgroundJobManager: Execution of job:{JobType.FullName} successfull.");
             }
             catch (Exception ex)
@@ -92,11 +92,6 @@ namespace Trendyol.App.BackgroundProcessing
             {
                 _isRunning = false;
             }
-        }
-
-        private void Execute()
-        {
-            Task.Run(RunTaskInNewThread);
         }
 
         private async Task RunTaskInNewThread()
