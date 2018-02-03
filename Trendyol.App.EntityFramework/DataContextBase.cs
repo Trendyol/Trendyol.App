@@ -116,7 +116,11 @@ namespace Trendyol.App.EntityFramework
                     }
                     else
                     {
-                        auditable.UpdatedOn = TrendyolApp.Instance.DateTimeProvider.Now;
+                        if (!auditable.UpdatedOn.HasValue)
+                        {
+                            auditable.UpdatedOn = TrendyolApp.Instance.DateTimeProvider.Now;
+                        }
+
                         auditable.UpdatedBy = currentUser;
                     }
                 }
