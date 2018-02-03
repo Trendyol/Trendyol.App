@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Common.Logging;
 using RestSharp;
 using Trendyol.App.BackgroundProcessing;
@@ -11,19 +12,8 @@ namespace WindowsService
     {
         private static readonly ILog Logger = LogManager.GetLogger<TestJob>();
 
-        public void Run()
+        public async Task Run()
         {
-            var restClient = new TrendyolRestClient("http://devxeonreceivingapi.trendyol.com", "Xeon.StockService", "topsecret", "http://devxeonauth.trendyol.com/connect/token", "receiving");
-
-            var request = new RestRequest("receiving-order-items/{id}");
-            request.AddUrlSegment("id", "1830743");
-
-            var getResponse = restClient.Get<GetReceivingOrderItemResponse>(request);
-
-            Logger.Info($"Example info text.");
-            Console.WriteLine($"Job:{typeof(TestJob).FullName} running.");
-            Thread.Sleep(10000);
-            Console.WriteLine($"Job:{typeof(TestJob).FullName} finished.");
         }
     }
 }

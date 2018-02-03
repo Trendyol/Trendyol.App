@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Common.Logging;
 
 namespace Trendyol.App.BackgroundProcessing
@@ -95,13 +96,10 @@ namespace Trendyol.App.BackgroundProcessing
 
         private void Execute()
         {
-            Thread thread = new Thread(RunTaskInNewThread);
-            thread.IsBackground = true;
-            thread.Start();
-            thread.Join();
+            Task.Run(RunTaskInNewThread);
         }
 
-        private void RunTaskInNewThread()
+        private async Task RunTaskInNewThread()
         {
             try
             {
@@ -111,7 +109,7 @@ namespace Trendyol.App.BackgroundProcessing
                 if (job != null)
                 {
                     Logger.Debug($"BackgroundJobManager: Running job:{JobType.FullName}.");
-                    job.Run();
+                    await job.Run();
                     Logger.Debug($"BackgroundJobManager: Job:{JobType.FullName} run.");
                 }
                 else

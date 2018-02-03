@@ -1,7 +1,9 @@
-﻿namespace Trendyol.App.BackgroundProcessing
+﻿using System.Threading.Tasks;
+
+namespace Trendyol.App.BackgroundProcessing
 {
     public interface IJob
     {
-        void Run();
+        Task Run();
     }
 }
