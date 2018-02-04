@@ -14,6 +14,7 @@ namespace WindowsService
 
         public async Task Run()
         {
+            Logger.Debug($"hamza2");
         }
     }
 }

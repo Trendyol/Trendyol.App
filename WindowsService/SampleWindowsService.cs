@@ -10,7 +10,7 @@ namespace WindowsService
 
         public override void Start()
         {
-            backgroundJobManager.Register<TestJob>(5000);
+            backgroundJobManager.Register<TestJob>(1000);
             backgroundJobManager.UseAutofacActivator();
             backgroundJobManager.Start();
         }

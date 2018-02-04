@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Trendyol.App.NLog</id>
-    <version>2.0.1</version>
+    <version>3.0.0</version>
     <title>Trendyol.App.NLog</title>
     <authors>trendyol ocinbat</authors>
     <owners>trendyol ocinbat</owners>
@@ -17,7 +17,7 @@
       <dependency id="Common.Logging" version="3.3.1" />
       <dependency id="Common.Logging.Core" version="3.3.1" />
       <dependency id="Common.Logging.NLog41" version="3.3.1" />
-      <dependency id="NLog" version="[4.3.8]" />
+      <dependency id="NLog" version="4.3.8" />
       <dependency id="NLog.Targets.Gelf" version="[1.0.0]" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
