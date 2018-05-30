@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Filters;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
@@ -200,6 +201,12 @@ namespace Trendyol.App.WebApi
                 config.MessageHandlers.Insert(1, new DeepLoggingHandler(deepLogger));
             });
 
+            return this;
+        }
+
+        public TrendyolWebApiBuilder WithExceptionHandler(IExceptionHandler exceptionHandler)
+        {
+            _appBuilder.DataStore.SetData(Constants.ExceptionHandlerDataKey, exceptionHandler);
             return this;
         }
 
