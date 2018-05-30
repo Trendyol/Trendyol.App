@@ -52,7 +52,18 @@ namespace Trendyol.App.WebApi
                 config.Formatters.Clear();
                 config.Formatters.Add(CreateJsonFormatter());
                 config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
-                config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+
+                var exceptionHandler = builder.DataStore.GetData(Constants.ExceptionHandlerDataKey);
+                if (exceptionHandler != null)
+                {
+                    config.Services.Replace(typeof(IExceptionHandler), exceptionHandler as IExceptionHandler);
+                }
+                else
+                {
+                    config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+                }
+
+                
 
                 builder.DataStore.SetData(Constants.HttpConfigurationDataKey, config);
             });
