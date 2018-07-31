@@ -4,7 +4,7 @@
     <id>Trendyol.App.RestClient</id>
     <version>1.2.2</version>
     <title>Trendyol.App.RestClient</title>
-    <authors>trendyol ocinbat</authors>
+    <authors>trendyol ocinbat</authors> 
     <owners>trendyol ocinbat</owners>
     <projectUrl>https://github.com/Trendyol/Trendyol.App</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
