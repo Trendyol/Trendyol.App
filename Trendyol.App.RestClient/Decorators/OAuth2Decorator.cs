@@ -305,7 +305,7 @@ namespace Trendyol.App.RestClient.Decorators
 
         private async Task GenerateNewAccessToken()
         {
-            TokenResponse tokenResult = await _tokenClient.RequestClientCredentialsAsync(_scope);
+            TokenResponse tokenResult = await _tokenClient.RequestClientCredentialsAsync(_scope).ConfigureAwait(false);
 
             if (tokenResult.HttpStatusCode == HttpStatusCode.OK)
             {
