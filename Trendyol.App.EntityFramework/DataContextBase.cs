@@ -152,6 +152,28 @@ namespace Trendyol.App.EntityFramework
             return id;
         }
 
+        public virtual TId GetNextIdRange<TEntity, TId>(int rangeSize)  where TEntity : IEntity<TId>
+        {
+            var customAttribute = typeof(TEntity).GetCustomAttribute<SequenceAttribute>();
+            if (customAttribute == null)
+                throw new InvalidOperationException("You need to decorate your entity with Sequence attribute to use this extension method.");
+            var name = customAttribute.Name;
+            var id = Database.SqlQuery<TId>($@"
+                DECLARE @range_first_value sql_variant ,   
+                        @range_first_value_output sql_variant ;  
+                
+                EXEC sp_sequence_get_range  
+                @sequence_name = N'{name}'  
+                , @range_size = {rangeSize} 
+                , @range_first_value = @range_first_value_output OUTPUT ;  
+                
+                SELECT @range_first_value_output AS FirstNumber ;")
+                .FirstOrDefault();
+            if (id == null || id.Equals(default(TId)))
+                throw new InvalidOperationException($"Database did not return an instance of identity for sequence {name}.");
+            return id;
+        }
+
         private void InitializeContext(bool logExecutedQueries)
         {
             Configuration.LazyLoadingEnabled = false;
