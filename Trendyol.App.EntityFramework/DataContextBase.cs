@@ -129,6 +129,31 @@ namespace Trendyol.App.EntityFramework
 
         public virtual TId GetNextId<TEntity, TId>() where TEntity : IEntity<TId>
         {
+            string sequenceName = GetSequenceName<TEntity, TId>();
+
+            var sql = $"SELECT (NEXT VALUE FOR {sequenceName})";
+
+            return GetSequenceId<TId>(sql,sequenceName); 
+        }
+        public virtual TId GetNextIdRange<TEntity, TId>(int rangeSize)  where TEntity : IEntity<TId>
+        {
+            var sequenceName = GetSequenceName<TEntity, TId>();
+
+            var sql = $@"
+                DECLARE @range_first_value sql_variant ,   
+                        @range_first_value_output sql_variant ;  
+                
+                EXEC sp_sequence_get_range  
+                @sequence_name = N'{sequenceName}'  
+                , @range_size = {rangeSize} 
+                , @range_first_value = @range_first_value_output OUTPUT ;  
+                
+                SELECT @range_first_value_output AS FirstNumber ;";
+
+            return GetSequenceId<TId>(sql,sequenceName); 
+        }
+        private static string GetSequenceName<TEntity, TId>() where TEntity : IEntity<TId>
+        {
             Type entityType = typeof(TEntity);
 
             SequenceAttribute attribute = entityType.GetCustomAttribute<SequenceAttribute>();
@@ -139,38 +164,14 @@ namespace Trendyol.App.EntityFramework
             }
 
             string sequenceName = attribute.Name;
-
-            DbRawSqlQuery<TId> result = Database.SqlQuery<TId>($"SELECT (NEXT VALUE FOR {sequenceName})");
-
-            TId id = result.FirstOrDefault();
-
-            if (id == null || id.Equals(default(TId)))
-            {
-                throw new InvalidOperationException($"Database did not return an instance of identity for sequence {sequenceName}.");
-            }
-
-            return id;
+            return sequenceName;
         }
-
-        public virtual TId GetNextIdRange<TEntity, TId>(int rangeSize)  where TEntity : IEntity<TId>
+        
+        private TId GetSequenceId<TId>(string sql,string sequenceName)
         {
-            var customAttribute = typeof(TEntity).GetCustomAttribute<SequenceAttribute>();
-            if (customAttribute == null)
-                throw new InvalidOperationException("You need to decorate your entity with Sequence attribute to use this extension method.");
-            var name = customAttribute.Name;
-            var id = Database.SqlQuery<TId>($@"
-                DECLARE @range_first_value sql_variant ,   
-                        @range_first_value_output sql_variant ;  
-                
-                EXEC sp_sequence_get_range  
-                @sequence_name = N'{name}'  
-                , @range_size = {rangeSize} 
-                , @range_first_value = @range_first_value_output OUTPUT ;  
-                
-                SELECT @range_first_value_output AS FirstNumber ;")
-                .FirstOrDefault();
+            var id = Database.SqlQuery<TId>(sql).FirstOrDefault();
             if (id == null || id.Equals(default(TId)))
-                throw new InvalidOperationException($"Database did not return an instance of identity for sequence {name}.");
+                throw new InvalidOperationException($"Database did not return an instance of identity for sequence {sequenceName}.");
             return id;
         }
 
