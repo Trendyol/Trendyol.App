@@ -91,7 +91,9 @@
     <Compile Include="DynamicFiltering\ExpressionMapper.cs" />
     <Compile Include="DynamicFiltering\FilteredExpressionQuery.cs" />
     <Compile Include="DynamicFiltering\IFilteredExpressionQuery.cs" />
+    <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
+    <Compile Include="Extensions\QueryBuilder.cs" />
     <Compile Include="Mapping\DataContextAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrendyolAppBuilderExtensions.cs" />
