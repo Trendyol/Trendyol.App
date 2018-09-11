@@ -15,9 +15,29 @@ namespace Trendyol.App.RestClient.Decorators
         private readonly string _clientSecret;
         private readonly string _tokenUrl;
         private readonly string _scope;
-        private readonly TokenClient _tokenClient;
-        private string _accessToken = String.Empty;
+        private TokenClient _tokenClient;
+        private string _accessToken = null;
         private bool _isExpired = false;
+
+        public TokenClient TokenClient
+        {
+            get
+            {
+                if (_tokenClient == null)
+                {
+                    lock (_syncLock)
+                    {
+                        if (_tokenClient == null)
+                        {
+                            _tokenClient = new TokenClient(_tokenUrl, _clientId, _clientSecret);
+                        }
+                    }
+                }
+
+                return _tokenClient;
+            }
+
+        }
 
         public OAuth2Decorator(RestSharp.RestClient decoratedClient, string clientId, string clientSecret, string tokenUrl, string scope) : 
             base(decoratedClient)
@@ -26,10 +46,6 @@ namespace Trendyol.App.RestClient.Decorators
             _clientSecret = clientSecret;
             _tokenUrl = tokenUrl;
             _scope = scope;
-
-            _tokenClient = new TokenClient(_tokenUrl, _clientId, _clientSecret);
-
-            RefreshAccessToken();
         }
 
         public override IRestResponse Execute(IRestRequest request)
@@ -274,6 +290,8 @@ namespace Trendyol.App.RestClient.Decorators
 
         private void InjectAccessToken(IRestRequest request)
         {
+            InitAccessToken();
+
             Parameter authHeader = request.Parameters.FirstOrDefault(p => p.Type == ParameterType.HttpHeader && p.Name == "Authorization");
 
             if (authHeader != null)
@@ -285,6 +303,21 @@ namespace Trendyol.App.RestClient.Decorators
                 request.AddHeader("Authorization", $"Bearer {_accessToken}");
             }
         }
+
+        private void InitAccessToken()
+        {
+            if (_accessToken == null)
+            {
+                lock (_syncLock)
+                {
+                    if (_accessToken == null)
+                    {
+                        GenerateNewAccessToken().Wait();
+                    }
+                }
+            }
+        }
+   
 
         private void RefreshAccessToken()
         {
@@ -305,7 +338,7 @@ namespace Trendyol.App.RestClient.Decorators
 
         private async Task GenerateNewAccessToken()
         {
-            TokenResponse tokenResult = await _tokenClient.RequestClientCredentialsAsync(_scope).ConfigureAwait(false);
+            TokenResponse tokenResult = await TokenClient.RequestClientCredentialsAsync(_scope).ConfigureAwait(false);
 
             if (tokenResult.HttpStatusCode == HttpStatusCode.OK)
             {
