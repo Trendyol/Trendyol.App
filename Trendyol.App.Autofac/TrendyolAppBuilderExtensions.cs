@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Autofac;
 using Trendyol.App.Configuration;
@@ -17,58 +16,9 @@ namespace Trendyol.App.Autofac
             {
                 ContainerBuilder containerBuilder = new ContainerBuilder();
 
-                if (isAllSystemSingleInstance)
-                {
-                    if (serviceAssembly != null)
-                    {
-                        containerBuilder
-                            .RegisterAssemblyTypes(serviceAssembly)
-                            .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
-                            .AsImplementedInterfaces()
-                            .SingleInstance();
-                    }
-
-                    if (dataAssembly != null)
-                    {
-                        containerBuilder
-                            .RegisterAssemblyTypes(dataAssembly)
-                            .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
-                            .AsImplementedInterfaces()
-                            .SingleInstance();
-
-                        containerBuilder
-                            .RegisterAssemblyTypes(dataAssembly)
-                            .Where(item => item.Implements(typeof(IIdentityProvider)) && item.IsAbstract == false)
-                            .AsImplementedInterfaces()
-                            .SingleInstance();
-                    }
-                }
-                else
-                {
-                    if (serviceAssembly != null)
-                    {
-                        containerBuilder
-                            .RegisterAssemblyTypes(serviceAssembly)
-                            .Where(item => item.Implements(typeof(IService)) && item.IsAbstract == false)
-                            .AsImplementedInterfaces()
-                            .InstancePerLifetimeScope();
-                    }
-
-                    if (dataAssembly != null)
-                    {
-                        containerBuilder
-                            .RegisterAssemblyTypes(dataAssembly)
-                            .Where(item => item.Implements(typeof(IRepository)) && item.IsAbstract == false)
-                            .AsImplementedInterfaces()
-                            .InstancePerLifetimeScope();
-
-                        containerBuilder
-                            .RegisterAssemblyTypes(dataAssembly)
-                            .Where(item => item.Implements(typeof(IIdentityProvider)) && item.IsAbstract == false)
-                            .AsImplementedInterfaces()
-                            .InstancePerLifetimeScope();
-                    }
-                }
+                RegisterDependency<IService>(containerBuilder, serviceAssembly, isAllSystemSingleInstance);
+                RegisterDependency<IRepository>(containerBuilder, dataAssembly, isAllSystemSingleInstance);
+                RegisterDependency<IIdentityProvider>(containerBuilder, dataAssembly, isAllSystemSingleInstance);
 
                 containerBuilder.Register<IConfigManager>(c => TrendyolApp.Instance.ConfigManager).SingleInstance();
                 containerBuilder.Register<IDateTimeProvider>(c => TrendyolApp.Instance.DateTimeProvider).SingleInstance();
@@ -85,6 +35,23 @@ namespace Trendyol.App.Autofac
             });
 
             return builder;
+        }
+
+        private static void RegisterDependency<T>(ContainerBuilder containerBuilder, Assembly assembly, bool isAllSystemSingleInstance)
+        {
+            var dependency = containerBuilder
+                .RegisterAssemblyTypes(assembly)
+                .Where(item => item.Implements(typeof(T)) && item.IsAbstract == false)
+                .AsImplementedInterfaces();
+
+            if (isAllSystemSingleInstance)
+            {
+                dependency.SingleInstance();
+            }
+            else
+            {
+                dependency.InstancePerLifetimeScope();
+            }
         }
     }
 }
