@@ -37,10 +37,10 @@ namespace Trendyol.App.Autofac
             return builder;
         }
 
-        private static void RegisterDependency<T>(ContainerBuilder containerBuilder, Assembly serviceAssembly, bool isAllSystemSingleInstance)
+        private static void RegisterDependency<T>(ContainerBuilder containerBuilder, Assembly assembly, bool isAllSystemSingleInstance)
         {
             var dependency = containerBuilder
-                .RegisterAssemblyTypes(serviceAssembly)
+                .RegisterAssemblyTypes(assembly)
                 .Where(item => item.Implements(typeof(T)) && item.IsAbstract == false)
                 .AsImplementedInterfaces();
 
